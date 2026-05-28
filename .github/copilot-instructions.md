@@ -26,6 +26,7 @@ Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", en
 ## Fluxo principal
 
 ### Passo 0 — Validação inicial
+- Se `candidate-data.js` **não existir** (arquivos `.example` ainda não foram renomeados), oriente o usuário a executar os comandos de configuração inicial do README e interrompa o fluxo.
 - Se for a **primeira vez** usando o projeto (sem dados em `candidate-data.js`), leia `.github/skills/iniciar-projeto/SKILL.md` e siga suas instruções antes de continuar.
 - Leia `vagas.txt` e identifique todos os blocos
 - Para cada vaga com modalidade **Presencial** ou **Híbrida**, verifique se a localização está explicitamente fora da cidade/região do candidato (conforme `candidate-data.js`). Se sim, **descarte a vaga antes de qualquer análise** e informe o usuário. Vagas **Remotas** não têm restrição de localização. Em caso de dúvida sobre a localização, mencione ao usuário em vez de descartar silenciosamente.

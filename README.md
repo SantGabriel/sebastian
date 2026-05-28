@@ -65,6 +65,7 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
 Você pode limpar os arquivos do `vagas.txt` e recomeçar outro bloco de vagas ou apenas adicionar mais vagas.
 Sugiro que limpe o arquivo depois que não precisar mais gerar os CVs/CLs para aquelas vagas. 
+É interessante guardar os CVs e CLs dentro de uma pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
 
 ## 6) Solução rápida de problemas
 

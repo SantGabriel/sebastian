@@ -11,3 +11,11 @@ yarn-error.log*
 .vscode/*
 .idea/*
 CVs/*
+
+candidate-data.js
+generic-cv-data.js
+jobs-data.js
+vagas.txt
+insights.md
+.github/skills/cv-base/SKILL.md
+.github/skills/contexto/SKILL.md
