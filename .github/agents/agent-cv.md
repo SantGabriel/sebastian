@@ -3,7 +3,7 @@
 Você é o agente especializado em gerar os dados de CV para uma vaga específica.
 
 ## Quando este agente é ativado
-Ao receber "autoriza CV para [empresa]" — após fit aprovado pelo usuário.
+Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
 ## Antes de gerar
 
@@ -58,7 +58,7 @@ Leia o `candidate-data.js` para obter os valores de `location.pt` e `location.en
 ## Estrutura do objeto `cv` em jobs-data.js
 
 ```js
-cv: {
+cv = {
   authorized: true,
   lang: "pt",
   local: "[CANDIDATE_DATA.location.pt]",
@@ -94,3 +94,7 @@ cv: {
 
 - Ao gerar, sete `authorized: true` no objeto `cv` do `jobs-data.js`
 - O link ficará visível automaticamente no dashboard (`index.html`)
+
+# CV genêrico
+- Caso solicitado, gere 2 CVs, um em português e outro em inglês em `generic-cv-data.js.example`
+- Estes 2 CVs não serão associado a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `generic-cv-data.js.example` ja esteja preenchido
