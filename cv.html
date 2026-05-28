@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">CV</title>
+  <script src="candidate-data.js"></script>
+  <script>
+    var _c = window.CANDIDATE_DATA || {};
+    if (_c.name) document.getElementById('page-title').textContent = 'CV | ' + _c.name;
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; max-width: 780px; margin: 30px auto; padding: 0 24px; color: #333; font-size: 13px; line-height: 1.5; background: #fff; }
+    h1 { font-size: 26px; color: #111; margin-bottom: 3px; }
+    .subtitle { font-size: 13px; color: #555; margin-bottom: 8px; }
+    .contact-line { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 13px; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-bottom: 18px; }
+    .contact-line a { color: #1a73e8; text-decoration: none; }
+    .contact-line span { color: #444; }
+    h2 { font-size: 12px; font-weight: bold; color: #1a73e8; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #1a73e8; padding-bottom: 3px; margin: 20px 0 10px 0; }
+    .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2px; }
+    .job-header h3 { font-size: 13px; font-weight: bold; }
+    .job-header h3 a { color: #1a73e8; text-decoration: none; }
+    .job-header .date { font-size: 12px; color: #666; }
+    .stack { font-size: 12px; color: #666; margin-bottom: 5px; }
+    ul { padding-left: 18px; margin-bottom: 10px; }
+    li { margin-bottom: 3px; }
+    .skills-block { margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px 12px; }
+    .pill { background: #e8f0fe; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-weight: bold; color: #1a73e8; }
+    .edu-row { display: flex; gap: 30px; }
+    .edu-item { flex: 1; }
+    .edu-item h3 { font-size: 13px; font-weight: bold; margin-bottom: 2px; }
+    .edu-item .edu-meta { font-size: 12px; color: #555; }
+    .lang-list { list-style: none; padding: 0; }
+    .lang-list li { margin-bottom: 2px; }
+    @page { margin: 0; size: 217mm 400mm; }
+
+    @media print {
+      body { margin: 0; padding: 32px 40px; max-width: 100%; font-size: 12px; }
+      #btn-pdf { display: none !important; }
+      .skills-block { display: flex !important; flex-wrap: wrap !important; }
+      .pill { background: #e8f0fe !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .contact-line { display: flex !important; flex-wrap: wrap !important; }
+      .edu-row { display: flex !important; }
+      a { color: #1a73e8 !important; }
+      h2 { color: #1a73e8 !important; border-bottom: 1px solid #1a73e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    .not-authorized { text-align: center; padding: 80px 24px; color: #aaa; }
+    .not-authorized i { font-size: 48px; display: block; margin-bottom: 16px; }
+    .not-authorized h2 { font-size: 18px; color: #ccc; border: none; margin: 0 0 8px 0; }
+    .not-authorized p { font-size: 14px; }
+    #btn-pdf { position: fixed; bottom: 24px; right: 24px; background: #1a73e8; color: #fff; border: none; border-radius: 6px; padding: 10px 18px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 999; }
+    #btn-pdf:hover { background: #1558b0; }
+    .city-warning { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 10px 14px; margin-bottom: 20px; font-size: 12px; color: #92400e; border-radius: 0 4px 4px 0; }
+    .city-warning i { margin-right: 6px; }
+    @media print { .city-warning { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div id="cv-root"></div>
+  <button id="btn-pdf" style="display:none" onclick="gerarPDF()">
+    <i class="fa-solid fa-file-pdf"></i> Baixar PDF
+  </button>
+
+  <script src="jobs-data.js"></script>
+  <script src="generic-cv-data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const jobId = params.get('job');
+    const root = document.getElementById('cv-root');
+
+    function notAuthorized(msg) {
+      root.innerHTML = `
+        <div class="not-authorized">
+          <i class="fa-solid fa-lock"></i>
+          <h2 style="color:#ccc;border:none;margin:0 0 8px 0">CV não autorizado</h2>
+          <p>${msg || 'Este CV ainda não foi autorizado pelo usuário.'}</p>
+        </div>`;
+    }
+
+    const isGeneric = !!(window.GENERIC_CV_DATA && window.GENERIC_CV_DATA[jobId]);
+    const job = isGeneric ? window.GENERIC_CV_DATA[jobId] : (window.JOBS_DATA && window.JOBS_DATA[jobId]);
+
+    if (!jobId || !job) {
+      notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
+    } else {
+      const cv = job.cv;
+
+      if (!isGeneric && (!cv || !cv.authorized)) {
+        notAuthorized(`CV para "${job.vaga} - ${job.empresa}" ainda não autorizado.`);
+      } else {
+        const c = window.CANDIDATE_DATA || {};
+        const candidateName = c.name || '';
+        const candidateEmail = c.email || '';
+        const candidatePhone = c.phone || '';
+        const candidateLinkedin = c.linkedin || {};
+
+        document.documentElement.lang = cv.lang || 'pt-BR';
+
+        const isInternational = cv.lang === 'en';
+        const secResumo = isInternational ? 'Professional Summary' : 'Resumo Profissional';
+        const secExp = isInternational ? 'Professional Experience' : 'Experiência Profissional';
+        const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
+        const secEdu = isInternational ? 'Education' : 'Formação Acadêmica';
+        const secLang = isInternational ? 'Languages' : 'Idiomas';
+        const remoteLabel = isInternational ? '<span>Open to remote work</span>' : '';
+
+        const candidateLocation = cv.local || (isInternational
+          ? (c.location && c.location.en) || ''
+          : (c.location && c.location.pt) || '');
+
+        document.getElementById('page-title').textContent = `${job.vaga} - ${job.empresa} | ${candidateName}`;
+
+        const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'CV';
+        window._pdfData = { vaga: vagaLabel, empresa: job.empresa || '', candidateName };
+
+        const modalidade = job.modalidade || '';
+        const cidadeVaga = job.cidadeVaga || '';
+        const isPresencialOutraCidade = cidadeVaga
+          && modalidade && modalidade !== 'Remoto'
+          && candidateLocation
+          && cidadeVaga.toLowerCase() !== candidateLocation.toLowerCase();
+        const cityWarningHtml = isPresencialOutraCidade
+          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${cidadeVaga}</strong> — sua localização cadastrada é <strong>${candidateLocation}</strong>.</div>`
+          : '';
+
+        const phoneHtml = candidatePhone
+          ? `<a href="tel:${candidatePhone}"><i class="fa-solid fa-phone"></i> ${candidatePhone}</a>` : '';
+        const emailHtml = candidateEmail
+          ? `<a href="mailto:${candidateEmail}"><i class="fa-solid fa-envelope"></i> ${candidateEmail}</a>` : '';
+        const linkedinHtml = candidateLinkedin.url
+          ? `<a href="${candidateLinkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${candidateLinkedin.label || 'LinkedIn'}</a>` : '';
+        const locationHtml = candidateLocation
+          ? `<span><i class="fa-solid fa-location-dot"></i> ${candidateLocation}</span>` : '';
+
+        window._pdfFilename = isGeneric
+          ? `CV - ${candidateName} - ${cv.lang === 'en' ? 'Generic EN' : 'Genérico PT'}.pdf`
+          : `CV - ${candidateName} - ${job.empresa}.pdf`;
+
+        const expHtml = (cv.experiencias || []).map(exp => `
+          <div class="job-header">
+            <h3>${exp.cargo}${exp.url ? ` - <a href="${exp.url}" target="_blank">${exp.empresa}</a>` : ` - ${exp.empresa}`}</h3>
+            <span class="date">${exp.inicio} - ${exp.fim}</span>
+          </div>
+          <p class="stack">${exp.stack}</p>
+          <ul>${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}</ul>
+        `).join('');
+
+        const skillsHtml = (cv.skills || []).map(s => `<span class="pill">${s}</span>`).join('');
+
+        const eduHtml = (cv.educacao || []).map(e => `
+          <div class="edu-item">
+            <h3>${e.curso}</h3>
+            <p class="edu-meta">${e.inst}</p>
+            <p class="edu-meta">${e.periodo}</p>
+          </div>
+        `).join('');
+
+        const idiomasHtml = (cv.idiomas || []).map(i => `<li>${i}</li>`).join('');
+
+        root.innerHTML = `
+          ${cityWarningHtml}
+          <h1>${candidateName}</h1>
+          <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
+          <div class="contact-line">
+            ${locationHtml}
+            ${remoteLabel}
+            ${phoneHtml}
+            ${emailHtml}
+            ${linkedinHtml}
+          </div>
+
+          <h2>${secResumo}</h2>
+          <p>${cv.resumo}</p>
+
+          <h2>${secExp}</h2>
+          ${expHtml}
+
+          <h2>${secSkills}</h2>
+          <p class="skills-block">${skillsHtml}</p>
+
+          <h2>${secEdu}</h2>
+          <div class="edu-row">${eduHtml}</div>
+
+          <h2>${secLang}</h2>
+          <ul class="lang-list">${idiomasHtml}</ul>
+        `;
+
+        document.getElementById('btn-pdf').style.display = 'flex';
+      }
+    }
+  </script>
+
+  <script>
+    function gerarPDF() {
+      const btn = document.getElementById('btn-pdf');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+
+      const jobId = new URLSearchParams(window.location.search).get('job');
+      fetch(`http://localhost:3001/pdf?job=${jobId}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Servidor retornou erro ' + res.status);
+          return res.blob();
+        })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = document.title.replace(' | ', ' - ') + '.pdf';
+          a.click();
+          URL.revokeObjectURL(url);
+        })
+        .catch(err => alert('Erro ao gerar PDF.\nVerifique se o servidor está rodando:\nnpm start\n\n' + err.message))
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Baixar PDF';
+        });
+    }
+  </script>
+</body>
+</html>

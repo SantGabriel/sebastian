@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vagas - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 24px; color: #333; font-size: 14px; background: #f5f7fa; }
+    h1 { font-size: 22px; color: #111; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #777; margin-bottom: 28px; }
+    .job-card { background: #fff; border-radius: 8px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+    .card-header-left h2 { font-size: 16px; font-weight: bold; color: #111; }
+    .card-header-left .company { font-size: 13px; color: #555; margin-top: 2px; }
+    .score-badge { font-size: 18px; font-weight: bold; padding: 6px 14px; border-radius: 20px; white-space: nowrap; }
+    .score-green { background: #d4edda; color: #1a6e2e; }
+    .score-yellow { background: #fff3cd; color: #856404; }
+    .score-red { background: #f8d7da; color: #721c24; }
+    .fit-toggle { background: none; border: none; color: #1a73e8; cursor: pointer; font-size: 13px; padding: 0; margin-bottom: 10px; margin-right: 14px; }
+    .vaga-toggle { background: none; border: none; color: #888; cursor: pointer; font-size: 12px; padding: 0; margin-bottom: 10px; }
+    .vaga-toggle:hover { text-decoration: underline; }
+    .vaga-texto { display: none; font-size: 12px; color: #555; white-space: pre-wrap; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 10px 12px; margin-bottom: 12px; max-height: 300px; overflow-y: auto; }
+    .fit-toggle:hover { text-decoration: underline; }
+    .fit-details { display: none; margin-bottom: 12px; }
+    .fit-details.open { display: block; }
+    .fit-section { margin-bottom: 8px; }
+    .fit-section strong { font-size: 12px; text-transform: uppercase; color: #888; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+    .fit-section ul { padding-left: 18px; }
+    .fit-section li { font-size: 13px; margin-bottom: 2px; }
+    .fit-summary { font-size: 13px; color: #444; background: #f0f4ff; border-left: 3px solid #1a73e8; padding: 8px 12px; border-radius: 0 4px 4px 0; margin-bottom: 10px; }
+    .card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 5px; font-size: 13px; font-weight: bold; text-decoration: none; cursor: pointer; border: none; }
+    .btn-cv { background: #1a73e8; color: #fff; }
+    .btn-cv:hover { background: #1558b0; }
+    .btn-cl { background: #34a853; color: #fff; }
+    .btn-cl:hover { background: #267a3e; }
+    .btn-pending { background: #e8eaed; color: #999; cursor: default; pointer-events: none; }
+    .pending-label { font-size: 12px; color: #aaa; display: flex; align-items: center; gap: 5px; align-self: center; }
+    .candidatura-aviso { display: flex; align-items: center; gap: 8px; background: #fff8e1; border: 1px solid #ffe082; border-left: 3px solid #f9a825; border-radius: 4px; padding: 7px 12px; font-size: 12px; color: #5d4037; margin-bottom: 12px; flex-wrap: wrap; }
+    .candidatura-aviso a { color: #e65100; font-weight: bold; text-decoration: none; margin-left: 4px; }
+    .candidatura-aviso a:hover { text-decoration: underline; }
+    .empty { text-align: center; color: #aaa; margin-top: 60px; font-size: 15px; }
+    .empty i { font-size: 36px; display: block; margin-bottom: 12px; }
+    .generic-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .generic-bar span { font-size: 13px; color: #888; align-self: center; margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <h1><i class="fa-solid fa-briefcase"></i> Vagas Dashboard</h1>
+  <p class="subtitle">Fits gerados pelo agente ATS. Autorize cada vaga para liberar os links de CV e CL.</p>
+  <div class="generic-bar">
+    <span><i class="fa-solid fa-file-lines"></i> CVs genéricos:</span>
+    <a class="btn btn-cv" href="cv.html?job=generico" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV PT</a>
+    <a class="btn btn-cv" href="cv.html?job=generico-en" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV EN</a>
+  </div>
+  <div id="jobs-container"></div>
+
+  <script src="jobs-data.js"></script>
+  <script>
+    function scoreClass(s) {
+      if (s >= 7) return 'score-green';
+      if (s >= 4) return 'score-yellow';
+      return 'score-red';
+    }
+
+    function toggleFit(id) {
+      const el = document.getElementById('fit-' + id);
+      const btn = document.getElementById('toggle-' + id);
+      if (el.classList.contains('open')) {
+        el.classList.remove('open');
+        btn.textContent = 'Ver detalhes do fit ▸';
+      } else {
+        el.classList.add('open');
+        btn.textContent = 'Ocultar detalhes ▴';
+      }
+    }
+
+    function toggleVaga(id) {
+      const el = document.getElementById('vaga-' + id);
+      const btn = document.getElementById('vaga-toggle-' + id);
+      if (el.style.display === 'block') {
+        el.style.display = 'none';
+        btn.textContent = 'Ver vaga ▸';
+      } else {
+        el.style.display = 'block';
+        btn.textContent = 'Ocultar vaga ▴';
+      }
+    }
+
+    function render() {
+      const container = document.getElementById('jobs-container');
+      const jobs = Object.values(window.JOBS_DATA || {}).filter(j => j.fit);
+
+      if (jobs.length === 0) {
+        container.innerHTML = '<div class="empty"><i class="fa-solid fa-inbox"></i>Nenhuma vaga carregada ainda.<br>Adicione vagas ao vagas.txt e peça ao agente para processar.</div>';
+        return;
+      }
+
+      container.innerHTML = jobs.map((job, idx) => {
+        const fit = job.fit || {};
+        const score = fit.score || 0;
+        const positivos = (fit.positivos || []).map(p => `<li>${p}</li>`).join('');
+        const negativos = (fit.negativos || []).map(n => `<li>${n}</li>`).join('');
+        const summary = fit.summary || '';
+
+        const cvAuthorized = job.cv && job.cv.authorized;
+        const clAuthorized = job.cl && job.cl.authorized;
+        const hasCv = (job.tipos || []).includes('cv');
+        const hasCl = (job.tipos || []).includes('cl');
+
+        const candidaturaHtml = job.candidatura
+          ? `<div class="candidatura-aviso">
+              <i class="fa-solid fa-triangle-exclamation" style="color:#f9a825;flex-shrink:0"></i>
+              <span>${job.candidatura.aviso}</span>
+              ${job.candidatura.url ? `<a href="${job.candidatura.url}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i> Abrir link</a>` : ''}
+            </div>`
+          : '';
+
+        const cvBtn = hasCv
+          ? cvAuthorized
+            ? `<a class="btn btn-cv" href="cv.html?job=${job.id}" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV</a>`
+            : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`
+          : '';
+
+        const clBtn = hasCl
+          ? clAuthorized
+            ? `<a class="btn btn-cl" href="cl.html?job=${job.id}" target="_blank"><i class="fa-solid fa-envelope"></i> Cover Letter</a>`
+            : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`
+          : '';
+
+        const pendingLabel = (!cvAuthorized && hasCv) || (!clAuthorized && hasCl)
+          ? `<span class="pending-label"><i class="fa-solid fa-clock"></i> Aguardando autorização</span>`
+          : '';
+
+        return `
+          <div class="job-card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <h2><span style="font-weight:normal;margin-right:6px">${idx+1}.</span>${job.vaga}</h2>
+                <div class="company"><i class="fa-solid fa-building"></i> ${job.empresa}${job.contratacao ? ` <span style="font-size:11px;font-weight:600;background:#e8f0fe;color:#1a56db;border-radius:10px;padding:2px 8px;margin-left:6px">${job.contratacao}</span>` : ''}</div>
+              </div>
+              <span class="score-badge ${scoreClass(score)}">${score}/10</span>
+            </div>
+            ${summary ? `<div class="fit-summary">${summary}</div>` : ''}
+            ${candidaturaHtml}
+            <button class="fit-toggle" id="toggle-${job.id}" onclick="toggleFit('${job.id}')">Ver detalhes do fit ▸</button>${job.vagaTexto ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">Ver vaga ▸</button>` : ''}
+            <div class="fit-details" id="fit-${job.id}">
+              ${positivos ? `<div class="fit-section"><strong><i class="fa-solid fa-circle-check" style="color:#34a853"></i> Pontos positivos</strong><ul>${positivos}</ul></div>` : ''}
+              ${negativos ? `<div class="fit-section"><strong><i class="fa-solid fa-circle-xmark" style="color:#e53935"></i> Gaps / Pontos negativos</strong><ul>${negativos}</ul></div>` : ''}
+            </div>
+            ${job.vagaTexto ? `<div class="vaga-texto" id="vaga-${job.id}">${job.vagaTexto.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : ''}
+            <div class="card-actions">
+              ${cvBtn}
+              ${clBtn}
+              ${pendingLabel}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    render();
+  </script>
+</body>
+</html>

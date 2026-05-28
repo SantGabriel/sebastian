@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Cover Letter</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; max-width: 680px; margin: 60px auto; padding: 0 24px; color: #333; font-size: 14px; line-height: 1.8; background: #fff; }
+    .header { border-bottom: 2px solid #1a73e8; padding-bottom: 12px; margin-bottom: 32px; }
+    .header h1 { font-size: 20px; color: #111; margin-bottom: 2px; }
+    .header .meta { font-size: 12px; color: #777; display: flex; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+    .header .meta a { color: #1a73e8; text-decoration: none; }
+    .job-target { font-size: 13px; color: #555; font-style: italic; margin-bottom: 28px; }
+    .cl-body p { margin-bottom: 18px; }
+    .cl-body p:last-child { margin-bottom: 0; }
+    .signature { margin-top: 36px; font-size: 13px; color: #555; }
+    .signature strong { display: block; font-size: 14px; color: #111; margin-top: 4px; }
+    @page { margin: 20mm; size: 217mm 400mm; }
+    @media print { body { margin: 0; } }
+    .not-authorized { text-align: center; padding: 80px 24px; color: #aaa; }
+    .not-authorized i { font-size: 48px; display: block; margin-bottom: 16px; }
+    .city-warning { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 10px 14px; margin-bottom: 20px; font-size: 12px; color: #92400e; border-radius: 0 4px 4px 0; }
+    .city-warning i { margin-right: 6px; }
+    @media print { .city-warning { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div id="cl-root"></div>
+
+  <script src="candidate-data.js"></script>
+  <script src="jobs-data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const jobId = params.get('job');
+    const root = document.getElementById('cl-root');
+
+    function notAuthorized(msg) {
+      root.innerHTML = `
+        <div class="not-authorized">
+          <i class="fa-solid fa-lock"></i>
+          <h2 style="color:#ccc">Cover Letter not authorized</h2>
+          <p>${msg || 'This Cover Letter has not been authorized yet.'}</p>
+        </div>`;
+    }
+
+    if (!jobId || !window.JOBS_DATA || !window.JOBS_DATA[jobId]) {
+      notAuthorized(jobId ? `Job "${jobId}" not found in jobs-data.js.` : 'No job parameter provided in the URL.');
+    } else {
+      const job = window.JOBS_DATA[jobId];
+      const cl = job.cl;
+      const isEN = (job.cv && job.cv.lang === 'en') || (cl && cl.lang === 'en');
+
+      const c = window.CANDIDATE_DATA || {};
+      const name = c.name || '';
+      const email = c.email || '';
+      const linkedin = c.linkedin || {};
+      const location = isEN
+        ? (c.location && c.location.en) || (job.cv && job.cv.local) || ''
+        : (c.location && c.location.pt) || (job.cv && job.cv.local) || '';
+
+      if (!cl || !cl.authorized) {
+        notAuthorized(`Cover Letter for "${job.vaga} - ${job.empresa}" not authorized yet.`);
+      } else {
+        document.documentElement.lang = isEN ? 'en' : 'pt-BR';
+        document.getElementById('page-title').textContent = `Cover Letter - ${job.empresa} | ${name}`;
+
+        const paragrafosHtml = (cl.paragrafos || []).map(p => `<p>${p}</p>`).join('');
+        const applicationLabel = isEN ? 'Application' : 'Candidatura';
+        const closingLabel = isEN ? 'Best regards,' : 'Atenciosamente,';
+
+        const locationHtml = location
+          ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
+        const emailHtml = email
+          ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
+        const linkedinHtml = linkedin.url
+          ? `<a href="${linkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.label || 'LinkedIn'}</a>` : '';
+
+        const modalidade = job.modalidade || '';
+        const cidadeVaga = job.cidadeVaga || '';
+        const isPresencialOutraCidade = cidadeVaga
+          && modalidade && modalidade !== 'Remoto'
+          && location
+          && cidadeVaga.toLowerCase() !== location.toLowerCase();
+        const cityWarningHtml = isPresencialOutraCidade
+          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${cidadeVaga}</strong> — sua localização cadastrada é <strong>${location}</strong>.</div>`
+          : '';
+
+        root.innerHTML = `
+          ${cityWarningHtml}
+          <div class="header">
+            <h1>${name}</h1>
+            <div class="meta">
+              ${locationHtml}
+              ${emailHtml}
+              ${linkedinHtml}
+            </div>
+          </div>
+          <p class="job-target">${applicationLabel}: ${job.vaga} — ${job.empresa}</p>
+          <div class="cl-body">${paragrafosHtml}</div>
+          <div class="signature">
+            ${closingLabel}
+            <strong>${name}</strong>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

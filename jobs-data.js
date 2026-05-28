@@ -1,0 +1,2 @@
+window.JOBS_DATA = {
+};

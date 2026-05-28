@@ -1,0 +1,9 @@
+Aqui ficará as vagas, apenas copie e cole aqui.
+Separe as vagas usando um "-----------------------------"
+
+vaga 1
+-----------------------------
+vaga 2
+-----------------------------
+vaga 3
+-----------------------------
