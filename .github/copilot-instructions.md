@@ -13,7 +13,7 @@ Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", en
 | `cv.html`                                   | Template de CV — renderiza via `?job=id`                                    |
 | `cl.html`                                   | Template de CL — renderiza via `?job=id`                                    |
 | `.github/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização               |
-| `.github/skills/contexto/SKILL.md`          | Instruções específicas do candidato (escala, moeda, IA tools)               |
+| `.github/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                         |
 | `.github/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                 |
 | `.github/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                     |
 | `.github/agents/agent-fit.md`               | Agente especializado em análise de fit                                      |

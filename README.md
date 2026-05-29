@@ -4,7 +4,7 @@
 
 # Sebastian - O seu mordomo orquestrador de Currículo
 
-Ferramenta para processar vagas em lote, calcular fit, gerar currículo (Curriculum Vitae - CV), Carta de Apresentação (Cover Letter - CL) por vaga com dashboard local, seja para uma vaga no Brasil ou na gringa.
+O agente de IA capaz de processar vagas em lote, calcular fit com vaga, gerar currículo (Curriculum Vitae - CV) e carta de apresentação (Cover Letter - CL) por vaga com dashboard local, seja para uma vaga no Brasil ou na gringa.
 
 ## Requisitos
 
@@ -24,19 +24,46 @@ npm install
 npm start
 ```
 
-## 2) Arquivos que você edita
+## 2) Informações que você precisa fornecer
 
-- `vagas.txt`: copie o texto bruto das vagas, separadas por `-----------------------------`. Pode ser tanto em português quanto em inglês.
-- `.github/skills/cv-base/SKILL.md`: base de experiência do candidato (fonte de verdade)
-- `.github/skills/contexto/SKILL.md`: regras adicionais pessoais
+### Dados pessoais
+Antes de começar pela primeira vez, dê uma olá para o Sebastian! Ele vai te perguntar alguns dados pessoais importantes seus para colocar no currículo. Você pode pedir o agente para atualizar esses dados a qualquer momento.
+
+### [.github/skills/cv-base/SKILL.md](.github/skills/cv-base/SKILL.md)
+Base de experiência do candidato (fonte de verdade).
+Aqui você vai criar uma espécie de grande currículo com todas as suas experiências, habilidades, educação e idiomas. O Sebastian vai usar esse CV base para extrair as informações relevantes para cada vaga e gerar um CV personalizado.
+Não economize detalhes aqui, pois quanto mais completo for o CV base, melhor serão os CVs personalizados gerados para cada vaga.
+<br>
+Dicas:
+1. Use o [CV base template](.github/skills/cv-base/SKILL.md.example) como base. Lá há sugestões de seções e subseções, mas você pode adicionar ou remover a medida que achar necessário.
+2. Fale detalhes de cada projeto/feature que você fez no seu trabalho, de preferência as mais longas e complexas, informando:
+   - O que foi o projeto/feature (ex: Aplicação de Cache usando Redis)
+   - Em quanto tempo levou para ser feito 
+   - Quais foram as tecnologias utilizadas 
+   - Quais foram os resultados obtidos (Ex: aumentou em 20% o número de vendas ou reduziu em 30% o tempo de resposta do sistema)
+   - Que posição você exercia nesse projeto/feature
+   - Como era o dia a dia do projeto/feature (ex: reuniões diárias, planejamento semanal, Kanban, Scrum)
+3. Fale não apenas das suas experiências profissionais, mas também de projetos pessoais e acadêmicos, trabalhos voluntários, monitorias, TCCs, programa de iniciação científica
+4. Fale um pouco sobre você: suas soft skills, o que você prefere fazer e trabalhar, se gosta mais de presencial/hibrído/remoto, se tem disponibilidade para viajar ou se mudar
+5. Você pode citar também conceitos que você conhece mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
+6. Site integrações que você fez como: gateway de pagamento, serviços de nuvem, distribuidores, sistemas do governo.
+
+### [.github/skills/contexto/SKILL.md](.github/skills/contexto/SKILL.md)
+Aqui são você pode dar contexto para o Sebastian do que preencher em algumas situações. 
+<br>
+Exemplos:
+1. Apesar de eu ter trabalhado profissionalmente apenas com Backend, eu tenho bastante conhecimento e prática com Frontend, especialmente em React, então pode preencher experiência com React mesmo que não tenha sido profissional.
+2. Apesar de eu ter trabalhado com Java, foi um período muito curto e não me sinto seguro trabalhando com essa stack por conta própria, portanto qualquer vaga que o exigir experiência sólida, coloque como um gap.
+3. Não informar o exato número de vendas que a empresa teve, isso é um dado sigiloso e só lhe informei para te dar um contexto de que o sistema era grande
+
+Obs: Com o tempo, a medida que for usando o Sebastian e pedindo correções, ele pode lhe sugerir informações novas a serem preenchidas no contexto. A medida que você aceitar as sugestões, Sebastian vai adicioná-los automaticamente.
+
+### [Vagas](vagas.txt)
+Copie o texto bruto das vagas que deseja se candidatar separadas por `-----------------------------`. Pode ser tanto em português quanto em inglês. O Sebastian vai identificar o idioma automaticamente.
+<br>
+Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
 
 ## 3) Fluxo com o agente para gerar CV/CL
-
-Antes de começar pela primeira vez, dê uma olá para o Sebastian! Ele vai te perguntar alguns dados pessoais importantes seus para colocar no currículo.
-Você pode pedir o agente para atualizar esse dados a qualquer momento.
-No fim ele vai te pedir para preencher o seu [CV base](.github/skills/cv-base/SKILL.md).
-
-Após isso:
 
 1. Peça para processar as vagas e gerar os fits.
 2. Reveja os fits no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
