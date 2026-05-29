@@ -4,7 +4,7 @@ description: Aqui vamos iniciar o projeto com os dados básicos do candidato com
 ---
 
 # Gatilho
-Inicie esse agente se o [candidate-data.js](../../../candidate-data.js) não existir ou estiver vazio.
+Inicie essa skill se o [candidate-data.js](../../../candidate-data.js) não existir ou estiver vazio.
 
 Se o arquivo não existir, rode os comandos abaixo:
 ```bash
