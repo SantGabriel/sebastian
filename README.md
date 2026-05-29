@@ -2,9 +2,10 @@
    <img src="assets/logo.png" alt="Sebastian Logo" height="200" />
 </div>
 
-# Sebastian - O seu mordomo orquestrador de Currículo
+# Sebastian - O seu mordomo orquestrador de Currículo ATS
 
-O agente de IA capaz de processar vagas em lote, calcular fit com vaga, gerar currículo (Curriculum Vitae - CV) e carta de apresentação (Cover Letter - CL) por vaga com dashboard local, seja para uma vaga no Brasil ou na gringa.
+O agente de IA capaz de processar vagas em lote, fazer o fit com a vaga, gerar currículo (Curriculum Vitae - CV) e carta de apresentação (Cover Letter - CL) por vaga seguindos critérios de ATS, com dashboard local, seja para uma vaga no Brasil ou na gringa.
+O dashboard exibe informações importantes sobre cada vaga, incluindo: modalidade de trabalho (Remoto, Presencial ou Híbrida), tipo de contratação (CLT, PJ ou CLT/PJ), score de fit, pontos positivos e gaps.
 
 ## Requisitos
 
@@ -45,7 +46,7 @@ Dicas:
    - Como era o dia a dia do projeto/feature (ex: reuniões diárias, planejamento semanal, Kanban, Scrum)
 3. Fale não apenas das suas experiências profissionais, mas também de projetos pessoais e acadêmicos, trabalhos voluntários, monitorias, TCCs, programa de iniciação científica
 4. Fale um pouco sobre você: suas soft skills, o que você prefere fazer e trabalhar, se gosta mais de presencial/hibrído/remoto, se tem disponibilidade para viajar ou se mudar
-5. Você pode citar também conceitos que você conhece mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
+5. Você pode citar também conceitos que você conhece, mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
 6. Site integrações que você fez como: gateway de pagamento, serviços de nuvem, distribuidores, sistemas do governo.
 
 ### [.github/skills/contexto/SKILL.md](.github/skills/contexto/SKILL.md)
@@ -55,6 +56,7 @@ Exemplos:
 1. Apesar de eu ter trabalhado profissionalmente apenas com Backend, eu tenho bastante conhecimento e prática com Frontend, especialmente em React, então pode preencher experiência com React mesmo que não tenha sido profissional.
 2. Apesar de eu ter trabalhado com Java, foi um período muito curto e não me sinto seguro trabalhando com essa stack por conta própria, portanto qualquer vaga que o exigir experiência sólida, coloque como um gap.
 3. Não informar o exato número de vendas que a empresa teve, isso é um dado sigiloso e só lhe informei para te dar um contexto de que o sistema era grande
+4. Quero apenas vagas remotas. Se forem híbridas ou presenciais, informar isso como gap e colocar score 0
 
 Obs: Com o tempo, a medida que for usando o Sebastian e pedindo correções, ele pode lhe sugerir informações novas a serem preenchidas no contexto. A medida que você aceitar as sugestões, Sebastian vai adicioná-los automaticamente.
 
@@ -65,8 +67,8 @@ Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
 
 ## 3) Fluxo com o agente para gerar CV/CL
 
-1. Peça para processar as vagas e gerar os fits.
-2. Reveja os fits no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
+1. Peça para processar as vagas. No meio do processo, o Sebastian pode te fazer perguntas de sobre os requisitos da vaga para ter certeza se você tem ou não uma habilidade específica, ou alguma outra dúvida. Responda às perguntas para que ele possa ter um melhor entendimento do seu perfil e gerar um fit mais preciso. Baseado nas respostas, o Sebastian pode sugerir alterações no seu CV ou no contexto.
+2. Aṕos os fits serem gerados, acesse-os no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
    - Você pode e deve pedir para remover as vagas em que o seu score está muito baixo.
 3. Feito a revisão dos fits, peça para gerar os CVs/CLs. Você pode pedir para gerar somente um dos dois pelo numero da vaga.
 Exemplo: 1) CV; 2) CL; 3) CV e CL.
