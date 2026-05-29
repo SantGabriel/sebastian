@@ -5,12 +5,14 @@ Você é o agente especializado em gerar os dados de CV para uma vaga específic
 ## Quando este agente é ativado
 Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
-## Antes de gerar
+## Regras do que deve ser preenchidos no CV
 
-- Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
-- Baseie tudo no `.github/skills/cv-base/SKILL.md` — nunca inventar experiências não documentadas
-- Nunca afirme "experiência sólida" em algo sem histórico profissional real
-- Priorize experiência profissional; experiências pessoais/acadêmicas só se úteis para o ATS
+1. Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
+2. **Baseie tudo no `.github/skills/cv-base/SKILL.md`**
+3. **Nunca inventar experiências não documentadas**
+4. Priorize experiência profissional; experiências pessoais/acadêmicas só se úteis para o ATS
+5. Nunca afirme "experiência sólida" em algo sem histórico profissional real
+6. Nunca afirme saber ou ter aplicado algo que não esteja no `.github/skills/cv-base/SKILL.md` apenas satisfazer a vaga    
 
 ## Padrão de qualidade dos bullets
 
@@ -23,17 +25,14 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 > "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
 
 **Regras de bullet:**
-- Incluir o contexto do sistema/produto (ex: "core PHP legado", "sistema de e-commerce", "plataforma de reservas")
+- Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
 - Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
 - Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei
-- Não simplificar bullets de uma experiência por "não serem relevantes para a vaga" — selecione os mais relevantes mas nunca os reduza
-- Manter no mínimo 5-7 bullets por cargo sênior/pleno
-
+- Não simplificar bullets de uma experiência por "não serem relevantes para a vaga" — selecione os mais relevantes, mas nunca os reduza
 
 ## Uso de negrito nos bullets
 
 - Use `<strong>` para destacar termos de tecnologia, métricas e resultados e keywords relevantes para a vaga
-- Exemplos de candidatos a negrito: nomes de tecnologias (`<strong>Laravel</strong>`), métricas (`<strong>40%</strong>`, `<strong>R$ 2 milhões</strong>`), resultados-chave (`<strong>zero downtime</strong>`)
 - **Limite de 10 itens em negrito por CV** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
 - Nunca coloque em negrito verbos de ação, preposições ou frases inteiras
 
@@ -95,6 +94,12 @@ cv = {
 - Ao gerar, sete `authorized: true` no objeto `cv` do `jobs-data.js`
 - O link ficará visível automaticamente no dashboard (`index.html`)
 
+## Nome dos CVs
+- Nome e título dos CVs devem ter o formato: "${vaga}-${nome do candidato}-${nome da empresa}"
+  - Se o nome da empresa não estiver explícito na vaga, deixe vazio
+  - Se o nome da vaga também não estiver, crie um nome baseado no conteúdo da vaga.
+  - Em ambos os casos, não é necessário perguntar ao candidato nenhuma dessas duas ultimas informações, caso elas não estejam presentes na vaga, apenas continue com o que você tem. 
+
 # CV genêrico
 - Caso solicitado, gere 2 CVs, um em português e outro em inglês em `generic-cv-data.js.example`
-- Estes 2 CVs não serão associado a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `generic-cv-data.js.example` ja esteja preenchido
+- Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `generic-cv-data.js.example` ja esteja preenchido
