@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
   <title id="page-title">Cover Letter</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
@@ -77,18 +78,7 @@
         const linkedinHtml = linkedin.url
           ? `<a href="${linkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.label || 'LinkedIn'}</a>` : '';
 
-        const modalidade = job.modalidade || '';
-        const cidadeVaga = job.cidadeVaga || '';
-        const isPresencialOutraCidade = cidadeVaga
-          && modalidade && modalidade !== 'Remoto'
-          && location
-          && cidadeVaga.toLowerCase() !== location.toLowerCase();
-        const cityWarningHtml = isPresencialOutraCidade
-          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${cidadeVaga}</strong> — sua localização cadastrada é <strong>${location}</strong>.</div>`
-          : '';
-
         root.innerHTML = `
-          ${cityWarningHtml}
           <div class="header">
             <h1>${name}</h1>
             <div class="meta">

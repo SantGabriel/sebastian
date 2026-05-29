@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">CV</title>
+  <link rel="icon" href="assets/logo.png" type="image/x-icon">
   <script src="candidate-data.js"></script>
   <script>
     var _c = window.CANDIDATE_DATA || {};
@@ -28,7 +29,7 @@
     li { margin-bottom: 3px; }
     .skills-block { margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px 12px; }
     .pill { background: #e8f0fe; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-weight: bold; color: #1a73e8; }
-    .edu-row { display: flex; gap: 30px; }
+    .edu-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 30px; }
     .edu-item { flex: 1; }
     .edu-item h3 { font-size: 13px; font-weight: bold; margin-bottom: 2px; }
     .edu-item .edu-meta { font-size: 12px; color: #555; }
@@ -42,7 +43,7 @@
       .skills-block { display: flex !important; flex-wrap: wrap !important; }
       .pill { background: #e8f0fe !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .contact-line { display: flex !important; flex-wrap: wrap !important; }
-      .edu-row { display: flex !important; }
+      .edu-row { display: grid !important; grid-template-columns: 1fr 1fr !important; }
       a { color: #1a73e8 !important; }
       h2 { color: #1a73e8 !important; border-bottom: 1px solid #1a73e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
@@ -115,16 +116,6 @@
         const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'CV';
         window._pdfData = { vaga: vagaLabel, empresa: job.empresa || '', candidateName };
 
-        const modalidade = job.modalidade || '';
-        const cidadeVaga = job.cidadeVaga || '';
-        const isPresencialOutraCidade = cidadeVaga
-          && modalidade && modalidade !== 'Remoto'
-          && candidateLocation
-          && cidadeVaga.toLowerCase() !== candidateLocation.toLowerCase();
-        const cityWarningHtml = isPresencialOutraCidade
-          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${cidadeVaga}</strong> — sua localização cadastrada é <strong>${candidateLocation}</strong>.</div>`
-          : '';
-
         const phoneHtml = candidatePhone
           ? `<a href="tel:${candidatePhone}"><i class="fa-solid fa-phone"></i> ${candidatePhone}</a>` : '';
         const emailHtml = candidateEmail
@@ -160,7 +151,6 @@
         const idiomasHtml = (cv.idiomas || []).map(i => `<li>${i}</li>`).join('');
 
         root.innerHTML = `
-          ${cityWarningHtml}
           <h1>${candidateName}</h1>
           <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
           <div class="contact-line">

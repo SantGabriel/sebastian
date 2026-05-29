@@ -11,7 +11,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 - Foque nos requisitos obrigatórios (seção explícita de "Requisitos" / "Requirements" / "Qualificações")
 - Atribuições, responsabilidades e diferenciais/opcionais **não são requisitos** — não os trate como gaps
 - Não misturar gaps de responsabilidades com gaps de requisitos
-- Distinguir claramente o que e obrigatorio do que e preferido ("preferred", "nice to have", "diferencial"): preferencias sao bonus, nao blockers
+- Distinguir claramente o que é obrigatório do que é preferido ("preferred", "nice to have", "diferencial"): preferencias são bonus, nnão blockers
 
 ### Listas de stack são OR, não AND
 Quando a vaga lista várias tecnologias numa frase (ex: "PHP, Python, Node.js, Ruby"), interpretar como OR — conhecer qualquer uma qualifica. Só tratar como AND se a vaga descrever uso simultâneo explícito.
@@ -61,14 +61,15 @@ fit = {
 }
 ```
 
-## Campos `modalidade` e `cidadeVaga`
+## Campos `modalidade`, `cidadeVaga` e `contratacao`
 
-Ao processar cada vaga, **sempre** inclua os campos `modalidade` e `cidadeVaga` na raiz da entrada:
+Ao processar cada vaga, **sempre** inclua os seguintes campos na raiz da entrada:
 
 - `modalidade`: `"Remoto"`, `"Presencial"` ou `"Híbrida"` — extraído do bloco da vaga em `vagas.txt`
 - `cidadeVaga`: cidade/UF onde a vaga está localizada (ex: `"São Paulo, SP"`) — **obrigatório** quando `modalidade` for `"Presencial"` ou `"Híbrida"`; omitir ou deixar `""` quando for `"Remoto"`
+- `contratacao`: `"CLT"`, `"PJ"` ou `"CLT/PJ"` — extraído do bloco da vaga em `vagas.txt` quando houver menção explícita ao tipo de contratação. **Omitir o campo** se não houver informação clara.
 
-Esses campos são usados pelos templates cv.html e cl.html para exibir um aviso quando a vaga é presencial/híbrida em cidade diferente da localização do candidato.
+Esses campos são usados pelo dashboard `index.html` para exibir informações da vaga e pelos templates `cv.html` e `cl.html` para exibir avisos quando a vaga é presencial/híbrida em cidade diferente da localização do candidato.
 
 ## Campo `candidatura`
 
@@ -94,7 +95,7 @@ candidatura = { aviso: "Candidatura via formulário interno — link informado n
 - Escreva o fit diretamente em `jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`
 - Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA.
 - **Não exiba os fits no chat** — o usuário os lê abrindo `index.html`
-- Ao terminar, apenas diga: "Fits gerados. Abra index.html para revisar."
+- Ao terminar, apenas diga: "Fits gerados. Abra http://localhost:3001/index.html para revisar."
 
 ## Ao terminar correções de fit
 
