@@ -7,43 +7,55 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
 ## Regras do que deve ser preenchidos no CV
 
+### Geral
 1. Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
 2. **Baseie tudo no `.github/skills/cv-base/SKILL.md`**
 3. **Nunca inventar experiências não documentadas**
 4. Priorize experiência profissional; experiências pessoais/acadêmicas só se úteis para o ATS
 5. Nunca afirme "experiência sólida" em algo sem histórico profissional real
-6. Nunca afirme saber ou ter aplicado algo que não esteja no `.github/skills/cv-base/SKILL.md` apenas satisfazer a vaga    
+6. Nunca afirme saber ou ter aplicado algo que não esteja no `.github/skills/cv-base/SKILL.md` apenas satisfazer a vaga
+7. Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
+8. Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
+9. Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei 
+10. Evite resumos genéricos
+    ❌ Errado — genérico, vago:
+    > "Desenvolvimento em sistema de alto tráfego"
+    
+    ✅ Correto — específico, contextual:
+    > "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
+11. **Limite de 15 itens em negrito nesta sessão, 5 no resumo e 10 na experiência profissional** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
+12. Nunca coloque em negrito verbos de ação, preposições ou frases inteira 
+13. Escreva datas por extenso: "Maio 2024", nunca "Mai/2024"
+14. Quando a vaga é remota, informar na localização "Disponível para trabalho remoto" ou "Open to remote work" se for vaga em português ou em inglês
+15. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
 
-## Padrão de qualidade dos bullets
+### Resumo profissional
+- Deve ser um parágrafo de 500 - 600 caracteres
+- Deve apresentar sempre o tempo de experiência profissional
+- Apresentar pelo menos um cargo, o que foi feito e os resultados obtidos. Preferir o cargo mais recente que esteja adequado à vaga.
+- Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
+- **Limite de 5 itens em negrito nesta sessão** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
 
-**Bullets devem ser ricos, específicos e contextuais — nunca resumos genéricos.**
+### Experiência Profissional
+- **Deve ter entre 2000 a 2500 caracteres**
+- Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
+- As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a última experiência profissional. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
+- A última experiência profissional ter no mínimo 800 caracteres
+- **Limite de 10 itens em negrito nesta sessão** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
 
-❌ Errado — genérico, vago:
-> "Desenvolvimento em sistema de alto tráfego"
+### Competências Técnicas
+- Deve citar no máximo 15.
+- Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
 
-✅ Correto — específico, contextual:
-> "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
-
-**Regras de bullet:**
-- Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
-- Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
-- Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei
-- Não simplificar bullets de uma experiência por "não serem relevantes para a vaga" — selecione os mais relevantes, mas nunca os reduza
-
-## Uso de negrito nos bullets
-
-- Use `<strong>` para destacar termos de tecnologia, métricas e resultados e keywords relevantes para a vaga
-- **Limite de 10 itens em negrito por CV** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
-- Nunca coloque em negrito verbos de ação, preposições ou frases inteiras
-
-## Regras de conteúdo
-
-- Sem emojis — use Font Awesome para ícones (`<i class="fa-solid fa-..."></i>`)
-- Traço simples `-` apenas (sem en-dash ou em-dash)
-- Datas por extenso: "Maio 2024", nunca "Mai/2024"
-- Não informar tempo decorrido para marcos (ex: "em 14 meses") — apenas a data
-- Não afirmar numericamente quantos devs foram liderados — usar termos qualitativos
-- Ferramentas de IA (Copilot, Claude Code) são uso pessoal — não colocar na stack de empresas
+### Formação Acadêmica
+- Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
+- Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
+Formato: 
+```js
+educacao = [
+  { "curso": "Nome do curso", "inst": "Nome da instituição", "periodo": "ano inicio - ano fim" },
+]
+```
 
 ## Localização e idioma
 
@@ -82,12 +94,6 @@ cv = {
   idiomas: ["Idioma 1 - Nível", "Idioma 2 - Nível"]
 }
 ```
-
-## Seção de educação
-
-- Incluir apenas: curso, instituição e período
-- ATS não pontua nota, monitoria, TCC ou disciplinas cursadas
-- Detalhes acadêmicos extras só se forem diferenciais claros para a vaga
 
 ## Protocolo de autorização
 

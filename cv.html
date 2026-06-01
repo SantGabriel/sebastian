@@ -105,7 +105,6 @@
         const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
         const secEdu = isInternational ? 'Education' : 'Formação Acadêmica';
         const secLang = isInternational ? 'Languages' : 'Idiomas';
-        const remoteLabel = isInternational ? '<span>Open to remote work</span>' : '';
 
         const candidateLocation = cv.local || (isInternational
           ? (c.location && c.location.en) || ''
@@ -155,7 +154,6 @@
           <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
           <div class="contact-line">
             ${locationHtml}
-            ${remoteLabel}
             ${phoneHtml}
             ${emailHtml}
             ${linkedinHtml}

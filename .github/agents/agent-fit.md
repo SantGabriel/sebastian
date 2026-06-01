@@ -99,7 +99,7 @@ candidatura = { aviso: "Candidatura via formulário interno — link informado n
 
 ## Ao terminar correções de fit
 
-Ao final, siga o protocolo de "Fim do fluxo" em `.github/copilot-instructions.md`:
+Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - Se o usuário revelou habilidades novas → proponha adição ao `.github/skills/cv-base/SKILL.md`
 - Se o usuário identificou erros recorrentes → proponha regra nova neste arquivo
 - **Nunca altere `.github/skills/cv-base/SKILL.md` sem autorização explícita**

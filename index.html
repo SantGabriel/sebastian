@@ -47,6 +47,11 @@
     .city-warning i { margin-right: 6px; }
     .generic-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
     .generic-bar span { font-size: 13px; color: #888; align-self: center; margin-right: 4px; }
+    .candidato-checkbox { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #f0f9ff; border: 1px solid #c7e9f5; border-radius: 5px; cursor: pointer; user-select: none; font-size: 13px; color: #0c5aa0; font-weight: 500; margin-top: 10px; }
+    .candidato-checkbox:hover { background: #e0f2ff; border-color: #91d5ff; }
+    .candidato-checkbox input[type="checkbox"] { cursor: pointer; accent-color: #1a73e8; }
+    .candidato-checkbox.marcado { background: #d4edda; border-color: #b1dfbb; color: #1a6e2e; }
+    .candidato-checkbox.marcado input[type="checkbox"] { accent-color: #34a853; }
   </style>
 </head>
 <body>
@@ -94,6 +99,27 @@
         el.style.display = 'block';
         btn.textContent = 'Ocultar vaga ▾';
       }
+    }
+
+    function toggleCandidatura(jobId) {
+      const checkbox = document.getElementById('candidato-' + jobId);
+      const container = document.getElementById('candidato-container-' + jobId);
+      const candidaturasSet = new Set(JSON.parse(localStorage.getItem('candidaturas') || '[]'));
+      
+      if (checkbox.checked) {
+        candidaturasSet.add(jobId);
+        container.classList.add('marcado');
+      } else {
+        candidaturasSet.delete(jobId);
+        container.classList.remove('marcado');
+      }
+      
+      localStorage.setItem('candidaturas', JSON.stringify(Array.from(candidaturasSet)));
+    }
+
+    function isCandidatura(jobId) {
+      const candidaturas = JSON.parse(localStorage.getItem('candidaturas') || '[]');
+      return candidaturas.includes(jobId);
     }
 
     function render() {
@@ -173,6 +199,10 @@
               ${clBtn}
               ${pendingLabel}
             </div>
+            <label class="candidato-checkbox ${isCandidatura(job.id) ? 'marcado' : ''}" id="candidato-container-${job.id}">
+              <input type="checkbox" id="candidato-${job.id}" ${isCandidatura(job.id) ? 'checked' : ''} onchange="toggleCandidatura('${job.id}')" />
+              <span> Já me candidatei</span>
+            </label>
           </div>`;
       }).join('');
     }
