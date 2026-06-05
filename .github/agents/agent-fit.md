@@ -7,7 +7,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 
 ## Regras de análise
 
-- Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md` antes de analisar
+- Leia `.github/skills/cv-base/SKILL.md` e `.github/skills/contexto/SKILL.md` antes de analisar
 - Foque nos requisitos obrigatórios (seção explícita de "Requisitos" / "Requirements" / "Qualificações")
 - Atribuições, responsabilidades e diferenciais/opcionais **não são requisitos** — não os trate como gaps
 - Não misturar gaps de responsabilidades com gaps de requisitos
@@ -50,6 +50,13 @@ Quando os requisitos são genéricos ("domínio de uma ou mais linguagens", "fra
 ### Tech stack ≠ Requisitos de experiência
 Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we use" descrevem o que a EMPRESA usa — não o que o candidato precisa trazer. Criar gaps apenas a partir de seções explicitamente de requisitos ("Requirements", "Requisitos", "What we expect", "O que esperamos").
 
+### Lista de gaps e pontos positivos
+- A soma de pontos positivos e gaps devem ser igual a 10. Exemplos: 
+  - 7 pontos positivos e 3 gaps ou;
+  - 10 pontos positivos ou;
+  - 5 gaps ou
+  - 3 gaps e 5 pontos positivos.
+
 ## Estrutura do fit no jobs-data.js
 
 ```js
@@ -73,22 +80,16 @@ Esses campos são usados pelo dashboard `index.html` para exibir informações d
 
 ## Campo `candidatura`
 
-Ao processar cada vaga, verifique se há instrução explícita de candidatura por e-mail, formulário externo ou link específico (inclusive quando a plataforma oferece "candidatura simplificada" mas a vaga indica um link/e-mail diferente para a avaliação real).
+Ao processar cada vaga, verifique se há instrução explícita de candidatura por e-mail.
 
-- Se houver: inclua o campo `candidatura` com `aviso` (texto legível) e `url` (mailto: ou https://, quando disponível)
-- Se não houver instrução explícita: **omita o campo `candidatura`** completamente
+- **Se candidatura é por e-mail:** inclua o campo `candidatura` com `aviso` (texto legível) e `email` (mailto: link)
+- **Se candidatura é por link/formulário externo:** **omita o campo `candidatura`** completamente
+- **Se não houver instrução explícita:** **omita o campo `candidatura`** completamente
 
 Exemplos:
 ```js
-// e-mail direto
-candidatura = { aviso: "Candidatar-se por e-mail: vaga@empresa.com", url: "mailto:vaga@empresa.com" }
-
-// formulário/link externo
-candidatura = { aviso: "Candidatura pelo formulário externo da empresa", url: "https://empresa.com/vagas/apply" }
-
-// aviso sem link clicável
-candidatura = { aviso: "Candidatura via formulário interno — link informado na descrição da vaga" }
-```
+// e-mail direto — USAR CAMPO candidatura
+candidatura = { aviso: "Candidatura é feito pelo e-mail vaga@empresa.com", email: "mailto:vaga@empresa.com" }
 
 ## Saída
 

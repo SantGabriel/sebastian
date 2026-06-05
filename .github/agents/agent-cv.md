@@ -23,25 +23,33 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
     
     ✅ Correto — específico, contextual:
     > "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
-11. **Limite de 15 itens em negrito nesta sessão, 5 no resumo e 10 na experiência profissional** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
-12. Nunca coloque em negrito verbos de ação, preposições ou frases inteira 
-13. Escreva datas por extenso: "Maio 2024", nunca "Mai/2024"
-14. Quando a vaga é remota, informar na localização "Disponível para trabalho remoto" ou "Open to remote work" se for vaga em português ou em inglês
-15. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
+11. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
+    - Tem que ter 15 itens em negrito (usando <strong>) no CV:
+      - 5 no [Resumo profissional](#resumo-profissional);
+      - 10 na [Experiência Profissional](#experiência-profissional)
+      - Excesso polui e dilui o efeito, portanto é importante seguir o limite de 15 itens.
+    - Priorize os de maior relevância para a vaga;  
+    - Um item é uma palavra ou expressão curta de no máximo 3 palavras
+    - Use negrito para destacar tecnologias, cargos, resultados.
+    - Jamais destaque preposições, artigos ou frases inteiras e verbos de ação.
+    - Cuidado para não cortar palavras ou expressões.
+12. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
+13. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
 
 ### Resumo profissional
 - Deve ser um parágrafo de 500 - 600 caracteres
 - Deve apresentar sempre o tempo de experiência profissional
 - Apresentar pelo menos um cargo, o que foi feito e os resultados obtidos. Preferir o cargo mais recente que esteja adequado à vaga.
 - Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
-- **Limite de 5 itens em negrito nesta sessão** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
 
 ### Experiência Profissional
-- **Deve ter entre 2000 a 2500 caracteres**
+- Deve ter entre 2000 a 2500 caracteres
 - Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
-- As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a última experiência profissional. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
-- A última experiência profissional ter no mínimo 800 caracteres
-- **Limite de 10 itens em negrito nesta sessão** — priorize os de maior impacto visual e relevância para a vaga; excesso polui e dilui o efeito
+- As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a experiência profissional mais recente. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
+- A mais recente experiência profissional ter no mínimo 800 caracteres
+- Em cada experiência profissional: 
+  - Cada bullet deve ter entre 100 e 200 caracteres.
+  - Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais recentes e relevantes para a vaga.
 
 ### Competências Técnicas
 - Deve citar no máximo 15.
@@ -56,6 +64,10 @@ educacao = [
   { "curso": "Nome do curso", "inst": "Nome da instituição", "periodo": "ano inicio - ano fim" },
 ]
 ```
+### Idiomas
+- Formato simples: Idioma - nível (ex: "Inglês - Avançado", "Espanhol - Intermediário")
+- Incluir todos os idiomas que o candidato tem conhecimento
+  - Português nativo apenas em vagas em inglês. Vagas em português pode ocultar o idioma português.
 
 ## Localização e idioma
 
@@ -109,3 +121,6 @@ cv = {
 # CV genêrico
 - Caso solicitado, gere 2 CVs, um em português e outro em inglês em `generic-cv-data.js.example`
 - Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `generic-cv-data.js.example` ja esteja preenchido
+
+# Checagem pós geração
+- Após gerar os CVs, repassar por todas as regras novamente para ver se nenhuma delas foi violada

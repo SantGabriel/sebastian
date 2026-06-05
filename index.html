@@ -52,6 +52,8 @@
     .candidato-checkbox input[type="checkbox"] { cursor: pointer; accent-color: #1a73e8; }
     .candidato-checkbox.marcado { background: #d4edda; border-color: #b1dfbb; color: #1a6e2e; }
     .candidato-checkbox.marcado input[type="checkbox"] { accent-color: #34a853; }
+    .vaga-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #1a73e8; text-decoration: none; margin-left: 8px; }
+    .vaga-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -147,17 +149,16 @@
           ? `<div class="candidatura-aviso">
               <i class="fa-solid fa-triangle-exclamation" style="color:#f9a825;flex-shrink:0"></i>
               <span>${job.candidatura.aviso}</span>
-              ${job.candidatura.url ? `<a href="${job.candidatura.url}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i> Abrir link</a>` : ''}
+              ${job.candidatura.email ? `<a href="${job.candidatura.email}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i> Abrir link</a>` : ''}
             </div>`
           : '';
 
         const modalidade = job.modalidade || '';
-        const cidadeVaga = job.cidadeVaga || '';
         const candidateLocation = (window.CANDIDATE_DATA && window.CANDIDATE_DATA.location && window.CANDIDATE_DATA.location.pt) || '';
-        const cityFromVaga = cidadeVaga.split(/[,\-]/)[0].trim().toLowerCase();
+        const cityFromVaga = (job.cidadeVaga || '').split(/[,\-]/)[0].trim().toLowerCase();
         const cityFromCandidate = candidateLocation.split(/[,\-]/)[0].trim().toLowerCase();
-        const cityWarningHtml = cidadeVaga && modalidade && modalidade !== 'Remoto' && candidateLocation && cityFromVaga !== cityFromCandidate
-          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${cidadeVaga}</strong> — sua localização cadastrada é <strong>${candidateLocation}</strong>.</div>`
+        const cityWarningHtml = job.cidadeVaga && modalidade && modalidade !== 'Remoto' && candidateLocation && cityFromVaga !== cityFromCandidate
+          ? `<div class="city-warning"><i class="fa-solid fa-triangle-exclamation"></i>Vaga <strong>${modalidade}</strong> em <strong>${job.cidadeVaga}</strong> — sua localização cadastrada é <strong>${candidateLocation}</strong>.</div>`
           : '';
 
         const cvBtn = hasCv
@@ -180,7 +181,7 @@
           <div class="job-card">
             <div class="card-header">
               <div class="card-header-left">
-                <h2><span style="font-weight:normal;margin-right:6px">${idx+1}.</span>${job.vaga}</h2>
+                <h2><span style="font-weight:normal;margin-right:6px">${idx+1}.</span>${job.vaga}${job.link ? `<a href="${job.link}" target="_blank" class="vaga-link"><i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i> Abrir</a>` : ''}</h2>
                 <div class="company"><i class="fa-solid fa-building"></i> ${job.empresa}${job.modalidade ? ` <span style="font-size:11px;font-weight:600;background:#e8f0fe;color:#1a56db;border-radius:10px;padding:2px 8px;margin-left:6px">${job.modalidade}</span>` : ''}${job.contratacao ? ` <span style="font-size:11px;font-weight:600;background:#e8f0fe;color:#1a56db;border-radius:10px;padding:2px 8px;margin-left:6px">${job.contratacao}</span>` : ''}</div>
               </div>
               <span class="score-badge ${scoreClass(score)}">${score}/10</span>

@@ -71,6 +71,21 @@
     const jobId = params.get('job');
     const root = document.getElementById('cv-root');
 
+    function getLocationDisplay(job, candidateLocation, cvLang) {
+      let location = candidateLocation || '';
+      if (job.modalidade === 'Remoto') {
+        const remoteText = cvLang === 'en' ? 'Open to remote work' : 'Disponível para trabalho remoto';
+        return location ? `${location}, ${remoteText}` : remoteText;
+      }
+      return location;
+    }
+
+    function formatPhoneWithCountryCode(phone, countryCode) {
+      if (!phone) return '';
+      const code = countryCode || '';
+      return code ? `${code} ${phone}` : phone;
+    }
+
     function notAuthorized(msg) {
       root.innerHTML = `
         <div class="not-authorized">
@@ -95,6 +110,7 @@
         const candidateName = c.name || '';
         const candidateEmail = c.email || '';
         const candidatePhone = c.phone || '';
+        const candidatePhoneCountryCode = c.phoneCountryCode || '';
         const candidateLinkedin = c.linkedin || {};
 
         document.documentElement.lang = cv.lang || 'pt-BR';
@@ -110,19 +126,21 @@
           ? (c.location && c.location.en) || ''
           : (c.location && c.location.pt) || '');
 
+        const vagaLocation = getLocationDisplay(job, candidateLocation, cv.lang);
+
         document.getElementById('page-title').textContent = `${job.vaga} - ${job.empresa} | ${candidateName}`;
 
         const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'CV';
         window._pdfData = { vaga: vagaLabel, empresa: job.empresa || '', candidateName };
 
         const phoneHtml = candidatePhone
-          ? `<a href="tel:${candidatePhone}"><i class="fa-solid fa-phone"></i> ${candidatePhone}</a>` : '';
+          ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';
         const emailHtml = candidateEmail
           ? `<a href="mailto:${candidateEmail}"><i class="fa-solid fa-envelope"></i> ${candidateEmail}</a>` : '';
         const linkedinHtml = candidateLinkedin.url
           ? `<a href="${candidateLinkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${candidateLinkedin.label || 'LinkedIn'}</a>` : '';
-        const locationHtml = candidateLocation
-          ? `<span><i class="fa-solid fa-location-dot"></i> ${candidateLocation}</span>` : '';
+        const locationHtml = vagaLocation
+          ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
         window._pdfFilename = isGeneric
           ? `CV - ${candidateName} - ${cv.lang === 'en' ? 'Generic EN' : 'Genérico PT'}.pdf`

@@ -1,6 +1,7 @@
 # Orquestrador ATS — Fluxo de Vagas em Lote
 
-Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", entenda que estão se referindo a você
+Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", entenda que estão se referindo a você.
+O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, identificar quais requisitos são cobertos por cada vaga e gerar fit, CV, CL, insight de entrevista e outros documentos. 
 
 ## Mapa de arquivos do sistema
 
@@ -30,14 +31,15 @@ Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", en
 **A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `.github/skills/iniciar-projeto/SKILL.md`.
 
 ### Passo 1 — Perguntas de clarificação (por vaga)
-- Leia `.github/skills/cv-base/SKILL.md`, `.github/skills/contexto/SKILL.md`, `.github/skills/boas-praticas-ats/SKILL.md`
+- Leia `.github/skills/cv-base/SKILL.md`, `.github/skills/contexto/SKILL.md`
 - Para cada vaga, compare os requisitos com o CV base
-- Se houver tecnologias/ferramentas/práticas **não documentadas** no CV base, pergunte objetivamente. Faça uma pergunta por vez
+- Se houver tecnologias/ferramentas/práticas **não documentadas** no CV base, pergunte objetivamente.
 - Só pule se todos os requisitos relevantes já estiverem cobertos
 - Não pergunte sobre itens já documentados (mesmo que implicitamente)
 
 ### Passo 2 — Fit
 - Leia `.github/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `jobs-data.js`
+- Você não deve abrir os links fornecidos para obter dados. Eles apenas serão apenas informados no index.html
 
 ### Passo 3 — Autorização
 - Aguarde o usuário pedir para gerar os CV e/ou CL:
@@ -60,6 +62,7 @@ window.JOBS_DATA = {
     id: "xpto",           // string simples, sem espaços/acentos — usada na URL
     empresa: "XPTO Ltda",
     vaga: "Product Engineer",
+    link: "https://www.linkedin.com/jobs/view/123456789",  // link direto da vaga
     modalidade: "Remoto",  // "Remoto", "Presencial" ou "Híbrida"
     contratacao: "CLT",  // "CLT", "PJ" ou "CLT/PJ" — omitir se não houver informação
     cidadeVaga: "",        // cidade da vaga — preencher se Presencial/Híbrida (ex: "São Paulo, SP"); omitir se Remoto
@@ -111,6 +114,10 @@ Se o usuário apontou erros recorrentes de análise ou forneceu regras para evit
 | Fluxo geral, orquestração              | `AGENTS.md`                                 |
 
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
+
+### Reiniciar o processo
+- Se o usuário dizer apenas "reiniciar processo", limpe o `jobs-data.js` e reinicie o fluxo para o passo 1.
+- Caso contrário, assuma apenas que novas vagas foram adicionadas e apenas faça os demais passos para as vagas que ainda não foram feitas. Se tiver dúvida, pergunte se deve continuar o processo com as vagas adicionais ou reiniciar o processo do zero.
 
 ---
 

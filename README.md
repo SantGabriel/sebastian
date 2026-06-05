@@ -62,6 +62,21 @@ Obs: Com o tempo, a medida que for usando o Sebastian e pedindo correções, ele
 
 ### [Vagas](vagas.txt)
 Copie o texto bruto das vagas que deseja se candidatar separadas por `-----------------------------`. Pode ser tanto em português quanto em inglês. O Sebastian vai identificar o idioma automaticamente.
+
+**Importante:** Antes de cada vaga, cole o link direto da vaga. O Sebastian vai usar esse link no dashboard para facilitar o acesso à vaga original.
+
+Formato:
+```
+https://www.linkedin.com/jobs/view/123456789
+
+[Texto da vaga aqui...]
+-----------------------------
+
+https://www.linkedin.com/jobs/view/987654321
+
+[Próxima vaga...]
+```
+
 <br>
 Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
 
@@ -96,9 +111,9 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
 ## 6) Pós uso
 
-Você pode limpar os arquivos do `vagas.txt` e recomeçar outro bloco de vagas ou apenas adicionar mais vagas.
-Sugiro que limpe o arquivo depois que não precisar mais gerar os CVs/CLs para aquelas vagas. 
-É interessante guardar os CVs e CLs dentro de uma pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
+- Se quiser processar um novo lote de vagas do zero, basta limpar as vagas antigas `vagas.txt` e preencher com as novas e dizer "reiniciar processo" que o Sebastian vai reiniciar o processo.
+  - Se você quiser processar apenas adicionar novas vagas, basta adicionar novas vagas no arquivo `vagas.txt` e pedir para processar as demais vagas. 
+- É interessante guardar os CVs e CLs dentro de uma pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
 
 ## 7) Solução rápida de problemas
 
