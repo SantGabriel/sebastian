@@ -1,28 +1,26 @@
 ---
 name: boas-praticas-ats
-description: Boas práticas genéricas para otimização de currículos em sistemas ATS
+description: Regras para otimização de currículos em sistemas ATS
 ---
 
-# Boas Práticas ATS — Genéricas
+# Regras ATS
 
-## Caracteres permitidos e proibidos
-
-### Permitidos
-- Acentuacao portuguesa: ã, ê, ç, ó, ú, etc. → ATS modernos suportam UTF-8
+## Caracteres Permitidos
+- Acentuacao portuguesa: ã, ê, ç, ó, ú, etc. → ATS modernos suportam UTF-8. Não normalize para ASCII.
 - Hifen simples: -
 - Barra: /
 - Pipe: |
 
-### Proibidos (quebram parsing do ATS)
-- Emojis: 📍 ✉️ 🔗 🇧🇷 🇬🇧 🇩🇪 etc. → substituir por icones do Font Awesome ou texto puro
-- Tracos especiais: en-dash (–) e em-dash (—) → usar apenas o hifen simples (-)
-- Setas: → → usar "->" ou apenas "-"
-- Ponto mediano: · → usar "|" ou "-"
+## Caracteres Proibidos (quebram parsing do ATS). 
+- Emojis: 📍 ✉️ 🔗 🇧🇷 🇬🇧 🇩🇪 etc => Substituir por ícones do Font Awesome ou texto puro
+- Dash: en-dash (–) e em-dash (—) => Usar apenas o hífen simples (-)
+- Setas: → => Usar "->" ou apenas "-"
+- Ponto mediano: · => usar "|" ou "-"
 
 ## Datas
-- Nao abreviar meses: "Mai/2024" → "Maio 2024"
-- Nao usar tracos especiais entre datas: "Mai/2024 – Jul/2025" → "Maio 2024 - Julho 2025"
-- Anos sozinhos sao aceitos: "2016 - 2022"
+- Não abreviar meses: "Mai/2024" → "Maio 2024"
+- Não usar tracos especiais entre datas: "Mai/2024 – Jul/2025" → "Maio 2024 - Julho 2025"
+- Anos sozinhos são aceitos: "2016 - 2022"
 
 ## Icones no HTML
 - Importar Font Awesome via CDN para usar icones sem emojis:
@@ -33,15 +31,6 @@ description: Boas práticas genéricas para otimização de currículos em siste
   - 📍 → `<i class="fa-solid fa-location-dot"></i>`
   - ✉️ → `<i class="fa-solid fa-envelope"></i>`
   - 🔗 LinkedIn → `<i class="fa-brands fa-linkedin"></i>`
-
-## Secao de Educacao
-- ATS nao pontua nota, monitoria, TCC ou disciplinas cursadas
-- Incluir apenas: curso, instituicao e periodo
-- Detalhes academicos extras so se forem diferenciais claros para a vaga
-
-## Localizacao / Remoto
-- Nao misturar cidade e modalidade no mesmo campo
-- Separar cidade em um elemento e disponibilidade remoto em outro
 
 ## CSS e estilos
 - O ATS le o texto bruto do HTML, ignorando CSS
