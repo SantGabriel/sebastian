@@ -22,6 +22,9 @@
     @media print { body { margin: 0; } }
     .not-authorized { text-align: center; padding: 80px 24px; color: #aaa; }
     .not-authorized i { font-size: 48px; display: block; margin-bottom: 16px; }
+    #btn-pdf { position: fixed; bottom: 24px; right: 24px; background: #1a73e8; color: #fff; border: none; border-radius: 6px; padding: 10px 18px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 999; }
+    #btn-pdf:hover { background: #1558b0; }
+    @media print { #btn-pdf { display: none !important; } }
     .city-warning { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 10px 14px; margin-bottom: 20px; font-size: 12px; color: #92400e; border-radius: 0 4px 4px 0; }
     .city-warning i { margin-right: 6px; }
     @media print { .city-warning { display: none !important; } }
@@ -29,6 +32,9 @@
 </head>
 <body>
   <div id="cl-root"></div>
+  <button id="btn-pdf" style="display:none" onclick="gerarPDF()">
+    <i class="fa-solid fa-file-pdf"></i> Baixar PDF
+  </button>
 
   <script src="candidate-data.js"></script>
   <script src="jobs-data.js"></script>
@@ -67,6 +73,9 @@
         document.documentElement.lang = isEN ? 'en' : 'pt-BR';
         document.getElementById('page-title').textContent = `Cover Letter - ${job.empresa} | ${name}`;
 
+        const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'Cover Letter';
+        window._pdfData = { vaga: vagaLabel, empresa: job.empresa || '', candidateName: name };
+
         const paragrafosHtml = (cl.paragrafos || []).map(p => `<p>${p}</p>`).join('');
         const applicationLabel = isEN ? 'Application' : 'Candidatura';
         const closingLabel = isEN ? 'Best regards,' : 'Atenciosamente,';
@@ -87,14 +96,44 @@
               ${linkedinHtml}
             </div>
           </div>
-          <p class="job-target">${applicationLabel}: ${job.vaga} — ${job.empresa}</p>
+          <p class="job-target">${applicationLabel}: ${job.vaga} - ${job.empresa}</p>
           <div class="cl-body">${paragrafosHtml}</div>
           <div class="signature">
             ${closingLabel}
             <strong>${name}</strong>
           </div>
         `;
+
+        document.getElementById('btn-pdf').style.display = 'flex';
       }
+    }
+  </script>
+
+  <script>
+    function gerarPDF() {
+      const btn = document.getElementById('btn-pdf');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
+
+      const jobId = new URLSearchParams(window.location.search).get('job');
+      fetch(`http://localhost:3001/pdf?doc=cl&job=${jobId}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Servidor retornou erro ' + res.status);
+          return res.blob();
+        })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = document.title.replace(' | ', ' - ') + '.pdf';
+          a.click();
+          URL.revokeObjectURL(url);
+        })
+        .catch(err => alert('Erro ao gerar PDF.\nVerifique se o servidor está rodando:\nnpm start\n\n' + err.message))
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Baixar PDF';
+        });
     }
   </script>
 </body>

@@ -9,14 +9,17 @@ app.use(express.static(__dirname));
 
 app.get('/pdf', async (req, res) => {
   const jobId = req.query.job;
+  const doc = (req.query.doc || 'cv').toString().toLowerCase();
   if (!jobId) return res.status(400).send('Parâmetro ?job= obrigatório');
+
+  const pageName = doc === 'cl' ? 'cl.html' : 'cv.html';
 
   let browser;
   try {
     browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
 
-    await page.goto(`http://localhost:${PORT}/cv.html?job=${jobId}`, { waitUntil: 'networkidle0' });
+    await page.goto(`http://localhost:${PORT}/${pageName}?job=${jobId}`, { waitUntil: 'networkidle0' });
 
     const pdfData = await page.evaluate(() => window._pdfData || {});
 
