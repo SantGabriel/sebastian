@@ -1,6 +1,7 @@
 // Dados pessoais do candidato — preencha com as suas informações
 window.CANDIDATE_DATA = {
   name: "",
+  phoneCountryCode: "+55",
   phone: "",
   email: "",
   linkedin: {

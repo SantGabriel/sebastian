@@ -25,9 +25,15 @@ cp .github/skills/contexto/SKILL.md.example .github/skills/contexto/SKILL.md
      - Cidade e estado/provincia/distrito
    - Email
    - Link do LinkedIn
+   - Código do país do telefone (ex: Brasil é +55)
    - Telefone de contato
 
 2. Com esses dados, preencha o candidate-data.js
+   - `name`: nome do candidato
+   - `phoneCountryCode`: código do país (ex: +55)
+   - `phone`: número do telefone
+   - `email`: email do candidato
+   - `linkedin.url`: link do LinkedIn
    - Em location
      - pt: cidade - estado
      - en: city - country
