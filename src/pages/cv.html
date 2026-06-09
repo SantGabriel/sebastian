@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">CV</title>
-  <link rel="icon" href="assets/logo.png" type="image/x-icon">
-  <script src="candidate-data.js"></script>
+  <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
+  <script src="../json/candidate-data.js"></script>
   <script>
     var _c = window.CANDIDATE_DATA || {};
     if (_c.name) document.getElementById('page-title').textContent = 'CV | ' + _c.name;
@@ -64,8 +64,8 @@
     <i class="fa-solid fa-file-pdf"></i> Baixar PDF
   </button>
 
-  <script src="jobs-data.js"></script>
-  <script src="generic-cv-data.js"></script>
+  <script src="../json/jobs-data.js"></script>
+  <script src="../json/generic-cv-data.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const jobId = params.get('job');

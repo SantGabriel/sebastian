@@ -4,13 +4,13 @@ description: Aqui vamos iniciar o projeto com os dados básicos do candidato com
 ---
 
 # Gatilho
-Inicie essa skill se o [candidate-data.js](../../../candidate-data.js) não existir ou estiver vazio.
+Inicie essa skill se o [candidate-data.js](../../../src/json/candidate-data.js) não existir ou estiver vazio.
 
 Se o arquivo não existir, rode os comandos abaixo:
 ```bash
-cp candidate-data.js.example candidate-data.js
-cp generic-cv-data.js.example generic-cv-data.js
-cp jobs-data.js.example jobs-data.js
+cp src/json/candidate-data.js.example src/json/candidate-data.js
+cp src/json/generic-cv-data.js.example src/json/generic-cv-data.js
+cp src/json/jobs-data.js.example src/json/jobs-data.js
 cp vagas.txt.example vagas.txt
 cp insights.md.example insights.md
 cp .github/skills/cv-base/SKILL.md.example .github/skills/cv-base/SKILL.md
@@ -28,7 +28,7 @@ cp .github/skills/contexto/SKILL.md.example .github/skills/contexto/SKILL.md
    - Código do país do telefone (ex: Brasil é +55)
    - Telefone de contato
 
-2. Com esses dados, preencha o candidate-data.js
+2. Com esses dados, preencha o `src/json/candidate-data.js`
    - `name`: nome do candidato
    - `phoneCountryCode`: código do país (ex: +55)
    - `phone`: número do telefone

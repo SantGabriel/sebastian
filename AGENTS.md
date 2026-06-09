@@ -8,12 +8,12 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 | Arquivo                                     | Papel                                                                                |
 |---------------------------------------------|--------------------------------------------------------------------------------------|
 | `vagas.txt`                                 | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                     |
-| `jobs-data.js`                              | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
-| `candidate-data.js`                         | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
-| `generic-cv-data.js`                        | Dados gerados/atualizados pelo agente para o CV genêrico                             |
+| `src/json/jobs-data.js`                     | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
+| `src/json/candidate-data.js`                | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
+| `src/json/generic-cv-data.js`               | Dados gerados/atualizados pelo agente para o CV genêrico                             |
 | `index.html`                                | Dashboard com fits e links CV/CL por vaga                                            |
-| `cv.html`                                   | Template de CV — renderiza via `?job=id`                                             |
-| `cl.html`                                   | Template de CL — renderiza via `?job=id`                                             |
+| `src/pages/cv.html`                         | Template de CV — renderiza via `?job=id`                                             |
+| `src/pages/cl.html`                         | Template de CL — renderiza via `?job=id`                                             |
 | `.github/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização                        |
 | `.github/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                                  |
 | `.github/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                          |
@@ -28,7 +28,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 ## Fluxo principal
 
 ### Passo 0 — Validação inicial
-**A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `.github/skills/iniciar-projeto/SKILL.md`.
+**A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `src/json/candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `.github/skills/iniciar-projeto/SKILL.md`.
 
 ### Passo 1 — Perguntas de clarificação (por vaga)
 - Leia `.github/skills/cv-base/SKILL.md`, `.github/skills/contexto/SKILL.md`
@@ -36,9 +36,10 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 - Se houver tecnologias/ferramentas/práticas **não documentadas** no CV base, pergunte objetivamente.
 - Só pule se todos os requisitos relevantes já estiverem cobertos
 - Não pergunte sobre itens já documentados (mesmo que implicitamente)
+- Depois de todas as perguntas respondidas, siga para o passo 2 para gerar os fits.
 
 ### Passo 2 — Fit
-- Leia `.github/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `jobs-data.js`
+- Leia `.github/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `src/json/jobs-data.js`
 - Você não deve abrir os links fornecidos para obter dados. Eles apenas serão apenas informados no index.html
 
 ### Passo 3 — Autorização
@@ -54,7 +55,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 ---
 
-## Schema do jobs-data.js
+## Schema do `src/json/jobs-data.js`
 
 ```js
 window.JOBS_DATA = {
@@ -116,7 +117,7 @@ Se o usuário apontou erros recorrentes de análise ou forneceu regras para evit
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 ### Reiniciar o processo
-- Se o usuário dizer apenas "reiniciar processo", limpe o `jobs-data.js` e reinicie o fluxo para o passo 1.
+- Se o usuário dizer apenas "reiniciar processo", limpe o `src/json/jobs-data.js` e reinicie o fluxo para o passo 1.
 - Caso contrário, assuma apenas que novas vagas foram adicionadas e apenas faça os demais passos para as vagas que ainda não foram feitas. Se tiver dúvida, pergunte se deve continuar o processo com as vagas adicionais ou reiniciar o processo do zero.
 
 ---
@@ -129,9 +130,9 @@ Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de anál
 ### Alterações de arquivos
 - Você pode alterar os seguintes arquivos, desde que tenha solicitado permissão ao usuário:
     - `vagas.txt`
-    - `jobs-data.js`
-    - `candidate-data.js`
-    - `generic-cv-data.js`
+    - `src/json/jobs-data.js`
+    - `src/json/candidate-data.js`
+    - `src/json/generic-cv-data.js`
     - `.github/skills/cv-base/SKILL.md`
     - `.github/skills/contexto/SKILL.md`
 - Os demais arquivos não devem ser alterados, muito menos sugerir alterá-los para o usuário. 

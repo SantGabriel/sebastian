@@ -65,13 +65,13 @@
   </div>
   <div class="generic-bar">
     <span><i class="fa-solid fa-file-lines"></i> CVs genéricos:</span>
-    <a class="btn btn-cv" href="cv.html?job=generico" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV PT</a>
-    <a class="btn btn-cv" href="cv.html?job=generico-en" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV EN</a>
+    <a class="btn btn-cv" href="src/pages/cv.html?job=generico" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV PT</a>
+    <a class="btn btn-cv" href="src/pages/cv.html?job=generico-en" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV EN</a>
   </div>
   <div id="jobs-container"></div>
 
-  <script src="candidate-data.js"></script>
-  <script src="jobs-data.js"></script>
+  <script src="src/json/candidate-data.js"></script>
+  <script src="src/json/jobs-data.js"></script>
   <script>
     function scoreClass(s) {
       if (s >= 7) return 'score-green';
@@ -163,13 +163,13 @@
 
         const cvBtn = hasCv
           ? cvAuthorized
-            ? `<a class="btn btn-cv" href="cv.html?job=${job.id}" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV</a>`
+            ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank"><i class="fa-solid fa-file-pdf"></i> CV</a>`
             : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`
           : '';
 
         const clBtn = hasCl
           ? clAuthorized
-            ? `<a class="btn btn-cl" href="cl.html?job=${job.id}" target="_blank"><i class="fa-solid fa-envelope"></i> Cover Letter</a>`
+            ? `<a class="btn btn-cl" href="src/pages/cl.html?job=${job.id}" target="_blank"><i class="fa-solid fa-envelope"></i> Cover Letter</a>`
             : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`
           : '';
 

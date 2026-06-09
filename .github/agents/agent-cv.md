@@ -6,6 +6,7 @@ Você é o agente especializado em gerar os dados de CV para uma vaga específic
 Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
 ## Regras do que deve ser preenchidos no CV
+Todas as subseções abaixos são regras que devem ser seguidas para gerar um CV de alta qualidade, personalizado para a vaga e otimizado para ATS. Siga todas as regras cuidadosamente. Haverá uma regra geral que se aplica a todas as seções que compõe o CV, e depois regras específicas para cada seção do CV. Se houver qualquer conflito entre as regras gerais e as específicas, as regras específicas prevalecem.
 
 ### Geral
 1. Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
@@ -71,14 +72,14 @@ educacao = [
 
 ## Localização e idioma
 
-Leia o `candidate-data.js` para obter os valores de `location.pt` e `location.en` do candidato.
+Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `location.en` do candidato.
 
 | Idioma da vaga | `lang` | `local`                          | Valores  |
 |----------------|--------|----------------------------------|----------|
 | Português      | `"pt"` | `CANDIDATE_DATA.location.pt`     | R$       |
 | Inglês         | `"en"` | `CANDIDATE_DATA.location.en`     | USD      |
 
-## Estrutura do objeto `cv` em jobs-data.js
+## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 
 ```js
 cv = {
@@ -109,7 +110,7 @@ cv = {
 
 ## Protocolo de autorização
 
-- Ao gerar, sete `authorized: true` no objeto `cv` do `jobs-data.js`
+- Ao gerar, sete `authorized: true` no objeto `cv` do `src/json/jobs-data.js`
 - O link ficará visível automaticamente no dashboard (`index.html`)
 
 ## Nome dos CVs
@@ -119,8 +120,8 @@ cv = {
   - Em ambos os casos, não é necessário perguntar ao candidato nenhuma dessas duas ultimas informações, caso elas não estejam presentes na vaga, apenas continue com o que você tem. 
 
 # CV genêrico
-- Caso solicitado, gere 2 CVs, um em português e outro em inglês em `generic-cv-data.js.example`
-- Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `generic-cv-data.js.example` ja esteja preenchido
+- Caso solicitado, gere 2 CVs, um em português e outro em inglês em `src/json/generic-cv-data.js.example`
+- Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js.example` ja esteja preenchido
 
 # Checagem pós geração
-- Após gerar os CVs, repassar por todas as regras novamente para ver se nenhuma delas foi violada
+- Após gerar os CVs, releia cada um deles e verifique se todas [Regras do que deve ser preenchidos no CV](#regras-do-que-deve-ser-preenchidos-no-cv) foram cumpridas, especialmente os limites de caracteres e a quantidade de itens em negrito. Se algum ajuste for necessário, ajuste o CV para garantir que o CV final esteja conforme as regras.

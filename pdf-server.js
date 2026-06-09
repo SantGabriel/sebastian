@@ -12,7 +12,7 @@ app.get('/pdf', async (req, res) => {
   const doc = (req.query.doc || 'cv').toString().toLowerCase();
   if (!jobId) return res.status(400).send('Parâmetro ?job= obrigatório');
 
-  const pageName = doc === 'cl' ? 'cl.html' : 'cv.html';
+  const pageName = doc === 'cl' ? 'src/pages/cl.html' : 'src/pages/cv.html';
 
   let browser;
   try {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="assets/logo.png" type="image/x-icon">
+  <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
   <title id="page-title">Cover Letter</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
@@ -36,8 +36,8 @@
     <i class="fa-solid fa-file-pdf"></i> Baixar PDF
   </button>
 
-  <script src="candidate-data.js"></script>
-  <script src="jobs-data.js"></script>
+  <script src="../json/candidate-data.js"></script>
+  <script src="../json/jobs-data.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const jobId = params.get('job');
@@ -53,7 +53,7 @@
     }
 
     if (!jobId || !window.JOBS_DATA || !window.JOBS_DATA[jobId]) {
-      notAuthorized(jobId ? `Job "${jobId}" not found in jobs-data.js.` : 'No job parameter provided in the URL.');
+      notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
     } else {
       const job = window.JOBS_DATA[jobId];
       const cl = job.cl;

@@ -24,7 +24,7 @@ Ao receber "autoriza CL para [empresa]" — após fit aprovado pelo usuário.
 - A omissão do gap é preferível à confissão explícita
 - **Exceção:** quando o gap é central e sem equivalente real (ex: Golang em vaga exclusivamente Golang), ser honesto evita problemas futuros
 
-## Estrutura do objeto `cl` em jobs-data.js
+## Estrutura do objeto `cl` em `src/json/jobs-data.js`
 
 ```js
 cl: {
@@ -35,5 +35,5 @@ cl: {
 
 ## Protocolo de autorização
 
-- Ao gerar, sete `authorized: true` no objeto `cl` do `jobs-data.js`
+- Ao gerar, sete `authorized: true` no objeto `cl` do `src/json/jobs-data.js`
 - O link ficará visível automaticamente no dashboard (`index.html`)

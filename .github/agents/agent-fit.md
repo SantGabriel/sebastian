@@ -9,9 +9,30 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 
 - Leia `.github/skills/cv-base/SKILL.md` e `.github/skills/contexto/SKILL.md` antes de analisar
 - Foque nos requisitos obrigatórios (seção explícita de "Requisitos" / "Requirements" / "Qualificações")
-- Atribuições, responsabilidades e diferenciais/opcionais **não são requisitos** — não os trate como gaps
+- Atribuições e responsabilidades **não são requisitos** — não os trate como gaps
 - Não misturar gaps de responsabilidades com gaps de requisitos
-- Distinguir claramente o que é obrigatório do que é preferido ("preferred", "nice to have", "diferencial"): preferencias são bonus, nnão blockers
+- Distinguir claramente o que é obrigatório do que é preferido ("preferred", "nice to have", "diferencial"):
+
+### Fórmula do gap
+- O gap vai de 0.0 a 10.0, onde 0 é totalmente desalinhado e 10 é totalmente alinhado
+- A nota inicialmente é 10.0, e cada gap reduz a nota.
+- Cada gap deve seguir a lista de redução do score nesta ordem:
+
+  | Gap                   | Regras                                                                                                                                                                                                                                          | Tipo de gap                                 | Peso  |
+  |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
+  | Requisito Core        | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio. <br>Geralmente termo que mais se repete na vaga; <br> Geralmente o primeiro requisito <br> Geralmente aparece no topo da vaga <br> Apenas um requisito pode ser core | Requisito/Requirement                       | -4    |
+  | Requisito Importante  | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced. <br>Aparece tanto nos requisitos quanto no corpo do texto da vaga                                                                                          | Requisito/Requirement                       | -3    |
+  | Requisito Secundário  | Acompanhado de verbos: required, experience, familiarity.                                                                                                                                                                                       | Requisito/Requirement                       | -1    |
+  | Fortemente desejável  | Acompanhado de verbos fortes: strongly recommended, highly recommended, highly desirable <br>.                                                                                                                                                  | Nice to have/optional/desirable/diferencial | -1    |
+  | Noção, conhecimento   | Acompanhado de verbos: knowledge, noção, conhecimento.                                                                                                                                                                                          | Requisito/Requirement                       | -0.5  |
+  | Desejável/Diferencial | Acompanhado de verbos: desejável, nice to have, recommended, desirable.                                                                                                                                                                         | Nice to have/optional/desirable/diferencial | -0.25 |
+
+Exemplos:
+1) 1 gap core e 2 gap desejável -> 10 - 4 - 0.5 * 2 = 5
+2) 1 gap importante -> 10 - 3 = 7
+3) 1 gap secundário, 1 gap de conhecimento, 1 gap de noção, 1 gap de desejável -> 10 - 1 - 0.5 * 2 - 0.25 = 7.75
+4) 1 gap fortemente desejável -> 10 - 1 = 9
+5) 1 gap core e 3 gaps importantes -> 10 - 4 - 3 * 3 = -3 = 0 (floor)
 
 ### Listas de stack são OR, não AND
 Quando a vaga lista várias tecnologias numa frase (ex: "PHP, Python, Node.js, Ruby"), interpretar como OR — conhecer qualquer uma qualifica. Só tratar como AND se a vaga descrever uso simultâneo explícito.
@@ -57,7 +78,7 @@ Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we u
   - 5 gaps ou
   - 3 gaps e 5 pontos positivos.
 
-## Estrutura do fit no jobs-data.js
+## Estrutura do fit no `src/json/jobs-data.js`
 
 ```js
 fit = {
@@ -76,7 +97,7 @@ Ao processar cada vaga, **sempre** inclua os seguintes campos na raiz da entrada
 - `cidadeVaga`: cidade/UF onde a vaga está localizada (ex: `"São Paulo, SP"`) — **obrigatório** quando `modalidade` for `"Presencial"` ou `"Híbrida"`; omitir ou deixar `""` quando for `"Remoto"`
 - `contratacao`: `"CLT"`, `"PJ"` ou `"CLT/PJ"` — extraído do bloco da vaga em `vagas.txt` quando houver menção explícita ao tipo de contratação. **Omitir o campo** se não houver informação clara.
 
-Esses campos são usados pelo dashboard `index.html` para exibir informações da vaga e pelos templates `cv.html` e `cl.html` para exibir avisos quando a vaga é presencial/híbrida em cidade diferente da localização do candidato.
+Esses campos são usados pelo dashboard `index.html` para exibir informações da vaga e pelos templates `src/pages/cv.html` e `src/pages/cl.html` para exibir avisos quando a vaga é presencial/híbrida em cidade diferente da localização do candidato.
 
 ## Campo `candidatura`
 
@@ -93,7 +114,7 @@ candidatura = { aviso: "Candidatura é feito pelo e-mail vaga@empresa.com", emai
 
 ## Saída
 
-- Escreva o fit diretamente em `jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`
+- Escreva o fit diretamente em `src/json/jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`
 - Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA.
 - **Não exiba os fits no chat** — o usuário os lê abrindo `index.html`
 - Ao terminar, apenas diga: "Fits gerados. Abra http://localhost:3001/index.html para revisar."
