@@ -96,7 +96,16 @@
     }
 
     const isGeneric = !!(window.GENERIC_CV_DATA && window.GENERIC_CV_DATA[jobId]);
-    const job = isGeneric ? window.GENERIC_CV_DATA[jobId] : (window.JOBS_DATA && window.JOBS_DATA[jobId]);
+    const getJobFromData = () => {
+      if (isGeneric) return window.GENERIC_CV_DATA[jobId];
+      if (!window.JOBS_DATA) return null;
+      // Suporta tanto array quanto objeto (para compatibilidade com versão antiga)
+      if (Array.isArray(window.JOBS_DATA)) {
+        return window.JOBS_DATA.find(job => job.id === jobId);
+      }
+      return window.JOBS_DATA[jobId];
+    };
+    const job = getJobFromData();
 
     if (!jobId || !job) {
       notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');

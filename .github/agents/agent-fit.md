@@ -14,9 +14,9 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 - Distinguir claramente o que é obrigatório do que é preferido ("preferred", "nice to have", "diferencial"):
 
 ### Fórmula do gap
-- O gap vai de 0.0 a 10.0, onde 0 é totalmente desalinhado e 10 é totalmente alinhado
-- A nota inicialmente é 10.0, e cada gap reduz a nota.
-- Cada gap deve seguir a lista de redução do score nesta ordem:
+1. O gap vai de 0.0 a 10.0, onde 0 é totalmente desalinhado e 10 é totalmente alinhado
+2. A nota inicialmente é 10.0, e cada gap reduz a nota.
+3. Cada gap deve seguir a lista de redução do score nesta ordem:
 
   | Gap                   | Regras                                                                                                                                                                                                                                          | Tipo de gap                                 | Peso  |
   |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
@@ -27,12 +27,12 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
   | Noção, conhecimento   | Acompanhado de verbos: knowledge, noção, conhecimento.                                                                                                                                                                                          | Requisito/Requirement                       | -0.5  |
   | Desejável/Diferencial | Acompanhado de verbos: desejável, nice to have, recommended, desirable.                                                                                                                                                                         | Nice to have/optional/desirable/diferencial | -0.25 |
 
-Exemplos:
-1) 1 gap core e 2 gap desejável -> 10 - 4 - 0.5 * 2 = 5
-2) 1 gap importante -> 10 - 3 = 7
-3) 1 gap secundário, 1 gap de conhecimento, 1 gap de noção, 1 gap de desejável -> 10 - 1 - 0.5 * 2 - 0.25 = 7.75
-4) 1 gap fortemente desejável -> 10 - 1 = 9
-5) 1 gap core e 3 gaps importantes -> 10 - 4 - 3 * 3 = -3 = 0 (floor)
+- Exemplos:
+  1) 1 gap core e 2 gap desejável -> 10 - 4 - 0.5 * 2 = 5
+  2) 1 gap importante -> 10 - 3 = 7
+  3) 1 gap secundário, 1 gap de conhecimento, 1 gap de noção, 1 gap de desejável -> 10 - 1 - 0.5 * 2 - 0.25 = 7.75
+  4) 1 gap fortemente desejável -> 10 - 1 = 9
+  5) 1 gap core e 3 gaps importantes -> 10 - 4 - 3 * 3 = -3 = 0 (floor)
 
 ### Listas de stack são OR, não AND
 Quando a vaga lista várias tecnologias numa frase (ex: "PHP, Python, Node.js, Ruby"), interpretar como OR — conhecer qualquer uma qualifica. Só tratar como AND se a vaga descrever uso simultâneo explícito.
@@ -111,6 +111,7 @@ Exemplos:
 ```js
 // e-mail direto — USAR CAMPO candidatura
 candidatura = { aviso: "Candidatura é feito pelo e-mail vaga@empresa.com", email: "mailto:vaga@empresa.com" }
+```
 
 ## Saída
 
@@ -125,3 +126,22 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - Se o usuário revelou habilidades novas → proponha adição ao `.github/skills/cv-base/SKILL.md`
 - Se o usuário identificou erros recorrentes → proponha regra nova neste arquivo
 - **Nunca altere `.github/skills/cv-base/SKILL.md` sem autorização explícita**
+
+# Testes
+- Após gerar todos os fits, rode os testes definidos em `test/fit.test.js` para consultar a qualidade do fit gerado.
+- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um fit perfeito.
+- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o fit passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
+- Você deve rodar os testes apenas uma vez. Jamais fique em loop tentando corrigir o fit e rodar os testes várias vezes.
+- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- Rode os testes com `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
+- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
+- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
+  
+  | Teste                | Regra infrigida                                      |
+  |----------------------|------------------------------------------------------|
+  | Score entre 0 e 10   | [Fórmula do gap](#fórmula-do-gap) Regra 1            |
+  | Sem gaps = score 10  | [Sem negativos = score 10](#sem-negativos--score-10) |
+
+- As demais regras não citadas na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o fit, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
+- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras 

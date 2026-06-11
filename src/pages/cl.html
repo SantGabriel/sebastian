@@ -52,10 +52,19 @@
         </div>`;
     }
 
-    if (!jobId || !window.JOBS_DATA || !window.JOBS_DATA[jobId]) {
+    const getJobFromData = () => {
+      if (!window.JOBS_DATA) return null;
+      // Suporta tanto array quanto objeto (para compatibilidade com versão antiga)
+      if (Array.isArray(window.JOBS_DATA)) {
+        return window.JOBS_DATA.find(job => job.id === jobId);
+      }
+      return window.JOBS_DATA[jobId];
+    };
+
+    if (!jobId || !getJobFromData()) {
       notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
     } else {
-      const job = window.JOBS_DATA[jobId];
+      const job = getJobFromData();
       const cl = job.cl;
       const isEN = (job.cv && job.cv.lang === 'en') || (cl && cl.lang === 'en');
 
