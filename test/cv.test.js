@@ -1,20 +1,19 @@
 const {
   selectJobs,
+  selectGenericCVs,
   countBoldItems,
   getTextLength,
 } = require('./utils/utils');
 
-// Carrega dados reais
 require('../src/json/jobs-data');
 require('../src/json/generic-cv-data');
 
-/**
- * @type {import('../src/interfaces/jobs-data').JobsData}
- */
-const jobList = selectJobs(window.JOBS_DATA || []);
+const jobList    = selectJobs(window.JOBS_DATA || []);
+const genericList = selectGenericCVs();
+const allCVList  = [...jobList, ...genericList];
 
 describe('CV - Experiência Profissional', () => {
-  test.each(jobList)('Validar tamanho resumo de 500 a 600 caracteres ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar tamanho resumo de 500 a 600 caracteres ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized) return;
     // Remove tags HTML para contar apenas texto
     const textOnly = cv.resumo.replace(/<[^>]*>/g, '');
@@ -25,7 +24,7 @@ describe('CV - Experiência Profissional', () => {
 });
 
 describe('CV - negrito', () => {
-  test.each(jobList)('Contar 3 a 5 negrito no sumário ($id)', ({id, cv}) => {
+  test.each(allCVList)('Contar 3 a 5 negrito no sumário ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.resumo) return;
 
     const boldCount = countBoldItems(cv.resumo);
@@ -33,7 +32,7 @@ describe('CV - negrito', () => {
     expect(boldCount).toBeLessThanOrEqual(5);
   });
 
-  test.each(jobList)('Contar 5 a 10 negrito na experiencia profissional ($id)', ({id, cv}) => {
+  test.each(allCVList)('Contar 5 a 10 negrito na experiencia profissional ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias) return;
 
     let totalBolds = 0;
@@ -53,7 +52,7 @@ describe('CV - negrito', () => {
 });
 
 describe('CV - Professional Experience', () => {
-  test.each(jobList)('Validar tamanho de 2000 a 2500 caracteres para todas as experiencias ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar tamanho de 2000 a 2500 caracteres para todas as experiencias ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias) return;
 
     let totalText = '';
@@ -66,7 +65,7 @@ describe('CV - Professional Experience', () => {
     expect(textLength).toBeLessThanOrEqual(2500);
   });
 
-  test.each(jobList)('Validar experiencia mais relevante com no minimo 800 caracteres ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar experiencia mais relevante com no minimo 800 caracteres ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias || cv.experiencias.length === 0) return;
 
     const firstExp = cv.experiencias[0];
@@ -79,7 +78,7 @@ describe('CV - Professional Experience', () => {
     expect(textLength).toBeGreaterThanOrEqual(800);
   });
 
-  test.each(jobList)('Validar experiencia mais relevante tem que ter mais caracteres que todas as outras ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar experiencia mais relevante tem que ter mais caracteres que todas as outras ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias || cv.experiencias.length <= 1) return;
 
     const firstExpLength = getTextLength((cv.experiencias[0].bullets || []).join(' '));
@@ -92,7 +91,7 @@ describe('CV - Professional Experience', () => {
     }
   });
 
-  test.each(jobList)('Validar bullet com tamanho entre 100 a 300 caracteres ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar bullet com tamanho entre 100 a 300 caracteres ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias) return;
 
     cv.experiencias.forEach(exp => {
@@ -105,7 +104,7 @@ describe('CV - Professional Experience', () => {
     });
   });
 
-  test.each(jobList)('Contar bullets entre 1 e 6 em cada experiencia ($id)', ({id, cv}) => {
+  test.each(allCVList)('Contar bullets entre 1 e 6 em cada experiencia ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.experiencias) return;
 
     cv.experiencias.forEach(exp => {
@@ -117,7 +116,7 @@ describe('CV - Professional Experience', () => {
 });
 
 describe('CV - Competências Técnicas', () => {
-  test.each(jobList)('Validar de 1 a 15 skills ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar de 1 a 15 skills ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.skills) return;
     expect(cv.skills.length).toBeGreaterThanOrEqual(1);
     expect(cv.skills.length).toBeLessThanOrEqual(15);
@@ -125,7 +124,7 @@ describe('CV - Competências Técnicas', () => {
 });
 
 describe('CV - Educação', () => {
-  test.each(jobList)('Validar Máximo 4 formações ($id)', ({id, cv}) => {
+  test.each(allCVList)('Validar Máximo 4 formações ($id)', ({id, cv}) => {
     if (!cv || !cv.authorized || !cv.educacao) return;
     expect(cv.educacao.length).toBeLessThanOrEqual(4);
   });

@@ -143,8 +143,31 @@ function getTextLength(html) {
 }
 
 
+/**
+ * Normaliza os CVs genéricos para o formato de item de teste,
+ * aplicando o mesmo filtro de JOB_ID que selectJobs.
+ * @returns {Array<{id: string, cv: Object, lang: string, cl: null}>}
+ */
+function selectGenericCVs() {
+  const data = window.GENERIC_CV_DATA || {};
+  const ids = (process.env.JOB_ID || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const entries = Object.entries(data).map(([id, job]) => ({
+    id,
+    cv: job.cv,
+    lang: (job.cv && job.cv.lang) || 'pt',
+    cl: null,
+  }));
+
+  return ids.length ? entries.filter(e => ids.includes(e.id)) : entries;
+}
+
 module.exports = {
   selectJobs,
+  selectGenericCVs,
   eachOrSkip,
   countBoldItems,
   validateDateFormat,

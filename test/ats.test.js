@@ -1,13 +1,13 @@
-const { validateATSCharacters, wrongAnsiiConvertionDetection, selectJobs } = require('./utils/utils');
+const { validateATSCharacters, wrongAnsiiConvertionDetection, selectJobs, selectGenericCVs } = require('./utils/utils');
 require('../src/json/jobs-data.js');
+require('../src/json/generic-cv-data.js');
 
-/**
- * @type {import('../src/interfaces/jobs-data').JobsData}
- */
-const jobList = selectJobs(window.JOBS_DATA);
+const jobList    = selectJobs(window.JOBS_DATA);
+const genericList = selectGenericCVs();
+const allList    = [...jobList, ...genericList];
 
 describe('ATS', () => {
-  test.each(jobList)('Caracteres proibidos ($id)', ({id, cv, cl}) => {
+  test.each(allList)('Caracteres proibidos ($id)', ({id, cv, cl}) => {
     if (cv) {
       let allTextCV = cv.resumo || '';
       (cv.experiencias || []).forEach(exp => {
@@ -27,7 +27,7 @@ describe('ATS', () => {
     }
   });
 
-  test.each(jobList)('Termos em Português sem acentuação ($id)', ({id, lang, cv, cl}) => {
+  test.each(allList)('Termos em Português sem acentuação ($id)', ({id, lang, cv, cl}) => {
     if (lang !== 'pt') return;
 
     if (cv) {
