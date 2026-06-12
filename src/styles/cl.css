@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 680px;
+  margin: 60px auto;
+  padding: 0 24px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.8;
+  background: #fff;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  border-bottom: 2px solid var(--brand);
+  padding-bottom: 12px;
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.header .meta {
+  font-size: 12px;
+  color: #777;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.header .meta a { color: var(--brand); text-decoration: none; }
+
+/* ---------- body ---------- */
+
+.job-target {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 28px;
+}
+
+.cl-body p           { margin-bottom: 18px; }
+.cl-body p:last-child { margin-bottom: 0; }
+
+/* ---------- signature ---------- */
+
+.signature {
+  margin-top: 36px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.signature strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+/* ---------- print ---------- */
+
+@page { margin: 20mm; size: 217mm 400mm; }
+
+@media print {
+  body { margin: 0; }
+}

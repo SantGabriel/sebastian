@@ -1,0 +1,94 @@
+:root {
+  --brand:         #1a73e8;
+  --brand-dark:    #1558b0;
+  --brand-light:   #e8f0fe;
+
+  --text:          #333;
+  --text-dark:     #111;
+  --text-muted:    #555;
+  --text-faint:    #666;
+  --text-disabled: #aaa;
+
+  --warning-bg:     #fff8e1;
+  --warning-border: #f59e0b;
+  --warning-text:   #92400e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- not-authorized ---------- */
+
+.not-authorized {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-disabled);
+}
+
+.not-authorized i {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.not-authorized h2 {
+  font-size: 18px;
+  color: #ccc;
+  border: none;
+  margin: 0 0 8px 0;
+}
+
+.not-authorized p {
+  font-size: 14px;
+}
+
+/* ---------- btn-pdf ---------- */
+
+#btn-pdf {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+#btn-pdf:hover {
+  background: var(--brand-dark);
+}
+
+/* ---------- city-warning ---------- */
+
+.city-warning {
+  background: var(--warning-bg);
+  border-left: 4px solid var(--warning-border);
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: var(--warning-text);
+  border-radius: 0 4px 4px 0;
+}
+
+.city-warning i {
+  margin-right: 6px;
+}
+
+/* ---------- print ---------- */
+
+@media print {
+  #btn-pdf     { display: none !important; }
+  .city-warning { display: none !important; }
+}
