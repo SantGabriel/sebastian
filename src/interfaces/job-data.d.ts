@@ -16,7 +16,6 @@ export interface Education {
 
 export interface CV {
   authorized: boolean;
-  lang: string;
   local: string;
   titulo: string;
   subtitulo: string;
@@ -52,6 +51,7 @@ export interface Job {
   modalidade: string;
   contratacao?: string;
   cidadeVaga?: string;
+  lang: string;
   tipos: string[];
   vagaTexto: string;
   candidatura?: Candidatura;

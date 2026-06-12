@@ -2,7 +2,7 @@ const {
   selectJobs,
   countBoldItems,
   getTextLength,
-} = require('./utils/helpers');
+} = require('./utils/utils');
 
 // Carrega dados reais
 require('../src/json/jobs-data');

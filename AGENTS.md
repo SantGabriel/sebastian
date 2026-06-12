@@ -68,6 +68,7 @@ window.JOBS_DATA = [
     modalidade: "Remoto",  // "Remoto", "Presencial" ou "Híbrida"
     contratacao: "CLT",  // "CLT", "PJ" ou "CLT/PJ" — omitir se não houver informação
     cidadeVaga: "",        // cidade da vaga — preencher se Presencial/Híbrida (ex: "São Paulo, SP"); omitir se Remoto
+    lang: "pt",            // idioma da vaga: "pt" ou "en"
     tipos: ["cv", "cl"],   // quais documentos esta vaga requer
     vagaTexto: "...",      // texto integral da vaga
     candidatura: {         // omitir se não houver instrução explícita de candidatura

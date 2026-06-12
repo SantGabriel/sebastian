@@ -1,8 +1,4 @@
 /**
- * Utilitários para testes
- */
-
-/**
  * Filtra a lista de jobs pelo(s) id(s) em process.env.JOB_ID.
  * JOB_ID aceita um id ou vários separados por vírgula (ex: "id-a,id-b").
  * Sem JOB_ID definido, retorna a lista completa (auditoria geral).
@@ -26,35 +22,6 @@ function selectJobs(jobList) {
 function eachOrSkip(rows) {
   if (rows && rows.length) return test.each(rows);
   return (name) => test.skip(String(name).replace(/\$\w+/g, '—'), () => {});
-}
-
-/**
- * Calcula o score de fit baseado em gaps
- * @param {number} initialScore - Score inicial (normalmente 10)
- * @param {Array<Object>} gaps - Array de gaps com format {type: string, weight: number}
- * @returns {number} Score final (mínimo 0)
- */
-function calculateGapScore(initialScore = 10, gaps = []) {
-  let score = initialScore;
-
-  gaps.forEach(gap => {
-    score -= gap.weight;
-  });
-
-  return Math.max(0, score);
-}
-
-/**
- * Valida se o texto tem comprimento entre min e max
- * @param {string} text - Texto a validar
- * @param {number} min - Comprimento mínimo
- * @param {number} max - Comprimento máximo
- * @returns {boolean}
- */
-function validateLength(text, min, max) {
-  if (!text || typeof text !== 'string') return false;
-  const length = text.length;
-  return length >= min && length <= max;
 }
 
 /**
@@ -122,47 +89,45 @@ function validateATSCharacters(text) {
   };
 }
 
-/**
- * Extrai bullets de um texto em formato de lista
- * @param {string} text - Texto contendo bullets
- * @returns {Array<string>}
- */
-function extractBullets(text) {
-  if (!text || typeof text !== 'string') return [];
-  // Suporta múltiplos formatos: "- ", "* ", "• "
-  const bulletPattern = /^[\s]*[-*•]\s+(.+)$/gm;
-  const matches = text.matchAll(bulletPattern);
-  return Array.from(matches).map(m => m[1]);
-}
 
-/**
- * Valida estrutura de experiência profissional
- * @param {Object} experience - Objeto com {bullets: Array<string>, ...}
- * @returns {Object} {valid: boolean, errors: Array<string>}
- */
-function validateExperience(experience) {
-  const errors = [];
+function wrongAnsiiConvertionDetection(text) {
+  if (!text || typeof text !== 'string') return { valid: true, message: "Sem texto para verificar." };
 
-  if (!experience.bullets || !Array.isArray(experience.bullets)) {
-    errors.push('bullets must be an array');
-    return { valid: false, errors };
-  }
+  const regexAccents = /[áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ]/;
+  const hasAccents = text.match(regexAccents);
 
-  if (experience.bullets.length < 1 || experience.bullets.length > 6) {
-    errors.push(`bullets must be between 1 and 6, got ${experience.bullets.length}`);
-  }
+  if (!hasAccents) return {
+    valid: false,
+    message: "Algumas palvras parecem estar sem acentuação",
+  };
 
-  experience.bullets.forEach((bullet, index) => {
-    if (typeof bullet !== 'string') {
-      errors.push(`bullet ${index} must be a string`);
-    } else if (bullet.length < 100 || bullet.length > 200) {
-      errors.push(`bullet ${index} must be between 100 and 200 characters, got ${bullet.length}`);
-    }
-  });
-
+  const listWordsWithoutAccents = [
+      'senior',
+      'junior',
+      'acao',
+      'programacao',
+      'nao',
+      'condicao',
+      'preparacao',
+      'organizacao',
+      'comunicacao',
+      'lideranca',
+      'gestao',
+      'experiencia',
+      'formacao',
+      'educacao',
+      'certificacao',
+      'portugues',
+      'ingles',
+      'frances',
+      'alemao',
+  ];
+  const found = listWordsWithoutAccents.filter(word =>
+      new RegExp(`\\b${word}\\b`, 'iu').test(text)
+  );
   return {
-    valid: errors.length === 0,
-    errors,
+    valid: found.length === 0,
+    message: "Palavras sem acentuação encontradas: " + (found.length === 0 ? "nenhuma!" : found.join(", ")),
   };
 }
 
@@ -177,39 +142,13 @@ function getTextLength(html) {
   return text.length;
 }
 
-/**
- * Verifica se um texto contém uma palavra ou frase (case-insensitive)
- * @param {string} text - Texto a pesquisar
- * @param {string} searchTerm - Termo a buscar
- * @returns {boolean}
- */
-function containsText(text, searchTerm) {
-  if (!text || typeof text !== 'string' || !searchTerm) return false;
-  return text.toLowerCase().includes(searchTerm.toLowerCase());
-}
-
-/**
- * Conta palavras em negrito (strong tags)
- * @param {string} html - HTML a analisar
- * @returns {Array<string>} Array com palavras em negrito
- */
-function extractBoldWords(html) {
-  if (!html || typeof html !== 'string') return [];
-  const matches = html.match(/<strong>(.*?)<\/strong>/g) || [];
-  return matches.map(m => m.replace(/<\/?strong>/g, ''));
-}
 
 module.exports = {
   selectJobs,
   eachOrSkip,
-  calculateGapScore,
-  validateLength,
   countBoldItems,
   validateDateFormat,
   validateATSCharacters,
-  extractBullets,
-  validateExperience,
   getTextLength,
-  containsText,
-  extractBoldWords,
+  wrongAnsiiConvertionDetection,
 };

@@ -12,9 +12,9 @@ Ao receber "autoriza CL para [empresa]" — após fit aprovado pelo usuário.
 
 ## Regras de conteúdo
 
-- **Tamanho:** soma de todos os parágrafos deve ter entre **800 e 1500 caracteres**
-- Tom direto e objetivo — sem floreios, sem emojis
-- Conectar experiências do candidato com os requisitos reais da vaga
+1) **Tamanho:** soma de todos os parágrafos deve ter entre **800 e 1500 caracteres**
+2) Entre 2 a 3 parágrafos.
+3) Conectar experiências do candidato com os requisitos reais da vaga
 
 ## Tratamento de gaps de tecnologia no CL
 
@@ -27,7 +27,7 @@ Ao receber "autoriza CL para [empresa]" — após fit aprovado pelo usuário.
 ## Estrutura do objeto `cl` em `src/json/jobs-data.js`
 
 ```js
-cl: {
+cl = {
   authorized: true,
   paragrafos: ["parágrafo 1", "parágrafo 2", "parágrafo 3"]
 }
@@ -49,9 +49,10 @@ cl: {
 - Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
-| Teste                                                              | Regra infrigida                           |
-|--------------------------------------------------------------------|-------------------------------------------|
-| Soma de todos os parágrafos deve ter entre 800 a 1500 caracteres   | [Regras de conteúdo](#regras-de-conteúdo) |
+| Teste                                                            | Regra infrigida                                   |
+|------------------------------------------------------------------|---------------------------------------------------|
+| Soma de todos os parágrafos deve ter entre 800 a 1500 caracteres | [Regras de conteúdo](#regras-de-conteúdo) Regra 1 |
+| Entre 2 a 3 parágrafos                                           | [Regras de conteúdo](#regras-de-conteúdo) Regra 2 |
 
 - As demais regras não citadas na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o CL, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
 - Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras 

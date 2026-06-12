@@ -79,17 +79,18 @@ educacao = [
 
 Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `location.en` do candidato.
 
-| Idioma da vaga | `lang` | `local`                          | Valores  |
-|----------------|--------|----------------------------------|----------|
-| Português      | `"pt"` | `CANDIDATE_DATA.location.pt`     | R$       |
-| Inglês         | `"en"` | `CANDIDATE_DATA.location.en`     | USD      |
+| Idioma da vaga | `lang` (no job) | `local` (no cv)                  | Valores  |
+|----------------|-----------------|----------------------------------|----------|
+| Português      | `"pt"`          | `CANDIDATE_DATA.location.pt`     | R$       |
+| Inglês         | `"en"`          | `CANDIDATE_DATA.location.en`     | USD      |
+
+`lang` fica no nível do job (ex: `job.lang = "pt"`), não dentro do objeto `cv`.
 
 ## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 
 ```js
 cv = {
   authorized: true,
-  lang: "pt",
   local: "[CANDIDATE_DATA.location.pt]",
   titulo: "Título do Cargo",
   subtitulo: "Tech 1 | Tech 2 | Tech 3",

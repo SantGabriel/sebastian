@@ -4,7 +4,7 @@
  * Valida estrutura, conteúdo e regras ATS dos CLs
  */
 
-const { getTextLength, selectJobs } = require('./utils/helpers');
+const { getTextLength, selectJobs } = require('./utils/utils');
 require('../src/json/jobs-data.js');
 
 /**
@@ -18,16 +18,19 @@ describe('CL Estrutura', () => {
     if (!cl.authorized) return;
 
     let totalText = '';
-    // Concatena todos os parágrafos
-    for (let i = 1; i <= 5; i++) {
-      const paragrafo = cl[`paragrafo${i}`];
-      if (paragrafo) {
-        totalText += paragrafo + ' ';
-      }
-    }
+    cl.paragrafos.forEach((paragrafo) => {
+      totalText += paragrafo;
+    });
 
     const textLength = getTextLength(totalText);
     expect(textLength).toBeGreaterThanOrEqual(800);
     expect(textLength).toBeLessThanOrEqual(1500);
+  });
+  test.each(jobList)('Entre 2 a 3 parágrafos (Job "$id")', ({id, cl}) => {
+
+    if (!cl.authorized) return;
+
+    expect(cl.paragrafos.length).toBeGreaterThanOrEqual(2);
+    expect(cl.paragrafos.length).toBeLessThanOrEqual(3);
   });
 });

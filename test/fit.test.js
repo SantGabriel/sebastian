@@ -1,5 +1,5 @@
 const { scoreClass } = require('../src/js/index');
-const { selectJobs, eachOrSkip } = require('./utils/helpers');
+const { selectJobs, eachOrSkip } = require('./utils/utils');
 require('../src/json/jobs-data.js');
 
 /**
