@@ -52,7 +52,16 @@
     }
 
     const isGeneric = !!(window.GENERIC_CV_DATA && window.GENERIC_CV_DATA[jobId]);
-    const job = isGeneric ? window.GENERIC_CV_DATA[jobId] : (window.JOBS_DATA && window.JOBS_DATA[jobId]);
+    const getJobFromData = () => {
+      if (isGeneric) return window.GENERIC_CV_DATA[jobId];
+      if (!window.JOBS_DATA) return null;
+      // Suporta tanto array quanto objeto (para compatibilidade com versão antiga)
+      if (Array.isArray(window.JOBS_DATA)) {
+        return window.JOBS_DATA.find(job => job.id === jobId);
+      }
+      return window.JOBS_DATA[jobId];
+    };
+    const job = getJobFromData();
 
     if (!jobId || !job) {
       notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
@@ -69,9 +78,9 @@
         const candidatePhoneCountryCode = c.phoneCountryCode || '';
         const candidateLinkedin = c.linkedin || {};
 
-        document.documentElement.lang = cv.lang || 'pt-BR';
+        document.documentElement.lang = job.lang || 'pt-BR';
 
-        const isInternational = cv.lang === 'en';
+        const isInternational = job.lang === 'en';
         const secResumo = isInternational ? 'Professional Summary' : 'Resumo Profissional';
         const secExp = isInternational ? 'Professional Experience' : 'Experiência Profissional';
         const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
@@ -82,7 +91,7 @@
           ? (c.location && c.location.en) || ''
           : (c.location && c.location.pt) || '');
 
-        const vagaLocation = getLocationDisplay(job, candidateLocation, cv.lang);
+        const vagaLocation = getLocationDisplay(job, candidateLocation, job.lang);
 
         document.getElementById('page-title').textContent = `${job.vaga} - ${job.empresa} | ${candidateName}`;
 
@@ -99,7 +108,7 @@
           ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
         window._pdfFilename = isGeneric
-          ? `CV - ${candidateName} - ${cv.lang === 'en' ? 'Generic EN' : 'Genérico PT'}.pdf`
+          ? `CV - ${candidateName} - ${job.lang === 'en' ? 'Generic EN' : 'Genérico PT'}.pdf`
           : `CV - ${candidateName} - ${job.empresa}.pdf`;
 
         const expHtml = (cv.experiencias || []).map(exp => `

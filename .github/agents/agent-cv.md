@@ -6,7 +6,8 @@ Você é o agente especializado em gerar os dados de CV para uma vaga específic
 Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
 ## Regras do que deve ser preenchidos no CV
-Todas as subseções abaixos são regras que devem ser seguidas para gerar um CV de alta qualidade, personalizado para a vaga e otimizado para ATS. Siga todas as regras cuidadosamente. Haverá uma regra geral que se aplica a todas as seções que compõe o CV, e depois regras específicas para cada seção do CV. Se houver qualquer conflito entre as regras gerais e as específicas, as regras específicas prevalecem.
+- Todas as subseções abaixo são regras que devem ser seguidas para gerar um CV de alta qualidade, personalizado para a vaga e otimizado para ATS. Siga todas as regras cuidadosamente. Haverá uma regra geral que se aplica a todas as seções que compõe o CV, e depois regras específicas para cada seção do CV. Se houver qualquer conflito entre as regras gerais e as específicas, as regras específicas prevalecem.
+- Gere um CV por vez seguindo tais regras. Quando entender que ele estiver pronto, siga para gerar o próximo CV.
 
 ### Geral
 1. Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
@@ -25,36 +26,40 @@ Todas as subseções abaixos são regras que devem ser seguidas para gerar um CV
     ✅ Correto — específico, contextual:
     > "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
 11. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
-    - Tem que ter 15 itens em negrito (usando <strong>) no CV:
-      - 5 no [Resumo profissional](#resumo-profissional);
-      - 10 na [Experiência Profissional](#experiência-profissional)
-      - Excesso polui e dilui o efeito, portanto é importante seguir o limite de 15 itens.
-    - Priorize os de maior relevância para a vaga;  
-    - Um item é uma palavra ou expressão curta de no máximo 3 palavras
-    - Use negrito para destacar tecnologias, cargos, resultados.
-    - Jamais destaque preposições, artigos ou frases inteiras e verbos de ação.
-    - Cuidado para não cortar palavras ou expressões.
+    1. Tem que ter 8 a 15 itens em negrito (usando <strong>) no CV:
+       1. 3 a 5 no [Resumo profissional](#resumo-profissional);
+       2. 5 a 10 na [Experiência Profissional](#experiência-profissional)
+       3. Excesso polui e dilui o efeito, portanto é importante seguir o limite de 15 itens.
+    2. Priorize os de maior relevância para a vaga;  
+    3. Um item é uma palavra ou expressão curta de no máximo 3 palavras
+    4. Use negrito para destacar tecnologias, cargos, resultados.
+    5. Jamais destaque preposições, artigos ou frases inteiras e verbos de ação.
+    6. Cuidado para não cortar palavras ou expressões.
 12. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
 13. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
 
 ### Resumo profissional
-- Deve ser um parágrafo de 500 - 600 caracteres
-- Deve apresentar sempre o tempo de experiência profissional
-- Apresentar pelo menos um cargo, o que foi feito e os resultados obtidos. Preferir o cargo mais recente que esteja adequado à vaga.
-- Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
+1. Deve ser um parágrafo de 500 - 600 caracteres
+2. Deve apresentar sempre o tempo de experiência profissional
+3. Apresentar pelo menos um cargo, o que foi feito e os resultados obtidos. Preferir o cargo mais recente que esteja adequado à vaga.
+4. Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
 
 ### Experiência Profissional
-- Deve ter entre 2000 a 2500 caracteres
-- Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
-- As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a experiência profissional mais recente. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
-- A mais recente experiência profissional ter no mínimo 800 caracteres
-- Em cada experiência profissional: 
-  - Cada bullet deve ter entre 100 e 200 caracteres.
-  - Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais recentes e relevantes para a vaga.
+1. A soma de todos os bullets deve ter entre 2000 a 2500 caracteres
+2. Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
+3. As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a experiência profissional mais recente. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
+4. A soma de todos os bullets da experiência profissional mais relevantes ter no mínimo 800 caracteres
+   - A experiência profissional mais relevante é aquela que:
+       - É mais recente;
+       - Que tenha relação com a vaga
+       - Tenha durado pele menos 1 ano ou continua em andamento
+5. Em cada experiência profissional: 
+   1. Cada bullet deve ter entre 100 e 300 caracteres.
+   2. Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais relevantes para a vaga.
 
 ### Competências Técnicas
-- Deve citar no máximo 15.
-- Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
+1. Deve citar entre a 1 a 15 skills.
+2. Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
 
 ### Formação Acadêmica
 - Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
@@ -74,17 +79,18 @@ educacao = [
 
 Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `location.en` do candidato.
 
-| Idioma da vaga | `lang` | `local`                          | Valores  |
-|----------------|--------|----------------------------------|----------|
-| Português      | `"pt"` | `CANDIDATE_DATA.location.pt`     | R$       |
-| Inglês         | `"en"` | `CANDIDATE_DATA.location.en`     | USD      |
+| Idioma da vaga | `lang` (no job) | `local` (no cv)                  | Valores  |
+|----------------|-----------------|----------------------------------|----------|
+| Português      | `"pt"`          | `CANDIDATE_DATA.location.pt`     | R$       |
+| Inglês         | `"en"`          | `CANDIDATE_DATA.location.en`     | USD      |
+
+`lang` fica no nível do job (ex: `job.lang = "pt"`), não dentro do objeto `cv`.
 
 ## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 
 ```js
 cv = {
   authorized: true,
-  lang: "pt",
   local: "[CANDIDATE_DATA.location.pt]",
   titulo: "Título do Cargo",
   subtitulo: "Tech 1 | Tech 2 | Tech 3",
@@ -123,5 +129,28 @@ cv = {
 - Caso solicitado, gere 2 CVs, um em português e outro em inglês em `src/json/generic-cv-data.js.example`
 - Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js.example` ja esteja preenchido
 
-# Checagem pós geração
-- Após gerar os CVs, releia cada um deles e verifique se todas [Regras do que deve ser preenchidos no CV](#regras-do-que-deve-ser-preenchidos-no-cv) foram cumpridas, especialmente os limites de caracteres e a quantidade de itens em negrito. Se algum ajuste for necessário, ajuste o CV para garantir que o CV final esteja conforme as regras.
+# Testes
+- Após gerar todos os CVs, rode os testes definidos em `test/cv.test.js` para consultar a qualidade do CV gerado.
+- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um CV perfeito.
+- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o CV passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
+- Rode os testes apenas uma vez. Jamais fique em loop tentando corrigir o CV e rodar os testes mais de uma vezes.
+- Não informe ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- Rode os testes com `JOB_ID=${cv.id} npm test -- test/cv.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/cv.test.js`
+- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
+- A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
+
+    | Teste                                                                              | Regra infrigida                                                 |
+    |------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+    | Validar tamanho resumo de 500 a 600 caracteres                                     | [Resumo profissional](#resumo-profissional) Regra 1             |
+    | Contar 3 a 5 negrito no sumário                                                    | [Geral](#geral)  Regra 11.1.1                                   |
+    | Contar 5 a 10 negrito na experiencia profissional                                  | [Geral](#geral)  Regra 11.1.2                                   |
+    | Validar tamanho de 1500 a 2000 caracteres para todas as experiencias               | [Experiência Profissional](#experiência-profissional) Regra 1   |
+    | Validar experiencia mais relevante com no minimo 700 caracteres                    | [Experiência Profissional](#experiência-profissional) Regra 4   |
+    | Validar experiencia mais relevante tem que ter mais caracteres que todas as outras | [Experiência Profissional](#experiência-profissional) Regra 3   |
+    | Validar bullet com tamanho entre 100 a 300 caracteres                              | [Experiência Profissional](#experiência-profissional) Regra 5.1 |
+    | Contar bullets entre 1 e 6 em cada experiencia                                     | [Experiência Profissional](#experiência-profissional) Regra 5.2 |
+    | Validar de 1 a 15 skills                                                           | [Competências Técnicas](#competências-técnicas)                 |
+    | CV - Educação                                                                      | [Formação Acadêmica](#formação-acadêmica)                       |
+
+- As demais regras não citadas na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o CV, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
+- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras 

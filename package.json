@@ -5,7 +5,9 @@
   "main": "src/json/jobs-data.js",
   "scripts": {
     "start": "nodemon pdf-server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,10 @@
     "puppeteer": "^24.42.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
+    "@types/jest": "^30.0.0",
+    "babel-jest": "^30.4.1",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.14"
   }
 }

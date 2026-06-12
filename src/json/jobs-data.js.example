@@ -1,2 +1,27 @@
-window.JOBS_DATA = {
-};
+/**
+ * @type {import('../src/interfaces/job-data').JobsData}
+ */
+window.JOBS_DATA = [
+  // {
+  //   id: "job-id",
+  //   empresa: "Empresa Ltda",
+  //   vaga: "Senior Developer",
+  //   link: "https://linkedin.com/jobs/view/123456",
+  //   modalidade: "Remoto",
+  //   contratacao: "CLT",
+  //   tipos: ["cv", "cl"],
+  //   vagaTexto: "Full text of job posting",
+  //   fit: {
+  //     score: 8,
+  //     positivos: ["PHP", "Laravel"],
+  //     negativos: ["Docker"],
+  //     summary: "Good alignment"
+  //   },
+  //   cv: { /* CV data */ },
+  //   cl: { /* CL data */ },
+  //   candidatura: {
+  //     aviso: "Apply via email",
+  //     url: "mailto:jobs@empresa.com"
+  //   }
+  // }
+];

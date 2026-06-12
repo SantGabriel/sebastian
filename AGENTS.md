@@ -25,7 +25,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 ---
 
-## Fluxo principal
+## Geração de fit, CV e CL por vaga — Fluxo principal
 
 ### Passo 0 — Validação inicial
 **A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `src/json/candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `.github/skills/iniciar-projeto/SKILL.md`.
@@ -47,10 +47,10 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
     - Para CV → leia `.github/agents/agent-cv.md` e siga suas instruções
     - Para CL → leia `.github/agents/agent-cl.md` e siga suas instruções
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
-- Se não informar, assuma que será gerado ambos.
+- Se não informar, assuma que será gerado apenas o CV.
+  - Se a vaga vier do domínio gupy.io, assuma que será apenas o CL
 
-
-### Modo entrevista
+## Modo entrevista
 - Quando o usuário pedir análise de entrevista para uma vaga, leia `.github/agents/agent-interview.md` e siga suas instruções
 
 ---
@@ -58,8 +58,9 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 ## Schema do `src/json/jobs-data.js`
 
 ```js
-window.JOBS_DATA = {
-  "xpto": {
+window.JOBS_DATA = [
+  {
+    index: 1,             // índice sequencial começando em 1 — usado para referenciar vagas por número (ex: "remova a vaga 3"). Sempre reatribuir ao adicionar ou remover vagas.
     id: "xpto",           // string simples, sem espaços/acentos — usada na URL
     empresa: "XPTO Ltda",
     vaga: "Product Engineer",
@@ -67,6 +68,7 @@ window.JOBS_DATA = {
     modalidade: "Remoto",  // "Remoto", "Presencial" ou "Híbrida"
     contratacao: "CLT",  // "CLT", "PJ" ou "CLT/PJ" — omitir se não houver informação
     cidadeVaga: "",        // cidade da vaga — preencher se Presencial/Híbrida (ex: "São Paulo, SP"); omitir se Remoto
+    lang: "pt",            // idioma da vaga: "pt" ou "en"
     tipos: ["cv", "cl"],   // quais documentos esta vaga requer
     vagaTexto: "...",      // texto integral da vaga
     candidatura: {         // omitir se não houver instrução explícita de candidatura
@@ -76,8 +78,9 @@ window.JOBS_DATA = {
     fit: { /* ver agent-fit.md */ },
     cv: { /* ver agent-cv.md */ },
     cl: { /* ver agent-cl.md */ }
-  }
-}
+  },
+  // ... mais vagas aqui
+]
 ```
 
 ---
