@@ -30,13 +30,13 @@ npm start
 ### Dados pessoais
 Antes de começar pela primeira vez, dê uma olá para o Sebastian! Ele vai te perguntar alguns dados pessoais importantes seus para colocar no currículo. Você pode pedir o agente para atualizar esses dados a qualquer momento.
 
-### [.github/skills/cv-base/SKILL.md](.github/skills/cv-base/SKILL.md)
+### [ai/skills/cv-base/SKILL.md](ai/skills/cv-base/SKILL.md)
 Base de experiência do candidato (fonte de verdade).
 Aqui você vai criar uma espécie de grande currículo com todas as suas experiências, habilidades, educação e idiomas. O Sebastian vai usar esse CV base para extrair as informações relevantes para cada vaga e gerar um CV personalizado.
 Não economize detalhes aqui, pois quanto mais completo for o CV base, melhor serão os CVs personalizados gerados para cada vaga.
 <br>
 Dicas:
-1. Use o [CV base template](.github/skills/cv-base/SKILL.md.example) como base. Lá há sugestões de seções e subseções, mas você pode adicionar ou remover a medida que achar necessário.
+1. Use o [CV base template](ai/skills/cv-base/SKILL.md.example) como base. Lá há sugestões de seções e subseções, mas você pode adicionar ou remover a medida que achar necessário.
 2. Fale detalhes de cada projeto/feature que você fez no seu trabalho, de preferência as mais longas e complexas, informando:
    - O que foi o projeto/feature (ex: Aplicação de Cache usando Redis)
    - Em quanto tempo levou para ser feito 
@@ -49,7 +49,7 @@ Dicas:
 5. Você pode citar também conceitos que você conhece, mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
 6. Site integrações que você fez como: gateway de pagamento, serviços de nuvem, distribuidores, sistemas do governo.
 
-### [.github/skills/contexto/SKILL.md](.github/skills/contexto/SKILL.md)
+### [ai/skills/contexto/SKILL.md](ai/skills/contexto/SKILL.md)
 Aqui são você pode dar contexto para o Sebastian do que preencher em algumas situações. 
 <br>
 Exemplos:

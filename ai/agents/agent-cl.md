@@ -7,7 +7,7 @@ Ao receber "autoriza CL para [empresa]" — após fit aprovado pelo usuário.
 
 ## Antes de gerar
 
-- Baseie no fit aprovado e no `.github/skills/cv-base/SKILL.md`
+- Baseie no fit aprovado e no `ai/skills/cv-base/SKILL.md`
 - Idioma da CL deve seguir o idioma da vaga
 
 ## Regras de conteúdo

@@ -5,33 +5,33 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 ## Mapa de arquivos do sistema
 
-| Arquivo                                     | Papel                                                                                |
-|---------------------------------------------|--------------------------------------------------------------------------------------|
-| `vagas.txt`                                 | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                     |
-| `src/json/jobs-data.js`                     | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
-| `src/json/candidate-data.js`                | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
-| `src/json/generic-cv-data.js`               | Dados gerados/atualizados pelo agente para o CV genêrico                             |
-| `index.html`                                | Dashboard com fits e links CV/CL por vaga                                            |
-| `src/pages/cv.html`                         | Template de CV — renderiza via `?job=id`                                             |
-| `src/pages/cl.html`                         | Template de CL — renderiza via `?job=id`                                             |
-| `.github/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização                        |
-| `.github/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                                  |
-| `.github/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                          |
-| `.github/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                              |
-| `.github/agents/agent-fit.md`               | Agente especializado em análise de fit                                               |
-| `.github/agents/agent-cv.md`                | Agente especializado em geração de CV                                                |
-| `.github/agents/agent-cl.md`                | Agente especializado em geração de CL                                                |
-| `.github/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                     |
+| Arquivo                                | Papel                                                                                |
+|----------------------------------------|--------------------------------------------------------------------------------------|
+| `vagas.txt`                            | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                     |
+| `src/json/jobs-data.js`                | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
+| `src/json/candidate-data.js`           | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
+| `src/json/generic-cv-data.js`          | Dados gerados/atualizados pelo agente para o CV genêrico                             |
+| `index.html`                           | Dashboard com fits e links CV/CL por vaga                                            |
+| `src/pages/cv.html`                    | Template de CV — renderiza via `?job=id`                                             |
+| `src/pages/cl.html`                    | Template de CL — renderiza via `?job=id`                                             |
+| `ai/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização                        |
+| `ai/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                                  |
+| `ai/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                          |
+| `ai/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                              |
+| `ai/agents/agent-fit.md`               | Agente especializado em análise de fit                                               |
+| `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                                |
+| `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                |
+| `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                     |
 
 ---
 
 ## Geração de fit, CV e CL por vaga — Fluxo principal
 
 ### Passo 0 — Validação inicial
-**A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `src/json/candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `.github/skills/iniciar-projeto/SKILL.md`.
+**A primeira coisa a se fazer ao abrir uma sessão é** ver se o arquivo `src/json/candidate-data.js` existe e está com os dados preenchidos. Se não existir ou sem dados, siga as instruções em `ai/skills/iniciar-projeto/SKILL.md`.
 
 ### Passo 1 — Perguntas de clarificação (por vaga)
-- Leia `.github/skills/cv-base/SKILL.md`, `.github/skills/contexto/SKILL.md`
+- Leia `ai/skills/cv-base/SKILL.md`, `ai/skills/contexto/SKILL.md`
 - Para cada vaga, compare os requisitos com o CV base
 - Se houver tecnologias/ferramentas/práticas **não documentadas** no CV base, pergunte objetivamente.
 - Só pule se todos os requisitos relevantes já estiverem cobertos
@@ -39,19 +39,19 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 - Depois de todas as perguntas respondidas, siga para o passo 2 para gerar os fits.
 
 ### Passo 2 — Fit
-- Leia `.github/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `src/json/jobs-data.js`
+- Leia `ai/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `src/json/jobs-data.js`
 - Você não deve abrir os links fornecidos para obter dados. Eles apenas serão apenas informados no index.html
 
 ### Passo 3 — Autorização
 - Aguarde o usuário pedir para gerar os CV e/ou CL:
-    - Para CV → leia `.github/agents/agent-cv.md` e siga suas instruções
-    - Para CL → leia `.github/agents/agent-cl.md` e siga suas instruções
+    - Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
+    - Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
   - Se a vaga vier do domínio gupy.io, assuma que será apenas o CL
 
 ## Modo entrevista
-- Quando o usuário pedir análise de entrevista para uma vaga, leia `.github/agents/agent-interview.md` e siga suas instruções
+- Quando o usuário pedir análise de entrevista para uma vaga, leia `ai/agents/agent-interview.md` e siga suas instruções
 
 ---
 
@@ -90,10 +90,10 @@ window.JOBS_DATA = [
 Ao finalizar qualquer etapa, **antes de responder "feito"**, verifique se ocorreu algum dos casos abaixo:
 
 ### Caso 1 — Novas habilidades reveladas
-Se durante o fluxo o usuário informou habilidades, experiências ou conhecimentos não documentados no `.github/skills/cv-base/SKILL.md` (ex: ao corrigir um fit), proponha a atualização:
+Se durante o fluxo o usuário informou habilidades, experiências ou conhecimentos não documentados no `ai/skills/cv-base/SKILL.md` (ex: ao corrigir um fit), proponha a atualização:
 
 > **Proposta de atualização — CV base**
-> Gostaria de adicionar ao `.github/skills/cv-base/SKILL.md`:
+> Gostaria de adicionar ao `ai/skills/cv-base/SKILL.md`:
 > - **Onde:** [seção exata, ex: "Skills > Backend"]
 > - **Texto:** `[texto exato a ser inserido]`
     > Confirma? (responda sim/não ou edite o texto)
@@ -111,10 +111,10 @@ Se o usuário apontou erros recorrentes de análise ou forneceu regras para evit
 
 | Tipo de regra                          | Arquivo                                     |
 |----------------------------------------|---------------------------------------------|
-| Análise de fit, scores, OR lists, gaps | `.github/agents/agent-fit.md`               |
-| Escrita do CV, ATS, estrutura          | `.github/agents/agent-cv.md`                |
-| Escrita do CL, gaps no CL              | `.github/agents/agent-cl.md`                |
-| Boas práticas ATS gerais               | `.github/skills/boas-praticas-ats/SKILL.md` |
+| Análise de fit, scores, OR lists, gaps | `ai/agents/agent-fit.md`               |
+| Escrita do CV, ATS, estrutura          | `ai/agents/agent-cv.md`                |
+| Escrita do CL, gaps no CL              | `ai/agents/agent-cl.md`                |
+| Boas práticas ATS gerais               | `ai/skills/boas-praticas-ats/SKILL.md` |
 | Fluxo geral, orquestração              | `AGENTS.md`                                 |
 
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
@@ -136,7 +136,7 @@ Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de anál
     - `src/json/jobs-data.js`
     - `src/json/candidate-data.js`
     - `src/json/generic-cv-data.js`
-    - `.github/skills/cv-base/SKILL.md`
-    - `.github/skills/contexto/SKILL.md`
+    - `ai/skills/cv-base/SKILL.md`
+    - `ai/skills/contexto/SKILL.md`
 - Os demais arquivos não devem ser alterados, muito menos sugerir alterá-los para o usuário. 
   - Você só poderá alterar **com permissão apenas** os demais se o arquivo [desenvolvedor.md](desenvolvedor.md) existir. 

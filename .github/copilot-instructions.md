@@ -1,1 +1,0 @@
-# Veja o AGENTS.md

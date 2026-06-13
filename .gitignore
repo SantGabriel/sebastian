@@ -17,6 +17,6 @@ src/json/generic-cv-data.js
 src/json/jobs-data.js
 vagas.txt
 insights.md
-.github/skills/cv-base/SKILL.md
-.github/skills/contexto/SKILL.md
+ai/skills/cv-base/SKILL.md
+ai/skills/contexto/SKILL.md
 desenvolvedor.md

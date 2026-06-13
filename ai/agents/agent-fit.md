@@ -7,7 +7,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 
 ## Regras de análise
 
-- Leia `.github/skills/cv-base/SKILL.md` e `.github/skills/contexto/SKILL.md` antes de analisar
+- Leia `ai/skills/cv-base/SKILL.md` e `ai/skills/contexto/SKILL.md` antes de analisar
 - Foque nos requisitos obrigatórios (seção explícita de "Requisitos" / "Requirements" / "Qualificações")
 - Atribuições e responsabilidades **não são requisitos** — não os trate como gaps
 - Não misturar gaps de responsabilidades com gaps de requisitos
@@ -123,9 +123,9 @@ candidatura = { aviso: "Candidatura é feito pelo e-mail vaga@empresa.com", emai
 ## Ao terminar correções de fit
 
 Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
-- Se o usuário revelou habilidades novas → proponha adição ao `.github/skills/cv-base/SKILL.md`
+- Se o usuário revelou habilidades novas → proponha adição ao `ai/skills/cv-base/SKILL.md`
 - Se o usuário identificou erros recorrentes → proponha regra nova neste arquivo
-- **Nunca altere `.github/skills/cv-base/SKILL.md` sem autorização explícita**
+- **Nunca altere `ai/skills/cv-base/SKILL.md` sem autorização explícita**
 
 # Testes
 - Após gerar todos os fits, rode os testes definidos em `test/fit.test.js` para consultar a qualidade do fit gerado.

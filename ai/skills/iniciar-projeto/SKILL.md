@@ -13,8 +13,8 @@ cp src/json/generic-cv-data.js.example src/json/generic-cv-data.js
 cp src/json/jobs-data.js.example src/json/jobs-data.js
 cp vagas.txt.example vagas.txt
 cp insights.md.example insights.md
-cp .github/skills/cv-base/SKILL.md.example .github/skills/cv-base/SKILL.md
-cp .github/skills/contexto/SKILL.md.example .github/skills/contexto/SKILL.md
+cp ai/skills/cv-base/SKILL.md.example ai/skills/cv-base/SKILL.md
+cp ai/skills/contexto/SKILL.md.example ai/skills/contexto/SKILL.md
 ```
 
 1. Pergunte ao candidato:

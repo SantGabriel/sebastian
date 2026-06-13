@@ -16,9 +16,9 @@ Para a vaga indicada, produza:
 
 ## Fontes
 
-- `.github/skills/cv-base/SKILL.md` — experiências e dados do candidato
-- `.github/skills/contexto/SKILL.md` — instruções específicas do candidato
-- `.github/skills/boas-praticas-ats/SKILL.md` — boas práticas de posicionamento
+- `ai/skills/cv-base/SKILL.md` — experiências e dados do candidato
+- `ai/skills/contexto/SKILL.md` — instruções específicas do candidato
+- `ai/skills/boas-praticas-ats/SKILL.md` — boas práticas de posicionamento
 - Descrição da vaga em `vagas.txt`
 
 ## Saída

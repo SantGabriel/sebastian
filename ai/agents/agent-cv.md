@@ -10,12 +10,12 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 - Gere um CV por vez seguindo tais regras. Quando entender que ele estiver pronto, siga para gerar o próximo CV.
 
 ### Geral
-1. Leia `.github/skills/boas-praticas-ats/SKILL.md` e `.github/skills/contexto/SKILL.md`
-2. **Baseie tudo no `.github/skills/cv-base/SKILL.md`**
+1. Leia `ai/skills/boas-praticas-ats/SKILL.md` e `ai/skills/contexto/SKILL.md`
+2. **Baseie tudo no `ai/skills/cv-base/SKILL.md`**
 3. **Nunca inventar experiências não documentadas**
 4. Priorize experiência profissional; experiências pessoais/acadêmicas só se úteis para o ATS
 5. Nunca afirme "experiência sólida" em algo sem histórico profissional real
-6. Nunca afirme saber ou ter aplicado algo que não esteja no `.github/skills/cv-base/SKILL.md` apenas satisfazer a vaga
+6. Nunca afirme saber ou ter aplicado algo que não esteja no `ai/skills/cv-base/SKILL.md` apenas satisfazer a vaga
 7. Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
 8. Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
 9. Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei 
