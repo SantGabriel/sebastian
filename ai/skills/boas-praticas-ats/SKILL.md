@@ -42,14 +42,10 @@ description: Regras para otimização de currículos em sistemas ATS
 - Se a vaga é em português, citar valores apenas em R$; caso contrário, em USD
 
 # Testes
+- Aqui será definido os detalhes dos destes para esse agente
 - Após geração de todos os CL/CV, rode os testes definidos em `test/ats.test.js` para consultar a qualidade do documento gerado.
-- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
-- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Você deve rodar os testes apenas uma vez. Jamais fique em loop tentando corrigir o documento e rodar os testes várias vezes.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - Rode os testes com `JOB_ID=${cl.id} npm test -- test/ats.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/ats.test.js`
-- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
 | Teste                               | Regra infrigida                                                                                 |
 |-------------------------------------|-------------------------------------------------------------------------------------------------|

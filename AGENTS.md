@@ -109,13 +109,13 @@ Se o usuário apontou erros recorrentes de análise ou forneceu regras para evit
 
 **Arquivo correto por tipo de regra:**
 
-| Tipo de regra                          | Arquivo                                     |
-|----------------------------------------|---------------------------------------------|
+| Tipo de regra                          | Arquivo                                |
+|----------------------------------------|----------------------------------------|
 | Análise de fit, scores, OR lists, gaps | `ai/agents/agent-fit.md`               |
 | Escrita do CV, ATS, estrutura          | `ai/agents/agent-cv.md`                |
 | Escrita do CL, gaps no CL              | `ai/agents/agent-cl.md`                |
 | Boas práticas ATS gerais               | `ai/skills/boas-praticas-ats/SKILL.md` |
-| Fluxo geral, orquestração              | `AGENTS.md`                                 |
+| Fluxo geral, orquestração              | `AGENTS.md`                            |
 
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
@@ -140,3 +140,24 @@ Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de anál
     - `ai/skills/contexto/SKILL.md`
 - Os demais arquivos não devem ser alterados, muito menos sugerir alterá-los para o usuário. 
   - Você só poderá alterar **com permissão apenas** os demais se o arquivo [desenvolvedor.md](desenvolvedor.md) existir. 
+
+# Testes
+- Após gerar todos os documentos (CV, CL e fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
+- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
+- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
+- Você deve rodar os testes **APENAS UMA ÚNICA VEZ**. Jamais fique em loop tentando corrigir o documento e rodar os testes mais de uma vez por documento. 
+- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
+- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
+- A tabela abaixo tem o mapeamento de quais agentes/skills precisam desses testes, incluindo os detalhes de como rodar e as regras que cada teste abrange:
+
+  | Agente/skill                                                                        |
+  |-------------------------------------------------------------------------------------|
+  | [ai/agents/agent-cv.md](ai/agents/agent-cv.md#testes)                               |
+  | [ai/agents/agent-cl.md](ai/agents/agent-cl.md#testes)                               |
+  | [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
+  | [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
+
+- As demais regras não citadas dentro dos agentes citados na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o documento, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
+- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras
+

@@ -130,13 +130,9 @@ cv = {
 - Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js.example` ja esteja preenchido
 
 # Testes
+- Aqui será definido os detalhes dos destes para esse agente
 - Após gerar todos os CVs, rode os testes definidos em `test/cv.test.js` para consultar a qualidade do CV gerado.
-- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um CV perfeito.
-- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o CV passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Rode os testes apenas uma vez. Jamais fique em loop tentando corrigir o CV e rodar os testes mais de uma vezes.
-- Não informe ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - Rode os testes com `JOB_ID=${cv.id} npm test -- test/cv.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/cv.test.js`
-- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
     | Teste                                                                              | Regra infrigida                                                 |
@@ -151,6 +147,3 @@ cv = {
     | Contar bullets entre 1 e 6 em cada experiencia                                     | [Experiência Profissional](#experiência-profissional) Regra 5.2 |
     | Validar de 1 a 15 skills                                                           | [Competências Técnicas](#competências-técnicas)                 |
     | CV - Educação                                                                      | [Formação Acadêmica](#formação-acadêmica)                       |
-
-- As demais regras não citadas na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o CV, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
-- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras 

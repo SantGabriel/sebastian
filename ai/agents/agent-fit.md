@@ -128,20 +128,12 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - **Nunca altere `ai/skills/cv-base/SKILL.md` sem autorização explícita**
 
 # Testes
+- Aqui será definido os detalhes dos destes para esse agente
 - Após gerar todos os fits, rode os testes definidos em `test/fit.test.js` para consultar a qualidade do fit gerado.
-- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um fit perfeito.
-- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o fit passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Você deve rodar os testes apenas uma vez. Jamais fique em loop tentando corrigir o fit e rodar os testes várias vezes.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - Rode os testes com `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
-- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
   
   | Teste                | Regra infrigida                                      |
   |----------------------|------------------------------------------------------|
   | Score entre 0 e 10   | [Fórmula do gap](#fórmula-do-gap) Regra 1            |
   | Sem gaps = score 10  | [Sem negativos = score 10](#sem-negativos--score-10) |
-
-- As demais regras não citadas na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o fit, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
-- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras 
