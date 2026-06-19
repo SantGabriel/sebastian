@@ -10,6 +10,8 @@ app.use(express.static(__dirname));
 app.get('/pdf', async (req, res) => {
   const jobId = req.query.job;
   const doc = (req.query.doc || 'cv').toString().toLowerCase();
+  const isGeneric = req.query.isGeneric || '';
+  const candidate = req.query.candidate || '';
   if (!jobId) return res.status(400).send('Parâmetro ?job= obrigatório');
 
   const pageName = doc === 'cl' ? 'src/pages/cl.html' : 'src/pages/cv.html';
@@ -19,9 +21,21 @@ app.get('/pdf', async (req, res) => {
     browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
 
-    await page.goto(`http://localhost:${PORT}/${pageName}?job=${jobId}`, { waitUntil: 'networkidle0' });
+    const pageParams = new URLSearchParams({ job: jobId });
+    if (isGeneric) pageParams.set('isGeneric', isGeneric);
+    if (candidate) pageParams.set('candidate', candidate);
+    await page.goto(`http://localhost:${PORT}/${pageName}?${pageParams}`, { waitUntil: 'networkidle0' });
 
-    const pdfData = await page.evaluate(() => window._pdfData || {});
+    const { pdfData, contentHeightMm } = await page.evaluate(() => {
+      const mmToPx = 96 / 25.4;
+      const totalMm = document.body.scrollHeight / mmToPx + 12 * 2;
+      return {
+        pdfData: window._pdfData || {},
+        contentHeightMm: Math.max(297, Math.ceil(totalMm)),
+      };
+    });
+
+    await page.addStyleTag({ content: `@page { size: 217mm ${contentHeightMm}mm !important; }` });
 
     const vaga = (pdfData.vaga || '').replace(/[<>:"/\\|?*]/g, '').trim();
     const empresa = (pdfData.empresa || '').replace(/[<>:"/\\|?*]/g, '').trim();
@@ -31,10 +45,9 @@ app.get('/pdf', async (req, res) => {
     const filename = parts.join(' - ') + '.pdf';
 
     const pdf = await page.pdf({
-      width: '217mm',
-      height: '400mm',
       printBackground: true,
-      margin: { top: '12mm', bottom: '12mm', left: '14mm', right: '14mm' }
+      preferCSSPageSize: true,
+      margin: { top: 0, bottom: 0, left: 0, right: 0 }
     });
 
     res.set({

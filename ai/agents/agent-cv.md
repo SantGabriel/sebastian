@@ -1,6 +1,6 @@
 # Agente: Gerador de CV
 
-Você é o agente especializado em gerar os dados de CV para uma vaga específica.
+Você é o agente especializado em gerar os dados de CV, seja para uma vaga específica ou genérica.
 
 ## Quando este agente é ativado
 Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
@@ -56,20 +56,52 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 5. Em cada experiência profissional: 
    1. Cada bullet deve ter entre 100 e 300 caracteres.
    2. Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais relevantes para a vaga.
+6. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
 
 ### Competências Técnicas
 1. Deve citar entre a 1 a 15 skills.
 2. Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
 
 ### Formação Acadêmica
-- Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
-- Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
-Formato: 
+1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
+2. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
+3. Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
+Formato:
 ```js
 educacao = [
-  { "curso": "Nome do curso", "inst": "Nome da instituição", "periodo": "ano inicio - ano fim" },
+  { curso: "Nome do curso", inst: "Nome da instituição", periodo: "AAAA - AAAA", stack: "Tech1 | Tech2" },
 ]
 ```
+
+### Projetos Pessoais
+- **Seção opcional**: incluir somente se existirem projetos documentados no `ai/skills/cv-base/SKILL.md`
+- Selecione no máximo 2 projetos que sejam relevantes para a vaga
+- Cada projeto deve ter entre 300 a 500 caracteres
+Formato:
+```js
+projetos: [
+  {
+    nome: "Nome do Projeto",
+    url: "https://github.com/...", // opcional
+    stack: "Tech1 | Tech2",
+    periodo: "AAAA - AAAA",
+    descricao: "Descrição do projeto em um parágrafo."
+  }
+]
+```
+
+### Certificados
+- **Seção opcional**: incluir somente se existirem certificados documentados no `ai/skills/cv-base/SKILL.md`
+- Inclua certificados relevantes para a vaga.
+- Máximo de 5 certificações. Se houver mais de 5, priorize os mais recentes e relevantes para a vaga.
+- `url` é opcional
+Formato:
+```js
+certificados: [
+  { nome: "Nome da Certificação", url: "https://...", periodo: "AAAA" }
+]
+```
+
 ### Idiomas
 - Formato simples: Idioma - nível (ex: "Inglês - Avançado", "Espanhol - Intermediário")
 - Incluir todos os idiomas que o candidato tem conhecimento
@@ -107,8 +139,14 @@ cv = {
     }
   ],
   skills: ["Tech 1", "Tech 2", "..."],
+  projetos: [ // Opcional — omitir se não houver projetos no cv-base
+    { nome: "Nome", url: "https://...", stack: "Tech1 | Tech2", periodo: "AAAA - AAAA", descricao: "Parágrafo." }
+  ],
   educacao: [
-    { curso: "Nome do Curso", inst: "Instituição de Ensino", periodo: "AAAA - AAAA" }
+    { curso: "Nome do Curso", inst: "Instituição de Ensino", periodo: "AAAA - AAAA", stack: "Tech1 | Tech2" }
+  ],
+  certificados: [ // Opcional — omitir se não houver certificados no cv-base
+    { nome: "Nome da Certificação", url: "https://...", periodo: "AAAA" }
   ],
   idiomas: ["Idioma 1 - Nível", "Idioma 2 - Nível"]
 }
@@ -126,13 +164,20 @@ cv = {
   - Em ambos os casos, não é necessário perguntar ao candidato nenhuma dessas duas ultimas informações, caso elas não estejam presentes na vaga, apenas continue com o que você tem. 
 
 # CV genêrico
-- Caso solicitado, gere 2 CVs, um em português e outro em inglês em `src/json/generic-cv-data.js.example`
-- Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js.example` ja esteja preenchido
+- Caso solicitado, gere 2 CVs, um em português e outro em inglês em `src/json/generic-cv-data.js`
+- Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js` já esteja preenchido
+- Jamais use os arquivos vindos do `fixtures/fake-candidates` para gerá-los
+
+# CV exemplos
+- Serão usados apenas em desenvolvimento
+- Eles estão `fixtures/fake-candidates`
+- Assuma que estamos falando destes CV apenas se o folder `fixtures/fake-candidates` estiver sendo referenciado no prompt do usuário
+- Nunca assuma que "cv genérico" se refere a estes CVs do `fixtures/fake-candidates`
 
 # Testes
 - Aqui será definido os detalhes dos destes para esse agente
 - Após gerar todos os CVs, rode os testes definidos em `test/cv.test.js` para consultar a qualidade do CV gerado.
-- Rode os testes com `JOB_ID=${cv.id} npm test -- test/cv.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/cv.test.js`
+- Rode os testes com `JOB_ID=${cv.id} npm run test "cv|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cv|ats"`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
     | Teste                                                                              | Regra infrigida                                                 |
@@ -147,3 +192,6 @@ cv = {
     | Contar bullets entre 1 e 6 em cada experiencia                                     | [Experiência Profissional](#experiência-profissional) Regra 5.2 |
     | Validar de 1 a 15 skills                                                           | [Competências Técnicas](#competências-técnicas)                 |
     | CV - Educação                                                                      | [Formação Acadêmica](#formação-acadêmica)                       |
+
+- Para rodar os testes em CVs genéricos, use `npm run test:generic`
+- Para rodar os testes nos CVs fakes que estão em `fixtures/fake-candidates/*` e usados apenas para desenvolvimento, use `npm run test:examples`

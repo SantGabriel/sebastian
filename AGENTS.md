@@ -46,9 +46,12 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 - Aguarde o usuário pedir para gerar os CV e/ou CL:
     - Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
     - Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções
+- O usuário pode pedir para tirar alguma vaga da lista baseado no fit gerado. Quando isso acontecer você deve:
+  - remover a vaga do `src/json/jobs-data.js` e refazer o index de cada vaga
+  - remover a vaga do `vagas.txt`
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
-  - Se a vaga vier do domínio gupy.io, assuma que será apenas o CL
+  - Se a vaga vier do domínio gupy.io, pergunte ao usuário se ele não quer um CL apenas para essa vaga, já que a gupy.io não permite anexar CVs, apenas CLs.
 
 ## Modo entrevista
 - Quando o usuário pedir análise de entrevista para uma vaga, leia `ai/agents/agent-interview.md` e siga suas instruções
@@ -57,8 +60,10 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 ## Schema do `src/json/jobs-data.js`
 
+Os arquivos de dados (`src/json/*.js`) são **ES modules**: exportam uma constante nomeada (`export const JOBS_DATA = [...]`), em vez de atribuir a `window.*`. As páginas (`index.html`, `cv.html`, `cl.html`) consomem via `import`; nunca usar `<script src>` de dados nem `window.JOBS_DATA = ...`.
+
 ```js
-window.JOBS_DATA = [
+export const JOBS_DATA = [
   {
     index: 1,             // índice sequencial começando em 1 — usado para referenciar vagas por número (ex: "remova a vaga 3"). Sempre reatribuir ao adicionar ou remover vagas.
     id: "xpto",           // string simples, sem espaços/acentos — usada na URL
@@ -142,10 +147,10 @@ Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de anál
   - Você só poderá alterar **com permissão apenas** os demais se o arquivo [desenvolvedor.md](desenvolvedor.md) existir. 
 
 # Testes
-- Após gerar todos os documentos (CV, CL e fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
+- Após gerar todos os documentos solicitados pelo usuário (seja CV, CL ou fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
 - Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
 - Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Você deve rodar os testes **APENAS UMA ÚNICA VEZ**. Jamais fique em loop tentando corrigir o documento e rodar os testes mais de uma vez por documento. 
+- Você deve rodar os testes **APENAS UMA ÚNICA VEZ**. Após gerar todos os documentos, rode os testes uma única vez. Guarde os resultados em um tmp. Corrija com base nos erros sem rodar os testes novamente. O resultado dos testes é um relatório de auditoria, não um checkpoint iterativo. Aceite o estado final.
 - Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
 - Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
 - Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
@@ -158,6 +163,14 @@ Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de anál
   | [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
   | [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
 
-- As demais regras não citadas dentro dos agentes citados na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o documento, revise cada regra e verifique se todas estão sendo seguidas. Se identificar alguma regra que não esteja sendo seguida, faça uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
-- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras
+- As demais regras não citadas dentro dos agentes citados na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o documento, revise cada regra e verifique se todas estão sendo seguidas. 
+- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
+- Estes são os passos ideias de como fazer um bom teste:
+  1) Rode todos os testes para um documento **APENAS**.
+  2) Confira os resultados, identificando quais regras foram infringidas e faça as correções apenas para esse único documento.
+  3) Refaça o processo para o próximo documento, sem usar o feedback dos testes dos documentos anteriores. Cada documento, resultado de testes e correção tem um contexto único, portanto não devem ser compartilhados entre si.
+  4) Não repita esses passos mais de uma vez para cada documento. Você deve encerrar por aqui e assumir que o documento está na melhor qualidade possível no momento.
+  5) Exemplos
+     1) Gerou 10 CVs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> fim
+     2) Gerou 7 CVs + 3 CLs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> testa CL 1 -> identificar e corrigir x regras infringidas no CL 1 -> testa CL 2 -> ... -> fim
 

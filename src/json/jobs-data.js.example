@@ -1,7 +1,5 @@
-/**
- * @type {import('../src/interfaces/job-data').JobsData}
- */
-window.JOBS_DATA = [
+/** @type {import('../interfaces/job-data').JobsData} */
+export const JOBS_DATA = [
   // {
   //   id: "job-id",
   //   empresa: "Empresa Ltda",
@@ -14,7 +12,9 @@ window.JOBS_DATA = [
   //   fit: {
   //     score: 8,
   //     positivos: ["PHP", "Laravel"],
-  //     negativos: ["Docker"],
+  //     negativos: [
+  //       { descricao: "Sem experiência com Docker", tipo: "Requisito Secundário" }
+  //     ],
   //     summary: "Good alignment"
   //   },
   //   cv: { /* CV data */ },

@@ -4,12 +4,18 @@ description: Regras para otimização de currículos em sistemas ATS
 ---
 
 # Regras ATS
+As regras serão aplicadas tanto para CVs quanto para os CLs.
 
 ## Caracteres Permitidos
-- Acentuacao portuguesa: ã, ê, ç, ó, ú, etc. → ATS modernos suportam UTF-8. Não normalize para ASCII.
+- Acentuação portuguesa: ã, ê, ç, ó, ú, etc. → ATS modernos suportam UTF-8. Não normalize para ASCII.
 - Hifen simples: -
 - Barra: /
 - Pipe: |
+
+### Substituição de caracteres (acentos, etc.)
+- Nunca substituir caracteres acentuados em **nomes de atributos/propriedades** de objetos JSON ou interfaces TypeScript.                                                                                                       
+- Os atributos são mantidos **sem acento** por convenção (ex: `descricao`, `experiencias`, `educacao`, `contratacao`).                                
+- Substituições de acentos devem atingir **apenas valores de string**, usando contextos que excluam chaves de objeto (ex: NUNCA rodar comandos de terminal para substituir como `sed`. Crie um script para isso).
 
 ## Caracteres Proibidos (quebram parsing do ATS). 
 - Emojis: 📍 ✉️ 🔗 🇧🇷 🇬🇧 🇩🇪 etc => Substituir por ícones do Font Awesome ou texto puro

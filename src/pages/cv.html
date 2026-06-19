@@ -5,43 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">CV</title>
   <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
-  <script src="../json/candidate-data.js"></script>
-  <script>
-    var _c = window.CANDIDATE_DATA || {};
-    if (_c.name) document.getElementById('page-title').textContent = 'CV | ' + _c.name;
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="../styles/global.css" />
   <link rel="stylesheet" href="../styles/cv.css" />
 </head>
 <body>
   <div id="cv-root"></div>
-  <button id="btn-pdf" style="display:none" onclick="gerarPDF()">
+  <button id="btn-pdf" style="display:none">
     <i class="fa-solid fa-file-pdf"></i> Baixar PDF
   </button>
 
-  <script src="../json/jobs-data.js"></script>
-  <script src="../json/generic-cv-data.js"></script>
-  <script>
+  <script type="module">
+    /** @typedef {import('../interfaces/job-data').DataCV} DataCV */
+    /** @typedef {import('../interfaces/job-data').Job} Job */
+
     const params = new URLSearchParams(window.location.search);
     const jobId = params.get('job');
+    const fakeCandidateName = params.get('candidate');
+    const isGeneric = params.get('isGeneric');
     const root = document.getElementById('cv-root');
 
-    function getLocationDisplay(job, candidateLocation, cvLang) {
-      let location = candidateLocation || '';
-      if (job.modalidade === 'Remoto') {
-        const remoteText = cvLang === 'en' ? 'Open to remote work' : 'Disponível para trabalho remoto';
-        return location ? `${location}, ${remoteText}` : remoteText;
+    /** @type {DataCV | Job | undefined} */
+    let doc;
+    let CANDIDATE_DATA;
+
+    const importData = (path) => import(path).catch(() => ({}));
+
+    await getCandidateData();
+    await getDoc();
+
+    async function getCandidateData() {
+      if(fakeCandidateName) {
+        const moduleCandidateData = await importData(`../../fixtures/fake-candidates/${fakeCandidateName}/candidate.fixture.js`);
+        CANDIDATE_DATA = moduleCandidateData.CANDIDATE_FIXTURE;
+      }else {
+        const moduleCandidateData = await importData('../json/candidate-data.js');
+        CANDIDATE_DATA = moduleCandidateData.CANDIDATE_DATA;
       }
-      return location;
     }
 
+    async function getDoc() {
+      if(fakeCandidateName) {
+        const { CV_FIXTURE = [] } = await importData(`../../fixtures/fake-candidates/${fakeCandidateName}/cv.fixture.js`);
+        doc = CV_FIXTURE.find(c => c.id === jobId);
+      } else if(isGeneric) {
+        const { GENERIC_CV_DATA = [] } = await importData(`../json/generic-cv-data.js`);
+        doc = GENERIC_CV_DATA.find(c => c.id === jobId);
+      } else {
+        const { JOBS_DATA = [] } = await importData('../json/jobs-data.js');
+        doc = JOBS_DATA.find(j => j.id === jobId);
+      }
+    }
+
+    /**
+     * @param {DataCV | Job} item
+     * @param {string} candidateLocation
+     * @returns {string}
+     */
+    function getLocationDisplay(item, candidateLocation) {
+      if (item.modalidade === 'Remoto') {
+        const remoteText = item.lang === 'en' ? 'Open to remote work' : 'Disponível para trabalho remoto';
+        return candidateLocation ? `${candidateLocation}, ${remoteText}` : remoteText;
+      }
+      return candidateLocation;
+    }
+
+    /**
+     * @param {string} phone
+     * @param {string} countryCode
+     * @returns {string}
+     */
     function formatPhoneWithCountryCode(phone, countryCode) {
       if (!phone) return '';
-      const code = countryCode || '';
-      return code ? `${code} ${phone}` : phone;
+      return countryCode ? `${countryCode} ${phone}` : phone;
     }
 
+    /** @param {string} [msg] */
     function notAuthorized(msg) {
       root.innerHTML = `
         <div class="not-authorized">
@@ -51,126 +90,142 @@
         </div>`;
     }
 
-    const isGeneric = !!(window.GENERIC_CV_DATA && window.GENERIC_CV_DATA[jobId]);
-    const getJobFromData = () => {
-      if (isGeneric) return window.GENERIC_CV_DATA[jobId];
-      if (!window.JOBS_DATA) return null;
-      // Suporta tanto array quanto objeto (para compatibilidade com versão antiga)
-      if (Array.isArray(window.JOBS_DATA)) {
-        return window.JOBS_DATA.find(job => job.id === jobId);
+    // 3. Renderização
+    function render() {
+      if (!jobId || !doc) {
+        notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
+        return;
       }
-      return window.JOBS_DATA[jobId];
-    };
-    const job = getJobFromData();
 
-    if (!jobId || !job) {
-      notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
-    } else {
-      const cv = job.cv;
+      const cv = doc.cv;
+      if (!isGeneric && !cv.authorized) {
+        notAuthorized(`CV para "${doc.vaga} - ${doc.empresa}" ainda não autorizado.`);
+        return;
+      }
 
-      if (!isGeneric && (!cv || !cv.authorized)) {
-        notAuthorized(`CV para "${job.vaga} - ${job.empresa}" ainda não autorizado.`);
-      } else {
-        const c = window.CANDIDATE_DATA || {};
-        const candidateName = c.name || '';
-        const candidateEmail = c.email || '';
-        const candidatePhone = c.phone || '';
-        const candidatePhoneCountryCode = c.phoneCountryCode || '';
-        const candidateLinkedin = c.linkedin || {};
+      const candidateName = CANDIDATE_DATA.name;
+      const candidatePhone = CANDIDATE_DATA.phone;
+      const candidatePhoneCountryCode = CANDIDATE_DATA.phoneCountryCode;
+      const candidateLinkedin = CANDIDATE_DATA.linkedin;
 
-        document.documentElement.lang = job.lang || 'pt-BR';
+      document.documentElement.lang = doc.lang;
 
-        const isInternational = job.lang === 'en';
-        const secResumo = isInternational ? 'Professional Summary' : 'Resumo Profissional';
-        const secExp = isInternational ? 'Professional Experience' : 'Experiência Profissional';
-        const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
-        const secEdu = isInternational ? 'Education' : 'Formação Acadêmica';
-        const secLang = isInternational ? 'Languages' : 'Idiomas';
+      const isInternational = doc.lang === 'en';
+      const secResumo = isInternational ? 'Professional Summary' : 'Resumo Profissional';
+      const secExp = isInternational ? 'Professional Experience' : 'Experiência Profissional';
+      const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
+      const secEdu = isInternational ? 'Education' : 'Formação Acadêmica';
+      const secLang = isInternational ? 'Languages' : 'Idiomas';
+      const secProjetos = isInternational ? 'Personal Projects' : 'Projetos Pessoais';
+      const secCertificados = isInternational ? 'Certifications' : 'Certificações';
 
-        const candidateLocation = cv.local || (isInternational
-          ? (c.location && c.location.en) || ''
-          : (c.location && c.location.pt) || '');
+      const candidateLocation = cv.local || (isInternational
+        ? CANDIDATE_DATA.location.en
+        : CANDIDATE_DATA.location.pt);
 
-        const vagaLocation = getLocationDisplay(job, candidateLocation, job.lang);
+      const vagaLocation = getLocationDisplay(doc, candidateLocation);
 
-        document.getElementById('page-title').textContent = `${job.vaga} - ${job.empresa} | ${candidateName}`;
+      document.getElementById('page-title').textContent = `${doc.vaga} - ${doc.empresa} | ${candidateName}`;
 
-        const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'CV';
-        window._pdfData = { vaga: vagaLabel, empresa: job.empresa || '', candidateName };
+      window._pdfData = { vaga: doc.vaga, empresa: doc.empresa, candidateName };
 
-        const phoneHtml = candidatePhone
-          ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';
-        const emailHtml = candidateEmail
-          ? `<a href="mailto:${candidateEmail}"><i class="fa-solid fa-envelope"></i> ${candidateEmail}</a>` : '';
-        const linkedinHtml = candidateLinkedin.url
-          ? `<a href="${candidateLinkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${candidateLinkedin.label || 'LinkedIn'}</a>` : '';
-        const locationHtml = vagaLocation
-          ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
+      const phoneHtml = candidatePhone
+        ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';
+      const emailHtml = CANDIDATE_DATA.email
+        ? `<a href="mailto:${CANDIDATE_DATA.email}"><i class="fa-solid fa-envelope"></i> ${CANDIDATE_DATA.email}</a>` : '';
+      const linkedinHtml = candidateLinkedin
+        ? `<a href="${candidateLinkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${candidateLinkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
+      const locationHtml = vagaLocation
+        ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
-        window._pdfFilename = isGeneric
-          ? `CV - ${candidateName} - ${job.lang === 'en' ? 'Generic EN' : 'Genérico PT'}.pdf`
-          : `CV - ${candidateName} - ${job.empresa}.pdf`;
+      window._pdfFilename = isGeneric
+        ? `CV - ${candidateName} - ${doc.lang}.pdf`
+        : `CV - ${candidateName} - ${doc.empresa}.pdf`;
 
-        const expHtml = (cv.experiencias || []).map(exp => `
+      const expHtml = cv.experiencias.map(exp => `
+        <div class="job-header">
+          <h3>${exp.cargo}${exp.url ? ` - <a href="${exp.url}" target="_blank">${exp.empresa}</a>` : ` - ${exp.empresa}`}</h3>
+          <span class="date">${exp.inicio} - ${exp.fim}</span>
+        </div>
+        <p class="stack">${exp.stack}</p>
+        <ul>${exp.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+      `).join('');
+
+      const skillsHtml = cv.skills.map(s => `<span class="pill">${s}</span>`).join('');
+
+      const eduHtml = cv.educacao.map(e => `
+        <div class="edu-item">
+          <div class="edu-header">
+            <h3>${e.curso} - ${e.inst}</h3>
+            <span class="date">${e.periodo}</span>
+          </div>
+          <p class="stack">${e.stack}</p>
+        </div>
+      `).join('');
+
+      const idiomasHtml = cv.idiomas.map(i => `<li>${i}</li>`).join('');
+
+      const projHtml = (cv.projetos || []).map(proj => `
+        <div class="project-item">
           <div class="job-header">
-            <h3>${exp.cargo}${exp.url ? ` - <a href="${exp.url}" target="_blank">${exp.empresa}</a>` : ` - ${exp.empresa}`}</h3>
-            <span class="date">${exp.inicio} - ${exp.fim}</span>
+            <h3>${proj.url ? `<a href="${proj.url}" target="_blank">${proj.nome}</a>` : proj.nome}</h3>
+            <span class="date">${proj.periodo}</span>
           </div>
-          <p class="stack">${exp.stack}</p>
-          <ul>${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}</ul>
-        `).join('');
+          <p class="stack">${proj.stack}</p>
+          <p>${proj.descricao}</p>
+        </div>
+      `).join('');
 
-        const skillsHtml = (cv.skills || []).map(s => `<span class="pill">${s}</span>`).join('');
+      const certHtml = (cv.certificados || []).map(cert => `
+        <li class="cert-item">
+          <span><strong>${cert.url ? `<a href="${cert.url}" target="_blank">${cert.nome}</a>` : cert.nome}</strong></span>
+          <span class="date">${cert.periodo}</span>
+        </li>
+      `).join('');
 
-        const eduHtml = (cv.educacao || []).map(e => `
-          <div class="edu-item">
-            <h3>${e.curso}</h3>
-            <p class="edu-meta">${e.inst}</p>
-            <p class="edu-meta">${e.periodo}</p>
-          </div>
-        `).join('');
+      root.innerHTML = `
+        <h1>${candidateName}</h1>
+        <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
+        <div class="contact-line">
+          ${locationHtml}
+          ${phoneHtml}
+          ${emailHtml}
+          ${linkedinHtml}
+        </div>
 
-        const idiomasHtml = (cv.idiomas || []).map(i => `<li>${i}</li>`).join('');
+        <h2>${secResumo}</h2>
+        <p>${cv.resumo}</p>
 
-        root.innerHTML = `
-          <h1>${candidateName}</h1>
-          <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
-          <div class="contact-line">
-            ${locationHtml}
-            ${phoneHtml}
-            ${emailHtml}
-            ${linkedinHtml}
-          </div>
+        <h2>${secExp}</h2>
+        ${expHtml}
 
-          <h2>${secResumo}</h2>
-          <p>${cv.resumo}</p>
+        ${cv.projetos && cv.projetos.length ? `<h2>${secProjetos}</h2>${projHtml}` : ''}
 
-          <h2>${secExp}</h2>
-          ${expHtml}
+        <h2>${secSkills}</h2>
+        <p class="skills-block">${skillsHtml}</p>
 
-          <h2>${secSkills}</h2>
-          <p class="skills-block">${skillsHtml}</p>
+        <h2>${secEdu}</h2>
+        <div class="edu-row">${eduHtml}</div>
 
-          <h2>${secEdu}</h2>
-          <div class="edu-row">${eduHtml}</div>
+        ${cv.certificados && cv.certificados.length ? `<h2>${secCertificados}</h2><ul class="cert-list">${certHtml}</ul>` : ''}
 
-          <h2>${secLang}</h2>
-          <ul class="lang-list">${idiomasHtml}</ul>
-        `;
+        <h2>${secLang}</h2>
+        <ul class="lang-list">${idiomasHtml}</ul>
+      `;
 
-        document.getElementById('btn-pdf').style.display = 'flex';
-      }
+      document.getElementById('btn-pdf').style.display = 'flex';
+
     }
-  </script>
 
-  <script>
     function gerarPDF() {
       const btn = document.getElementById('btn-pdf');
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
 
-      const jobId = new URLSearchParams(window.location.search).get('job');
-      fetch(`http://localhost:3001/pdf?job=${jobId}`)
+      const pdfParams = new URLSearchParams({ job: jobId });
+      if (isGeneric) pdfParams.set('isGeneric', 'true');
+      if (fakeCandidateName) pdfParams.set('candidate', fakeCandidateName);
+      fetch(`http://localhost:3001/pdf?${pdfParams}`)
         .then(res => {
           if (!res.ok) throw new Error('Servidor retornou erro ' + res.status);
           return res.blob();
@@ -189,6 +244,23 @@
           btn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Baixar PDF';
         });
     }
+
+    document.getElementById('btn-pdf').addEventListener('click', gerarPDF);
+
+    window.addEventListener('beforeprint', () => {
+      const mmToPx = 96 / 25.4;
+      const totalMm = document.body.scrollHeight / mmToPx + 24;
+      const heightMm = Math.max(297, Math.ceil(totalMm));
+      let style = document.getElementById('_dynamic-page-size');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = '_dynamic-page-size';
+        document.head.appendChild(style);
+      }
+      style.textContent = `@page { size: 217mm ${heightMm}mm !important; }`;
+    });
+
+    render();
   </script>
 </body>
 </html>

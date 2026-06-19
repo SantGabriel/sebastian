@@ -13,7 +13,6 @@ module.exports = {
     {
       displayName: 'dom',
       testEnvironment: 'node',
-      setupFiles: ['<rootDir>/test/setup.js'],
       testMatch: ['**/test/*.test.js'],
     },
   ],

@@ -1,28 +1,56 @@
 /**
- * Filtra a lista de jobs pelo(s) id(s) em process.env.JOB_ID.
- * JOB_ID aceita um id ou vários separados por vírgula (ex: "id-a,id-b").
- * Sem JOB_ID definido, retorna a lista completa (auditoria geral).
- * @param {Array<Object>} jobList - Lista de jobs (window.JOBS_DATA)
- * @returns {Array<Object>}
+ * @typedef {import('../../src/interfaces/job-data').Job} Job
+ * @typedef {import('../../src/interfaces/job-data').CV} CV
+ * @typedef {import('../../src/interfaces/job-data').CL} CL
+ * @typedef {import('../../src/interfaces/job-data').DataCV} DataCV
  */
-function selectJobs(jobList) {
-  const ids = (process.env.JOB_ID || '')
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
-  return ids.length ? jobList.filter(job => ids.includes(job.id)) : jobList;
+
+/**
+ * @returns {DataCV[]}
+ */
+function getGenericCVData() {
+  if (process.env.TEST_DATA === 'generic') {
+    return require('../../src/json/generic-cv-data.js').GENERIC_CV_DATA;
+  }
+  if (process.env.TEST_DATA === 'examples') {
+    const combined = [];
+    for (let i = 1; i <= 3; i++) {
+      const exampleList = require(`../../fixtures/fake-candidates/example-${i}/cv.fixture.js`).CV_FIXTURE;
+      exampleList.forEach(example => {
+        combined.push({...example, id: `example-${i}-${example.id}`});
+      });
+    }
+    return combined;
+  }
+  return [];
 }
 
 /**
- * Igual a `test.each`, mas registra um teste pulado quando a tabela está vazia,
- * evitando o erro "`.each` called with an empty Array of table data" que ocorre
- * ao escopar por JOB_ID e sobrar um sub-filtro sem itens.
- * @param {Array<Object>} rows
+ * Retorna todos os jobs (sem filtro de autorização) com suporte a JOB_ID.
+ * Usado pelos testes de fit, que devem rodar mesmo em jobs não autorizados.
+ * @returns {Job[]|DataCV[]}
  */
-function eachOrSkip(rows) {
-  if (rows && rows.length) return test.each(rows);
-  return (name) => test.skip(String(name).replace(/\$\w+/g, '—'), () => {});
+function getDataCVList() {
+  let dataCVList = [];
+  if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') {
+    dataCVList = getGenericCVData();
+  }else {
+    dataCVList = getJobsData();
+  }
+  return dataCVList;
 }
+
+/**
+ * Retorna todos os jobs (sem filtro de autorização) com suporte a JOB_ID.
+ * Usado pelos testes de fit, que devem rodar mesmo em jobs não autorizados.
+ * @returns {Job[]|DataCV[]}
+ */
+function getJobsData() {
+  if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') return [];
+  const jobs = require('../../src/json/jobs-data.js').JOBS_DATA;
+  return selectDataCVs(jobs);
+}
+
 
 /**
  * Conta itens em negrito no texto HTML
@@ -60,9 +88,16 @@ function validateDateFormat(date) {
 }
 
 /**
- * Verifica caracteres proibidos em ATS
- * @param {string} text - Texto a verificar
- * @returns {Object} {valid: boolean, forbiddenChars: Array<string>}
+ * Resultado da verificação de caracteres proibidos em ATS.
+ * @typedef {Object} ATSValidationResult
+ * @property {boolean} valid - `true` se nenhum caractere proibido foi encontrado.
+ * @property {string[]} forbiddenChars - Nomes dos grupos proibidos detectados (ex: "emoji", "emDash").
+ */
+
+/**
+ * Verifica caracteres proibidos em ATS.
+ * @param {string} text - Texto a verificar.
+ * @returns {ATSValidationResult} Resultado da validação.
  */
 function validateATSCharacters(text) {
   if (!text || typeof text !== 'string') return { valid: true, forbiddenChars: [] };
@@ -90,6 +125,20 @@ function validateATSCharacters(text) {
 }
 
 
+/**
+ * Resultado da detecção de acentuação ausente / conversão ANSI incorreta.
+ * @typedef {Object} AnsiValidationResult
+ * @property {boolean} valid - `true` se nenhum problema de acentuação foi encontrado.
+ * @property {string} message - Mensagem descritiva do resultado.
+ */
+
+/**
+ * Detecta texto em português que perdeu acentuação (conversão ANSI incorreta),
+ * seja pela ausência total de acentos ou pela presença de palavras conhecidas
+ * sem acento (ex: "experiencia", "gestao").
+ * @param {string} text - Texto a verificar.
+ * @returns {AnsiValidationResult} Resultado da validação.
+ */
 function wrongAnsiiConvertionDetection(text) {
   if (!text || typeof text !== 'string') return { valid: true, message: "Sem texto para verificar." };
 
@@ -144,33 +193,59 @@ function getTextLength(html) {
 
 
 /**
- * Normaliza os CVs genéricos para o formato de item de teste,
- * aplicando o mesmo filtro de JOB_ID que selectJobs.
- * @returns {Array<{id: string, cv: Object, lang: string, cl: null}>}
+ * @param {DataCV[]} data
+ * @returns {DataCV[]}
  */
-function selectGenericCVs() {
-  const data = window.GENERIC_CV_DATA || {};
+function selectDataCVs(data) {
   const ids = (process.env.JOB_ID || '')
     .split(',')
     .map(s => s.trim())
     .filter(Boolean);
 
-  const entries = Object.entries(data).map(([id, job]) => ({
-    id,
-    cv: job.cv,
-    lang: (job.cv && job.cv.lang) || 'pt',
-    cl: null,
-  }));
+  return ids.length ? data.filter(e => ids.includes(e.id)) : data;
+}
 
-  return ids.length ? entries.filter(e => ids.includes(e.id)) : entries;
+/**
+ * Indica se o CV de um item de teste está autorizado para publicação.
+ * Itens sem `cv` ou com `cv.authorized === false` são considerados
+ * não autorizados e devem ser filtrados antes do `test.each`.
+ * @param {Job | DataCV} item - Job ou item de CV genérico.
+ * @returns {boolean} `true` se o CV existe e não está marcado como não autorizado.
+ */
+function hasAuthorizedCV(item) {
+  return !!(item && item.cv && item.cv.authorized !== false);
+}
+
+/**
+ * Indica se a CL de um item de teste está autorizada para publicação.
+ * Itens sem `cl` ou com `cl.authorized === false` são considerados
+ * não autorizados e devem ser filtrados antes do `test.each`.
+ * @param {Job | DataCV} item - Job ou item de CV genérico (cujo `cl` é sempre `null`).
+ * @returns {boolean} `true` se a CL existe e não está marcada como não autorizada.
+ */
+function hasAuthorizedCL(item) {
+  return !!(item && item.cl && item.cl.authorized !== false);
+}
+
+/**
+ * Igual a `test.each`, mas registra um teste pulado quando a tabela está vazia,
+ * evitando o erro "`.each` called with an empty Array of table data".
+ * @template {object} DataCV
+ * @param {DataCV[]} dataCVList
+ * @returns {(name: string, fn: (row: DataCV) => void) => void}
+ */
+function eachOrSkip(dataCVList) {
+  if (dataCVList && dataCVList.length) return test.each(dataCVList);
+  return (name) => test.skip(String(name).replace(/\$\w+/g, '—'), () => {});
 }
 
 module.exports = {
-  selectJobs,
-  selectGenericCVs,
+  hasAuthorizedCV,
+  hasAuthorizedCL,
   eachOrSkip,
   countBoldItems,
-  validateDateFormat,
+  getDataCVList,
+  getJobsData,
   validateATSCharacters,
   getTextLength,
   wrongAnsiiConvertionDetection,

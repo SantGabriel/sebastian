@@ -1,13 +1,11 @@
 // Dados pessoais do candidato — preencha com as suas informações
-window.CANDIDATE_DATA = {
+/** @type {import('../interfaces/job-data').CandidateData} */
+export const CANDIDATE_DATA = {
   name: "",
   phoneCountryCode: "+55",
   phone: "",
   email: "",
-  linkedin: {
-    label: "LinkedIn",
-    url: ""
-  },
+  linkedin: "",
   location: {
     pt: "",
     en: ""

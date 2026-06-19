@@ -4,18 +4,13 @@
  * Valida estrutura, conteúdo e regras ATS dos CLs
  */
 
-const { getTextLength, selectJobs } = require('./utils/utils');
-require('../src/json/jobs-data.js');
+const { getTextLength, hasAuthorizedCL, eachOrSkip, getJobsData } = require('./utils/utils');
 
-/**
- * @type {import('../src/interfaces/jobs-data').JobsData}
- */
-const jobList = selectJobs(window.JOBS_DATA);
+/** @type Job[] */
+const jobList = getJobsData().filter(hasAuthorizedCL);
 
 describe('CL Estrutura', () => {
-  test.each(jobList)('Soma de todos os parágrafos deve ter entre 800 a 1500 caracteres (Job "$id")', ({id, cl}) => {
-
-    if (!cl.authorized) return;
+  eachOrSkip(jobList)('Soma de todos os parágrafos deve ter entre 800 a 1500 caracteres (Job "$id")', ({id, cl}) => {
 
     let totalText = '';
     cl.paragrafos.forEach((paragrafo) => {
@@ -26,9 +21,7 @@ describe('CL Estrutura', () => {
     expect(textLength).toBeGreaterThanOrEqual(800);
     expect(textLength).toBeLessThanOrEqual(1500);
   });
-  test.each(jobList)('Entre 2 a 3 parágrafos (Job "$id")', ({id, cl}) => {
-
-    if (!cl.authorized) return;
+  eachOrSkip(jobList)('Entre 2 a 3 parágrafos (Job "$id")', ({id, cl}) => {
 
     expect(cl.paragrafos.length).toBeGreaterThanOrEqual(2);
     expect(cl.paragrafos.length).toBeLessThanOrEqual(3);

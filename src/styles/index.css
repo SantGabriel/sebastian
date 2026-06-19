@@ -145,6 +145,8 @@ body {
 .btn-cv:hover { background: var(--brand-dark); }
 .btn-cl       { background: var(--green); color: #fff; }
 .btn-cl:hover { background: var(--green-dark); }
+.btn-example  { background: #f0a954; color: #fff; }
+.btn-example:hover { background: #e6943a; }
 .btn-pending  { background: #e8eaed; color: #999; cursor: default; pointer-events: none; }
 
 .pending-label {
@@ -191,8 +193,85 @@ body {
 
 /* ---------- generic bar ---------- */
 
-.generic-bar      { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+.generic-bar {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.generic-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .generic-bar span { font-size: 13px; color: #888; align-self: center; margin-right: 4px; }
+
+.example-section {
+  margin-left: auto;
+}
+
+/* ---------- example section styles ---------- */
+
+.example-dropdown {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.example-dropdown label {
+  font-size: 13px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.example-dropdown select {
+  padding: 7px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 13px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 180px;
+}
+
+.example-dropdown select:hover {
+  border-color: #999;
+  background: #f9f9f9;
+}
+
+.example-dropdown select:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.1);
+}
+
+@media (max-width: 768px) {
+  .generic-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .example-section {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .example-dropdown select {
+    min-width: auto;
+    flex: 1;
+  }
+}
 
 /* ---------- candidato checkbox ---------- */
 
@@ -255,6 +334,15 @@ body {
   border-radius: 10px;
   padding: 2px 8px;
   margin-left: 6px;
+}
+
+/* ---------- gap badge ---------- */
+
+.gap-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c62828;
+  margin-left: 4px;
 }
 
 /* ---------- icon utilities ---------- */

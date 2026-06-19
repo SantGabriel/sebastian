@@ -1,7 +1,38 @@
-function scoreClass(s) {
+import { JOBS_DATA } from '../json/jobs-data.js';
+import { CANDIDATE_DATA } from '../json/candidate-data.js';
+
+export function abrirCVDropdown(value) {
+  if (!value) return;
+  const [candidate, jobId] = value.split('|');
+  window.open(`src/pages/cv.html?job=${jobId}&isGeneric=true&candidate=${candidate}`, '_blank');
+  document.getElementById('cv-select').value = '';
+}
+
+export function scoreClass(s) {
   if (s >= 8) return 'score-green';
   if (s >= 5) return 'score-yellow';
   return 'score-red';
+}
+
+export const GAP = Object.freeze({
+  REQUISITO_CORE:        'Requisito Core',
+  REQUISITO_IMPORTANTE:  'Requisito Importante',
+  REQUISITO_SECUNDARIO:  'Requisito Secundário',
+  FORTEMENTE_DESEJAVEL:  'Fortemente desejável',
+  NOCAO_CONHECIMENTO:    'Noção, conhecimento',
+  DESEJAVEL_DIFERENCIAL: 'Desejável/Diferencial',
+});
+
+export function gapWeight(tipo) {
+  switch (tipo) {
+    case GAP.REQUISITO_CORE:        return 4;
+    case GAP.REQUISITO_IMPORTANTE:  return 3;
+    case GAP.REQUISITO_SECUNDARIO:  return 1;
+    case GAP.FORTEMENTE_DESEJAVEL:  return 1;
+    case GAP.NOCAO_CONHECIMENTO:    return 0.5;
+    case GAP.DESEJAVEL_DIFERENCIAL: return 0.25;
+    default:                        return null;
+  }
 }
 
 function toggleFit(id) {
@@ -54,7 +85,7 @@ function badge(label) {
 
 function render() {
   const container = document.getElementById('jobs-container');
-  const jobsArray = Array.isArray(window.JOBS_DATA) ? window.JOBS_DATA : Object.values(window.JOBS_DATA || {});
+  const jobsArray = Array.isArray(JOBS_DATA) ? JOBS_DATA : Object.values(JOBS_DATA || {});
   const jobs      = jobsArray.filter(j => j.fit);
 
   if (jobs.length === 0) {
@@ -71,7 +102,11 @@ function render() {
     const fit      = job.fit || {};
     const score    = fit.score || 0;
     const positivos = (fit.positivos || []).map(p => `<li>${p}</li>`).join('');
-    const negativos = (fit.negativos || []).map(n => `<li>${n}</li>`).join('');
+    const negativos = (fit.negativos || []).map(n => {
+      const peso  = gapWeight(n.tipo);
+      const badge = n.tipo ? `<span class="gap-badge">${n.tipo} (-${peso})</span>` : '';
+      return `<li>${n.descricao} ${badge}</li>`;
+    }).join('');
 
     const cvAuthorized = job.cv && job.cv.authorized;
     const clAuthorized = job.cl && job.cl.authorized;
@@ -82,15 +117,15 @@ function render() {
       <div class="candidatura-aviso">
         <i class="fa-solid fa-triangle-exclamation icon-amber"></i>
         <span>${job.candidatura.aviso}</span>
-        ${job.candidatura.email
-          ? `<a href="${job.candidatura.email}" target="_blank">
+        ${job.candidatura.url
+          ? `<a href="${job.candidatura.url}" target="_blank">
                <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i> Abrir link
              </a>`
           : ''}
       </div>` : '';
 
     const modalidade        = job.modalidade || '';
-    const candidateLocation = (window.CANDIDATE_DATA && window.CANDIDATE_DATA.location && window.CANDIDATE_DATA.location.pt) || '';
+    const candidateLocation = (CANDIDATE_DATA && CANDIDATE_DATA.location && CANDIDATE_DATA.location.pt) || '';
     const cityFromVaga      = (job.cidadeVaga || '').split(/[,\-]/)[0].trim().toLowerCase();
     const cityFromCandidate = candidateLocation.split(/[,\-]/)[0].trim().toLowerCase();
     const cityWarningHtml   = job.cidadeVaga && modalidade && modalidade !== 'Remoto' && candidateLocation && cityFromVaga !== cityFromCandidate
@@ -198,8 +233,14 @@ function render() {
   }).join('');
 }
 
-if (typeof module === 'undefined') {
+// Os cards renderizados usam handlers inline (onclick/onchange) que resolvem
+// no escopo global; como este arquivo agora é um módulo, expomos no window.
+if (typeof window !== 'undefined') {
+  Object.assign(window, { abrirCVDropdown, toggleFit, toggleVaga, toggleCandidatura });
+}
+
+// Só renderiza no browser; ao ser importado pelos testes (Node, sem DOM) o
+// import fica livre de efeitos colaterais.
+if (typeof document !== 'undefined') {
   render();
-} else {
-  module.exports = { scoreClass };
 }

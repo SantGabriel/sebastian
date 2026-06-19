@@ -3,179 +3,182 @@ name: cv-base
 description: CV base do candidato — fonte de verdade para geração de documentos
 ---
 
-# Formato (modelo)
+# Carlos Eduardo Silva
 
-# [Nome Completo]
-
-Moradia: [cidade - UF, País]
+Moradia: São Paulo - SP, Brasil
 <br>
-Email: [email]
+Email: carlos.silva.devops@example.com
 <br>
-Linkedin: [url do perfil]
+Linkedin: https://www.linkedin.com/in/carlos-silva-devops
 
 # Experiência profissional
 
-## [Cargo] ([MM/AAAA - MM/AAAA]) - [Empresa]
+## DevOps Engineer Sênior (06/2023 - Atual) - TechFlow Solutions
 
 ### Introdução
-[Descrição da empresa e contexto do trabalho]
+TechFlow Solutions é uma consultoria de transformação digital especializada em cloud-native e infraestrutura como código, atendendo empresas Fortune 500.
 
 ### Detalhes
-[O que fazia no dia a dia, sistemas em que atuou, responsabilidades]
+Arquiteto responsável pela adoção de Kubernetes e infraestrutura como código em múltiplos clientes. Liderei migração de datacenters on-premise para AWS, implementei CI/CD pipelines robustos e automatizei provisionamento de infraestrutura com Terraform. Estabeleci padrões de observabilidade com Prometheus, Grafana e ELK Stack. Mentorei time de 5 engenheiros em boas práticas DevOps e arquitetura de microsserviços.
+
+### Resultados
+- Redução de 60% no tempo de deployment com implementação de GitOps
+- Economia de R$ 2.5 milhões anuais em custos de cloud através de otimização de recursos
+- Implementação de disaster recovery reduzindo RTO de 4 horas para 15 minutos
+- Zero downtime deployments em ambiente de produção com 99.99% uptime
 
 ### Stacks
-[Tech 1, Tech 2, ...]
+Kubernetes | Docker | Terraform | AWS (EC2, ECS, RDS, S3, Lambda) | GitHub Actions | ArgoCD | Prometheus | Grafana | ELK Stack | PostgreSQL | Redis | Ansible
+
+## DevOps Engineer Pleno (01/2021 - 05/2023) - CloudFirst Sistemas
+
+### Introdução
+CloudFirst Sistemas é uma fintech especializada em soluções de pagamento B2B, operando em ambiente de alta criticidade.
+
+### Detalhes
+Responsável pela infraestrutura de produção servindo 10 milhões de transações/mês. Implementei arquitetura de Kubernetes on-premise com alta disponibilidade. Criei estratégias de backup e disaster recovery. Automatizei provisionamento com Terraform e Ansible. Participei de on-call rotation e resolução de incidentes críticos em produção.
+
+### Resultados
+- Migração de 20+ serviços monolíticos para arquitetura de microsserviços
+- Redução de 40% no tempo de resolução de incidentes através de melhor observabilidade
+- Implementação de chaos engineering reduziu falhas de segurança em 35%
+- Economia de 30% em custos de infraestrutura com right-sizing
+
+### Stacks
+Kubernetes | Docker | Terraform | Linux (CentOS/Ubuntu) | Prometheus | Grafana | ELK Stack | PostgreSQL | Redis | Nginx | Jenkins | GitLab CI/CD | Helm
+
+## Engenheiro de Infrastructure (06/2019 - 12/2020) - DataVision Analytics
+
+### Introdução
+DataVision Analytics é uma empresa de big data e machine learning com pipelines complexos de processamento.
+
+### Detalhes
+Implementei infraestrutura para processamento distribuído com Apache Spark e Hadoop. Configurei clusters Kubernetes para workloads de ML. Automatizei provisionamento com scripts Bash e Ansible. Monitorizei aplicações com Prometheus e alertas em PagerDuty. Participei de cultura DevOps trazendo práticas de infrastructure-as-code.
+
+### Resultados
+- Redução de 50% no tempo de processamento de pipelines de dados através de otimização de recursos
+- Implementação de autoscaling reduzindo custos em 25%
+- Estabelecimento de SLOs e alertas reduzindo MTTR em 60%
+
+### Stacks
+Docker | Kubernetes | Apache Spark | Hadoop | Ansible | Bash | Prometheus | ELK Stack | PostgreSQL | AWS S3 | Jenkins | Linux
+
+## Técnico em Infraestrutura (03/2018 - 05/2019) - Netcore Telecom
+
+### Introdução
+Netcore Telecom é provedora de serviços de telecomunicações com infraestrutura legada e modernização em andamento.
+
+### Detalhes
+Administração de servidores Linux (CentOS/RHEL) em ambiente de produção. Implementei automação de deploys com scripts Bash. Suporte a aplicações legadas e modernos. Configuração de firewalls, load balancers (Nginx, HAProxy) e DNS. Participei de projetos de backup e disaster recovery.
+
+### Resultados
+- Automação de rotinas de backup reduzindo erros em 90%
+- Implementação de monitoramento centralizado com Zabbix
+- Redução do MTTR de incidentes em 45% através de runbooks automatizados
+
+### Stacks
+Linux (CentOS/RHEL/Ubuntu) | Bash | Nginx | HAProxy | PostgreSQL | MySQL | Zabbix | Keepalived | OpenVPN
 
 # Experiência acadêmica
 
-## [Curso] - [Instituição] ([AAAA - AAAA])
-[Descrição, projetos, intercâmbios, destaques relevantes]
+## Engenharia de Sistemas de Computação - UFRJ (2014 - 2018)
+Formação com ênfase em redes, infraestrutura e sistemas operacionais. Projeto de conclusão sobre otimização de clusters Kubernetes em ambientes multi-cloud.
 
 ### Stacks
-[Tech 1, Tech 2, ...]
+Java | Python | C | Linux | Redes TCP/IP | Banco de Dados Relacionais
 
-# Idiomas
-
-- [Idioma]: [Nível (ex: Nativo, C1, B2)]
-
-# Outras infos
-
-- [Informações adicionais relevantes: projetos pessoais, certificações, interesses técnicos]
-
-# Conceitos e práticas
-
-- [Metodologias, padrões, práticas que domina]
-
-# Skills complementares
-
-- [Ferramentas, habilidades que não se encaixam nas experiências acima]
-
-# Integrações e APIs
-
-- [Integrações com sistemas externos já realizadas]
-
----
-# Exemplo fictício de CV base
-
----
-
-# Marina Costa Ribeiro
-
-Moradia: Belo Horizonte - MG, Brasil
-<br>
-Email: marina.ribeiro.dev@example.com
-<br>
-Linkedin: https://www.linkedin.com/in/marina-costa-ribeiro
-
-# Experiência profissional
-
-## Estagiária em Desenvolvimento Web (01/2019 - 12/2019) - Lumen Sistemas
-
-### Introdução
-Lumen Sistemas é uma software house focada em pequenos e médios negócios do varejo.
-
-### Detalhes
-Atuei no desenvolvimento de módulos administrativos para um ERP web, com foco em cadastros, permissões e relatórios.
-Participei da manutenção de queries SQL e da criação de telas para o time de atendimento interno.
+## Certificação Linux Professional Institute (LPI Level 3 - Enterprise Administrator) - 2020
+Certificação de máximo nível em administração Linux e arquitetura de sistemas.
 
 ### Stacks
-PHP, MySQL, JavaScript, HTML, CSS, Bootstrap, Git
+Linux Avançado | Bash | Infraestrutura
 
-## Desenvolvedora de Software Júnior (01/2020 - 06/2022) - Nexa Commerce
+# Projetos Pessoais
 
-### Introdução
-Nexa Commerce é uma empresa de e-commerce B2B com operação nacional.
-
-### Detalhes
-Trabalhei no backoffice de pedidos e no fluxo de faturamento.
-Implementei integrações com gateway de pagamento, melhorias em processos de conciliação e ajustes em APIs internas.
-Também atuei em suporte N2/N3 para incidentes críticos.
-
-### Resultados
-- Redução de 35% no tempo médio de processamento de pedidos em horário de pico
-- Padronização de logs de integração, diminuindo retrabalho em incidentes recorrentes
+## Orquestração de Infraestrutura com Terraform e Kubernetes (2022 - 2024)
+Desenvolveu stack completo de infraestrutura como código permitindo provisionamento de ambientes multi-cloud (AWS, Azure, GCP) com um único comando. Implementou módulos reutilizáveis de Terraform, charts Helm customizados e GitOps com ArgoCD. Sistema escalável demonstrando redução de 70% no tempo de provisionamento manual.
 
 ### Stacks
-Laravel, PHP, MySQL, Redis, RabbitMQ, Vue.js, Docker, GitLab CI
+Terraform | Kubernetes | Helm | ArgoCD | AWS | Azure | GCP | YAML
 
-## Engenheira de Software Pleno (07/2022 - 08/2025) - Atlas Viagens
-
-### Introdução
-Atlas Viagens é uma plataforma digital de turismo para reservas de hotéis e pacotes.
-
-### Detalhes
-Atuei em arquitetura e evolução de serviços de busca e reserva.
-Liderei iniciativas de refatoração para reduzir acoplamento entre módulos legados e novos serviços.
-Participei da definição técnica de integrações com distribuidores e meta buscadores.
-
-### Resultados
-- Redução de latência de busca de 850ms para 140ms em rotas críticas
-- Lançamento de novo fluxo de reservas B2B com crescimento de 22% na conversão
-- Criação de pipeline de deploy que reduziu falhas em produção em 40%
+## Plataforma de Observabilidade Open Source (2021 - 2023)
+Criou solução open-source (140+ stars no GitHub) para centralizar logs, métricas e traces de aplicações em containers. Implementou stack com Prometheus, Loki, Jaeger e Grafana com dashboards pré-configurados. Documentação completa e 5 releases com suporte da comunidade.
 
 ### Stacks
-PHP, Laravel, Node.js, PostgreSQL, Redis, Kafka, Docker, Kubernetes, AWS, TypeScript
+Prometheus | Grafana | Loki | Jaeger | Docker | Kubernetes | Python
 
-## Tech Lead (09/2025 - Atual) - Atlas Viagens
-
-### Introdução
-Responsável técnica por um squad de produto voltado a pricing e distribuição.
-
-### Detalhes
-Coordeno decisões de arquitetura, code reviews e práticas de engenharia.
-Acompanho planejamento técnico com produto e estabeleço estratégias de observabilidade e qualidade.
-
-### Resultados
-- Estruturação de trilha de evolução técnica do time
-- Melhoria na previsibilidade de entregas com definição de padrões de arquitetura e revisão
+## HomeLab com 5 Nós Kubernetes (2020 - Atual)
+Mantém ambiente de laboração com cluster Kubernetes bare-metal de 5 nós para experimentação com novas tecnologias. Hospeda aplicações pessoais e testes de SRE. Implementa práticas de observabilidade, backup e disaster recovery. Documentado em blog técnico com 2k followers.
 
 ### Stacks
-Laravel, TypeScript, PostgreSQL, Redis, AWS, OpenTelemetry, GitHub Actions
+Kubernetes | Docker | Linux | Terraform | Prometheus | Grafana | PostgreSQL
 
-# Experiência acadêmica
+# Certificações
 
-## Ciência da Computação - UFMG (2015 - 2019)
-Formação com ênfase em engenharia de software, banco de dados e sistemas distribuídos.
-Projeto de conclusão sobre observabilidade em aplicações web.
-
-### Stacks
-Java, Python, SQL, Linux
-
-## Pós-graduação em Arquitetura de Software - PUC Minas (2021 - 2022)
-Especialização em arquitetura orientada a eventos, escalabilidade e governança técnica.
-
-### Stacks
-Domain-Driven Design (DDD), Event-Driven Architecture, AWS
+- Certified Kubernetes Administrator (CKA) - CNCF - 2023
+- AWS Certified Solutions Architect - Professional - AWS - 2022
+- AWS Certified DevOps Engineer - Professional - AWS - 2021
+- Linux Professional Institute Level 3 - Enterprise Administrator - LPI - 2020
+- Certified Kubernetes Application Developer (CKAD) - CNCF - 2021
 
 # Idiomas
 
 - Português: Nativo
 - Inglês: C1
-- Espanhol: B2
+- Espanhol: B1
 
-# Outras infos
+# Conceitos que tenho experiência
 
-- Mentoria técnica para pessoas em transição de carreira
-- Projetos pessoais com foco em sistemas distribuídos e observabilidade
+- Site Reliability Engineering (SRE)
+- Infrastructure as Code (IaC)
+- Continuous Integration / Continuous Deployment (CI/CD)
+- GitOps
+- Observabilidade (Logs, Métricas, Traces)
+- High Availability e Disaster Recovery
+- Chaos Engineering
+- Microserviços
+- Containerização
 
-# Conceitos e práticas
+# Skills
 
-- Clean Architecture
-- SOLID
-- Domain-Driven Design (DDD)
-- Event-Driven Architecture
-- Testes automatizados (unitários, integração e E2E)
-- CI/CD
+- Kubernetes: Deployment, StatefulSets, DaemonSets, Custom Resources, Operators
+- Terraform: Módulos, State Management, Provider customizados
+- Cloud: AWS (EC2, ECS, RDS, Lambda, CloudFormation), Azure (VMs, AKS), GCP (GKE)
+- Observabilidade: Prometheus, Grafana, ELK Stack, Loki, Jaeger, Datadog
+- CI/CD: GitHub Actions, GitLab CI/CD, Jenkins, ArgoCD, Spinnaker
+- Containerização: Docker, Podman
+- Orquestração: Kubernetes, Docker Swarm
+- IaC: Terraform, Ansible, CloudFormation
+- Scripting: Bash, Python, Go (básico)
+- Bases de Dados: PostgreSQL, MySQL, Redis, MongoDB
+- Load Balancing: Nginx, HAProxy, AWS ELB/ALB
+- Monitoramento: Prometheus, Grafana, Zabbix, Datadog, New Relic
 
-# Skills complementares
+# Segurança
 
-- GitHub Copilot e outras ferramentas de IA para apoio no desenvolvimento
-- Grafana, Prometheus e OpenTelemetry
-- Documentação técnica e facilitação de decisões arquiteturais
+- Hardening de servidores Linux
+- Princípio do menor privilégio (PoLP)
+- Secrets management (Vault, AWS Secrets Manager)
+- Network segmentation e firewalls
+- Container security scanning
+- RBAC em Kubernetes
+- Compliance e auditoria
 
-# Integrações e APIs
+# Sobre mim
 
-- Gateways de pagamento (cartão, Pix, boleto)
-- Distribuidores de turismo e fornecedores de inventário
-- Meta buscadores
-- APIs REST e mensageria orientada a eventos
+- 6+ anos de experiência em infraestrutura e DevOps
+- Forte mentalidade de automação e eficiência
+- Paixão por aprender novas tecnologias
+- Contribuidor em projetos open-source
+- Palestrante em conferências técnicas (KubeCon, DevOps Days)
+- Disponível para trabalho 100% remoto
+- Aberto a desafios em startups e grandes corporações
+
+# Integrações
+
+- Integração com múltiplos cloud providers (AWS, Azure, GCP)
+- APIs de Kubernetes para automações customizadas
+- Integração com ferramentas de monitoramento (Prometheus, Grafana, Datadog)
+- Webhooks para automação de workflows
+- Integração com Git (GitHub, GitLab) para GitOps
+- APIs de CI/CD (GitHub Actions, GitLab Pipelines)

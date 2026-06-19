@@ -19,19 +19,33 @@
   </div>
 
   <div class="generic-bar">
-    <span><i class="fa-solid fa-file-lines"></i> CVs genéricos:</span>
-    <a class="btn btn-cv" href="src/pages/cv.html?job=generico" target="_blank">
-      <i class="fa-solid fa-file-pdf"></i> CV PT
-    </a>
-    <a class="btn btn-cv" href="src/pages/cv.html?job=generico-en" target="_blank">
-      <i class="fa-solid fa-file-pdf"></i> CV EN
-    </a>
+    <div class="generic-section">
+      <span><i class="fa-solid fa-file-lines"></i> CVs genéricos:</span>
+      <a class="btn btn-cv" href="src/pages/cv.html?job=generico&isGeneric=true" target="_blank">
+        <i class="fa-solid fa-file-pdf"></i> CV PT
+      </a>
+      <a class="btn btn-cv" href="src/pages/cv.html?job=generico-en&isGeneric=true" target="_blank">
+        <i class="fa-solid fa-file-pdf"></i> CV EN
+      </a>
+    </div>
+
+    <div class="example-section example-dropdown">
+      <label for="cv-select">
+        <i class="fa-solid fa-file-lines"></i> CV exemplo:
+      </label>
+      <select id="cv-select" onchange="abrirCVDropdown(this.value)">
+        <option value="">Escolher CV...</option>
+        <option value="example-1|generico">Exemplo 1 - Marina (15 anos) - PT</option>
+        <option value="example-1|generico-en">Exemplo 1 - Marina (15 anos) - EN</option>
+        <option value="example-2|generico">Exemplo 2 - Rafael (1 ano) - PT</option>
+        <option value="example-2|generico-en">Exemplo 2 - Rafael (1 ano) - EN</option>
+        <option value="example-3|generico">Exemplo 3 - Felipe (5 anos) - PT</option>
+        <option value="example-3|generico-en">Exemplo 3 - Felipe (5 anos) - EN</option>
+      </select>
+    </div>
   </div>
 
   <div id="jobs-container"></div>
-
-  <script src="src/json/candidate-data.js"></script>
-  <script src="src/json/jobs-data.js"></script>
-  <script src="src/js/index.js"></script>
+  <script type="module" src="src/js/index.js"></script>
 </body>
 </html>

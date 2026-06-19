@@ -48,6 +48,8 @@ Dicas:
 4. Fale um pouco sobre você: suas soft skills, o que você prefere fazer e trabalhar, se gosta mais de presencial/hibrído/remoto, se tem disponibilidade para viajar ou se mudar
 5. Você pode citar também conceitos que você conhece, mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
 6. Site integrações que você fez como: gateway de pagamento, serviços de nuvem, distribuidores, sistemas do governo.
+7. Projetos pessoais (opcional): se tiver, informe nome, período, stack e uma descrição. O Sebastian vai gerar uma seção "Projetos Pessoais" no CV quando houver projetos relevantes para a vaga.
+8. Certificações (opcional): se tiver, informe nome, instituição emissora, link e ano. O Sebastian vai gerar uma seção "Certificações" no CV quando houver certificados relevantes para a vaga.
 
 ### [ai/skills/contexto/SKILL.md](ai/skills/contexto/SKILL.md)
 Aqui são você pode dar contexto para o Sebastian do que preencher em algumas situações. 
@@ -85,7 +87,7 @@ Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
 1. Peça para processar as vagas. No meio do processo, o Sebastian pode te fazer perguntas de sobre os requisitos da vaga para ter certeza se você tem ou não uma habilidade específica, ou alguma outra dúvida. Responda às perguntas para que ele possa ter um melhor entendimento do seu perfil e gerar um fit mais preciso. Baseado nas respostas, o Sebastian pode sugerir alterações no seu CV ou no contexto.
 2. Aṕos os fits serem gerados, acesse-os no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
    - Você pode e deve pedir para remover as vagas em que o seu score está muito baixo.
-3. Feito a revisão dos fits, peça para gerar os CVs/CLs. Você pode pedir para gerar somente um dos dois pelo numero da vaga.
+3. Feito a revisão dos fits, peça para gerar os CVs e/ou CLs. Você também pode pedir para gerar somente um dos dois pelo número da vaga.
 Exemplo: 1) CV; 2) CL; 3) CV e CL.
 4. Reveja os CVs/CLs no dashboard `http://localhost:3001/index.html`. Veja o que foi gerado e se está coerente. Caso queira ajustes, peça para corrigir o CV/CL da vaga específica.
 5. Para baixar o CV/CL, existe um botão no canto inferior direito da tela **Baixar PDF**

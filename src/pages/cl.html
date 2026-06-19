@@ -11,13 +11,16 @@
 </head>
 <body>
   <div id="cl-root"></div>
-  <button id="btn-pdf" style="display:none" onclick="gerarPDF()">
+  <button id="btn-pdf" style="display:none">
     <i class="fa-solid fa-file-pdf"></i> Baixar PDF
   </button>
 
-  <script src="../json/candidate-data.js"></script>
-  <script src="../json/jobs-data.js"></script>
-  <script>
+  <script type="module">
+    /** @typedef {import('../interfaces/job-data').Job} Job */
+
+    import { CANDIDATE_DATA } from '../json/candidate-data.js';
+    import { JOBS_DATA } from '../json/jobs-data.js';
+
     const params = new URLSearchParams(window.location.search);
     const jobId = params.get('job');
     const root = document.getElementById('cl-root');
@@ -31,26 +34,25 @@
         </div>`;
     }
 
-    const getJobFromData = () => {
-      if (!window.JOBS_DATA) return null;
-      // Suporta tanto array quanto objeto (para compatibilidade com versão antiga)
-      if (Array.isArray(window.JOBS_DATA)) {
-        return window.JOBS_DATA.find(job => job.id === jobId);
-      }
-      return window.JOBS_DATA[jobId];
-    };
+    // jobId aponta para uma vaga real. JOBS_DATA já é array, mas o formato por
+    // objeto ainda é suportado para não quebrar dados antigos.
+    function resolveJob(jobId) {
+      if (Array.isArray(JOBS_DATA)) return JOBS_DATA.find(job => job.id === jobId);
+      return JOBS_DATA[jobId];
+    }
 
-    if (!jobId || !getJobFromData()) {
+    const job = resolveJob(jobId);
+
+    if (!jobId || !job) {
       notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
     } else {
-      const job = getJobFromData();
       const cl = job.cl;
       const isEN = job.lang === 'en';
 
-      const c = window.CANDIDATE_DATA || {};
+      const c = CANDIDATE_DATA || {};
       const name = c.name || '';
       const email = c.email || '';
-      const linkedin = c.linkedin || {};
+      const linkedin = c.linkedin || '';
       const location = isEN
         ? (c.location && c.location.en) || (job.cv && job.cv.local) || ''
         : (c.location && c.location.pt) || (job.cv && job.cv.local) || '';
@@ -72,8 +74,8 @@
           ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
         const emailHtml = email
           ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
-        const linkedinHtml = linkedin.url
-          ? `<a href="${linkedin.url}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.label || 'LinkedIn'}</a>` : '';
+        const linkedinHtml = linkedin
+          ? `<a href="${linkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
 
         root.innerHTML = `
           <div class="header">
@@ -95,15 +97,12 @@
         document.getElementById('btn-pdf').style.display = 'flex';
       }
     }
-  </script>
 
-  <script>
     function gerarPDF() {
       const btn = document.getElementById('btn-pdf');
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
 
-      const jobId = new URLSearchParams(window.location.search).get('job');
       fetch(`http://localhost:3001/pdf?doc=cl&job=${jobId}`)
         .then(res => {
           if (!res.ok) throw new Error('Servidor retornou erro ' + res.status);
@@ -123,6 +122,8 @@
           btn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Baixar PDF';
         });
     }
+
+    document.getElementById('btn-pdf').addEventListener('click', gerarPDF);
   </script>
 </body>
 </html>
