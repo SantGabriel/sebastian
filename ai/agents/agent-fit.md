@@ -23,7 +23,8 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
   |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
   | Requisito Core        | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Geralmente termo que mais se repete na vaga; <br> Geralmente o primeiro requisito <br> Geralmente aparece no topo da vaga <br> Apenas um requisito pode ser core | Requisito/Requirement                       | -4    |
   | Requisito Importante  | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Aparece tanto nos requisitos quanto no corpo do texto da vaga                                                                                                    | Requisito/Requirement                       | -3    |
-  | Requisito Secundário  | Acompanhado de verbos: required, experience, familiarity.                                                                                                                                                                                                                                   | Requisito/Requirement                       | -1    |
+  | Requisito Secundário  | Acompanhado de verbos: required, experience, familiarity. <br> Os 5 primeiros itens da lista de requisitos se encaixam aqui                                                                                                                                                                 | Requisito/Requirement                       | -2    |
+  | Requisito Baixo       | Acompanhado de verbos: required, experience, familiarity.                                                                                                                                                                                                                                   | Requisito/Requirement                       | -1    |
   | Fortemente desejável  | Acompanhado de verbos fortes: strongly recommended, highly recommended, highly desirable <br>.                                                                                                                                                                                              | Nice to have/optional/desirable/diferencial | -1    |
   | Noção, conhecimento   | Acompanhado de verbos: knowledge, noção, conhecimento.                                                                                                                                                                                                                                      | Requisito/Requirement                       | -0.5  |
   | Desejável/Diferencial | Acompanhado de verbos: desejável, nice to have, recommended, desirable.                                                                                                                                                                                                                     | Nice to have/optional/desirable/diferencial | -0.25 |
@@ -31,7 +32,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 - Exemplos:
   1) 1 gap core e 2 gap desejável -> 10 - 4 - 0.5 * 2 = 5
   2) 1 gap importante -> 10 - 3 = 7
-  3) 1 gap secundário, 1 gap de conhecimento, 1 gap de noção, 1 gap de desejável -> 10 - 1 - 0.5 * 2 - 0.25 = 7.75
+  3) 1 gap secundário, 1 gap de conhecimento, 1 gap de noção, 1 gap de desejável -> 10 - 2 - 0.5 * 2 - 0.25 = 6.75
   4) 1 gap fortemente desejável -> 10 - 1 = 9
   5) 1 gap core e 3 gaps importantes -> 10 - 4 - 3 * 3 = -3 = 0 (floor)
 
@@ -81,8 +82,8 @@ Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we u
 
 ## Estrutura do fit no `src/json/jobs-data.js`
 
-Os tipos válidos para `tipo` são exatamente os 6 da tabela da fórmula do gap:
-`"Requisito Core"`, `"Requisito Importante"`, `"Requisito Secundário"`, `"Fortemente desejável"`, `"Noção, conhecimento"`, `"Desejável/Diferencial"`.
+Os tipos válidos para `tipo` são exatamente os 7 da tabela da fórmula do gap:
+`"Requisito Core"`, `"Requisito Importante"`, `"Requisito Secundário"`, `"Requisito Baixo"`, `"Fortemente desejável"`, `"Noção, conhecimento"`, `"Desejável/Diferencial"`.
 
 ```js
 fit = {
