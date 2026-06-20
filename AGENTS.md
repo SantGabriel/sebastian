@@ -104,7 +104,7 @@ Se durante o fluxo o usuário informou habilidades, experiências ou conheciment
     > Confirma? (responda sim/não ou edite o texto)
 
 ### Caso 2 — Erros identificados / novas instruções
-Se o usuário apontou erros recorrentes de análise ou forneceu regras para evitá-los, proponha a atualização no agente adequado:
+Se o usuário apontou erros recorrentes de análise ou forneceu regras para evitá-los, proponha a atualização no arquivo adequado:
 
 > **Proposta de atualização — [nome do arquivo]**
 > Gostaria de adicionar/ajustar em `[arquivo]`:
@@ -112,15 +112,19 @@ Se o usuário apontou erros recorrentes de análise ou forneceu regras para evit
 > - **Texto:** `[texto exato da regra]`
     > Confirma? (responda sim/não ou edite o texto)
 
-**Arquivo correto por tipo de regra:**
+Você pode alterar os seguintes arquivos, desde que tenha solicitado permissão ao usuário:
 
-| Tipo de regra                          | Arquivo                                |
-|----------------------------------------|----------------------------------------|
-| Análise de fit, scores, OR lists, gaps | `ai/agents/agent-fit.md`               |
-| Escrita do CV, ATS, estrutura          | `ai/agents/agent-cv.md`                |
-| Escrita do CL, gaps no CL              | `ai/agents/agent-cl.md`                |
-| Boas práticas ATS gerais               | `ai/skills/boas-praticas-ats/SKILL.md` |
-| Fluxo geral, orquestração              | `AGENTS.md`                            |
+| Arquivo                           | Finalidade                          |
+|-----------------------------------|-------------------------------------|
+| `vagas.txt`                       | Vagas de emprego                    |
+| `src/json/jobs-data.js`           | Dados de CV/CL/fit por vaga         |
+| `src/json/candidate-data.js`      | Dados pessoais do candidato         |
+| `src/json/generic-cv-data.js`     | Dados do CV genérico                |
+| `ai/skills/cv-base/SKILL.md`      | Fonte de verdade do candidato       |
+| `ai/skills/contexto/SKILL.md`     | Instruções específicas do candidato |
+
+Os demais arquivos não devem ser alterados, muito menos sugerir alterá-los para o usuário.
+Você só poderá alterar **com permissão apenas** os demais se o arquivo [desenvolvedor.md](desenvolvedor.md) existir.
 
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
@@ -133,18 +137,7 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 ## Regras
 
 ### Perguntas e Correções do usuário
-Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de análise apontado pelo usuário. Se o usuário questionar o descumprimento de uma regra, admita o erro, explique o motivo e apenas proponha a alteração nos arquivos permitidos em [Alterações de arquivos](#alterações-de-arquivos)
-
-### Alterações de arquivos
-- Você pode alterar os seguintes arquivos, desde que tenha solicitado permissão ao usuário:
-    - `vagas.txt`
-    - `src/json/jobs-data.js`
-    - `src/json/candidate-data.js`
-    - `src/json/generic-cv-data.js`
-    - `ai/skills/cv-base/SKILL.md`
-    - `ai/skills/contexto/SKILL.md`
-- Os demais arquivos não devem ser alterados, muito menos sugerir alterá-los para o usuário. 
-  - Você só poderá alterar **com permissão apenas** os demais se o arquivo [desenvolvedor.md](desenvolvedor.md) existir. 
+Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de análise apontado pelo usuário. Se o usuário questionar o descumprimento de uma regra, admita o erro, explique o motivo e apenas proponha a alteração nos arquivos permitidos em [Caso 2](#caso-2--erros-identificados--novas-instruções)
 
 # Testes
 - Após gerar todos os documentos solicitados pelo usuário (seja CV, CL ou fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
