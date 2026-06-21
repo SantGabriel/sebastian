@@ -168,7 +168,7 @@ cv = {
 - Estes 2 CVs não serão associados a nenhuma vaga específica, portanto ele sempre deve estar disponível para ser exibido no dashboard, desde que `src/json/generic-cv-data.js` já esteja preenchido
 - Jamais use os arquivos vindos do `fixtures/fake-candidates` para gerá-los
 
-# CV exemplos
+# CV fixtures
 - Serão usados apenas em desenvolvimento
 - Eles estão `fixtures/fake-candidates`
 - Assuma que estamos falando destes CV apenas se o folder `fixtures/fake-candidates` estiver sendo referenciado no prompt do usuário
