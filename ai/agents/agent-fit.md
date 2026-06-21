@@ -102,6 +102,7 @@ Ao processar cada vaga, **sempre** inclua os seguintes campos na raiz da entrada
 
 - `modalidade`: `"Remoto"`, `"Presencial"` ou `"Híbrida"` — extraído do bloco da vaga em `vagas.txt`
 - `cidadeVaga`: cidade/UF onde a vaga está localizada (ex: `"São Paulo, SP"`) — **obrigatório** quando `modalidade` for `"Presencial"` ou `"Híbrida"`; omitir ou deixar `""` quando for `"Remoto"`
+- `empresa`: **omitir o campo** (deixar `undefined`) quando o nome da empresa não estiver disponível na vaga. Nunca usar textos como "não informada", "N/A", etc.
 - `contratacao`: `"CLT"`, `"PJ"` ou `"CLT/PJ"` — extraído do bloco da vaga em `vagas.txt` quando houver menção explícita ao tipo de contratação. **Omitir o campo** se não houver informação clara.
 
 Esses campos são usados pelo dashboard `index.html` para exibir informações da vaga e pelos templates `src/pages/cv.html` e `src/pages/cl.html` para exibir avisos quando a vaga é presencial/híbrida em cidade diferente da localização do candidato.

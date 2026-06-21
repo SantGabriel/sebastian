@@ -91,7 +91,7 @@ export interface DataCV {
 export interface Job extends DataCV {
   /** Índice sequencial (começa em 1) para referenciar vagas por número. */
   index: number;
-  empresa: string;
+  empresa?: string;
   link: string;
   modalidade: string;
   contratacao?: string;

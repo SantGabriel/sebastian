@@ -38,7 +38,7 @@ app.get('/pdf', async (req, res) => {
     await page.addStyleTag({ content: `@page { size: 217mm ${contentHeightMm}mm !important; }` });
 
     const vaga = (pdfData.vaga || '').replace(/[<>:"/\\|?*]/g, '').trim();
-    const empresa = (pdfData.empresa || '').replace(/[<>:"/\\|?*]/g, '').trim();
+    const empresa = pdfData.empresa ? pdfData.empresa.replace(/[<>:"/\\|?*]/g, '').trim() : '';
     const candidateName = (pdfData.candidateName || '').replace(/[<>:"/\\|?*]/g, '').trim();
 
     const parts = [vaga, empresa, candidateName].filter(Boolean);

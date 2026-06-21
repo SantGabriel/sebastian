@@ -99,7 +99,7 @@
 
       const cv = doc.cv;
       if (!isGeneric && !cv.authorized) {
-        notAuthorized(`CV para "${doc.vaga} - ${doc.empresa}" ainda não autorizado.`);
+        notAuthorized(`CV para "${doc.vaga}${doc.empresa ? ' - ' + doc.empresa : ''}" ainda não autorizado.`);
         return;
       }
 
@@ -125,9 +125,9 @@
 
       const vagaLocation = getLocationDisplay(doc, candidateLocation);
 
-      document.getElementById('page-title').textContent = `${doc.vaga} - ${doc.empresa} | ${candidateName}`;
+      document.getElementById('page-title').textContent = [doc.vaga, doc.empresa].filter(Boolean).join(' - ') + ` | ${candidateName}`;
 
-      window._pdfData = { vaga: doc.vaga, empresa: doc.empresa, candidateName };
+      window._pdfData = { vaga: doc.vaga, empresa: doc.empresa || '', candidateName };
 
       const phoneHtml = candidatePhone
         ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';
@@ -138,9 +138,7 @@
       const locationHtml = vagaLocation
         ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
-      window._pdfFilename = isGeneric
-        ? `CV - ${candidateName} - ${doc.lang}.pdf`
-        : `CV - ${candidateName} - ${doc.empresa}.pdf`;
+      window._pdfFilename = `CV - ${candidateName}${doc.empresa ? ' - ' + doc.empresa : ''}.pdf`;
 
       const expHtml = cv.experiencias.map(exp => `
         <div class="job-header">
