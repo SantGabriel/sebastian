@@ -120,7 +120,18 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
   - Se você quiser processar apenas adicionar novas vagas, basta adicionar novas vagas no arquivo `vagas.txt` e pedir para processar as demais vagas. 
 - É interessante guardar os CVs e CLs dentro de uma pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
 
-## 7) Solução rápida de problemas
+## 7) Limites de caracteres do CV
+
+| Seção | Limite |
+|-------|--------|
+| Resumo profissional | 400 – 500 caracteres |
+| Experiência profissional (soma de todos os bullets) | 1500 – 2000 caracteres |
+| Experiência mais relevante (soma dos bullets) | mínimo 600 caracteres |
+| Cada bullet | 100 – 300 caracteres |
+| Bullets por experiência | 1 – 6 bullets |
+| Cada projeto pessoal | 100 – 200 caracteres |
+
+## 8) Solução rápida de problemas
 
 - **Botão PDF falha:** confirme se `npm start` está rodando na porta `3001`.
 - **CV/CL bloqueado:** a vaga ainda não foi autorizada.

@@ -167,7 +167,7 @@ function render() {
               <span class="job-number">${idx + 1}.</span>
               ${job.vaga}
               ${job.link
-                ? `<a href="${job.link}" target="_blank" class="vaga-link">
+                ? `<a href="${job.link}" target="_blank" rel="noreferrer" class="vaga-link">
                      <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i> Abrir
                    </a>`
                 : ''}

@@ -40,12 +40,12 @@ describe('CV - Campos obrigatórios', () => {
 });
 
 describe('CV - Experiência Profissional', () => {
-  eachOrSkip(allCVList)('Validar tamanho resumo de 500 a 600 caracteres ($id)', ({id, cv}) => {
+  eachOrSkip(allCVList)('Validar tamanho resumo de 400 a 500 caracteres ($id)', ({id, cv}) => {
     // Remove tags HTML para contar apenas texto
     const textOnly = cv.resumo.replace(/<[^>]*>/g, '');
     const textLength = getTextLength(textOnly);
-    expect(textLength).toBeGreaterThanOrEqual(500);
-    expect(textLength).toBeLessThanOrEqual(600);
+    expect(textLength).toBeGreaterThanOrEqual(400);
+    expect(textLength).toBeLessThanOrEqual(500);
   });
 });
 
@@ -72,24 +72,24 @@ describe('CV - negrito', () => {
 });
 
 describe('CV - Professional Experience', () => {
-  eachOrSkip(allCVList)('Validar tamanho de 2000 a 2500 caracteres para todas as experiencias ($id)', ({id, cv}) => {
+  eachOrSkip(allCVList)('Validar tamanho de 1500 a 2000 caracteres para todas as experiencias ($id)', ({id, cv}) => {
     let totalText = '';
     cv.experiencias.forEach(exp => {
       totalText += exp.bullets.join(' ');
     });
 
     const textLength = getTextLength(totalText);
-    expect(textLength).toBeGreaterThanOrEqual(2000);
-    expect(textLength).toBeLessThanOrEqual(2500);
+    expect(textLength).toBeGreaterThanOrEqual(1500);
+    expect(textLength).toBeLessThanOrEqual(2000);
   });
 
-  eachOrSkip(allCVList)('Validar experiencia mais relevante com no minimo 800 caracteres ($id)', ({id, cv}) => {
+  eachOrSkip(allCVList)('Validar experiencia mais relevante com no minimo 600 caracteres ($id)', ({id, cv}) => {
     const firstExp = cv.experiencias[0];
     let text = (firstExp.cargo || '') + ' ' + (firstExp.stack || '') + ' ';
     firstExp.bullets.forEach(bullet => { text += bullet + ' '; });
 
     const textLength = getTextLength(text);
-    expect(textLength).toBeGreaterThanOrEqual(800);
+    expect(textLength).toBeGreaterThanOrEqual(600);
   });
 
   eachOrSkip(allCVList)('Validar experiencia mais relevante tem que ter mais caracteres que todas as outras ($id)', ({id, cv}) => {
