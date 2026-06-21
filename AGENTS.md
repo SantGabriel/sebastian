@@ -140,30 +140,45 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de análise apontado pelo usuário. Se o usuário questionar o descumprimento de uma regra, admita o erro, explique o motivo e apenas proponha a alteração nos arquivos permitidos em [Caso 2](#caso-2--erros-identificados--novas-instruções)
 
 # Testes
-- Após gerar todos os documentos solicitados pelo usuário (seja CV, CL ou fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
-- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
-- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Você deve rodar os testes **APENAS UMA ÚNICA VEZ**. Após gerar todos os documentos, rode os testes uma única vez. Guarde os resultados em um tmp. Corrija com base nos erros sem rodar os testes novamente. O resultado dos testes é um relatório de auditoria, não um checkpoint iterativo. Aceite o estado final.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
-- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
-- A tabela abaixo tem o mapeamento de quais agentes/skills precisam desses testes, incluindo os detalhes de como rodar e as regras que cada teste abrange:
 
-  | Agente/skill                                                                        |
-  |-------------------------------------------------------------------------------------|
-  | [ai/agents/agent-cv.md](ai/agents/agent-cv.md#testes)                               |
-  | [ai/agents/agent-cl.md](ai/agents/agent-cl.md#testes)                               |
-  | [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
-  | [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
+Os testes são métricas consultivas — passar em todos não implica documento perfeito, e reprovar não implica documento ruim. Eles cobrem apenas regras quantitativas; problemas de qualidade fora do escopo dos testes devem ser levados ao usuário junto ao relatório.
 
-- As demais regras não citadas dentro dos agentes citados na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o documento, revise cada regra e verifique se todas estão sendo seguidas. 
-- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
-- Estes são os passos ideias de como fazer um bom teste:
-  1) Rode todos os testes para um documento **APENAS**.
-  2) Confira os resultados, identificando quais regras foram infringidas e faça as correções apenas para esse único documento.
-  3) Refaça o processo para o próximo documento, sem usar o feedback dos testes dos documentos anteriores. Cada documento, resultado de testes e correção tem um contexto único, portanto não devem ser compartilhados entre si.
-  4) Não repita esses passos mais de uma vez para cada documento. Você deve encerrar por aqui e assumir que o documento está na melhor qualidade possível no momento.
-  5) Exemplos
-     1) Gerou 10 CVs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> fim
-     2) Gerou 7 CVs + 3 CLs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> testa CL 1 -> identificar e corrigir x regras infringidas no CL 1 -> testa CL 2 -> ... -> fim
+A tabela abaixo mapeia os agentes/skills que possuem testes automatizados:
+
+| Agente/skill                                                                        |
+|-------------------------------------------------------------------------------------|
+| [ai/agents/agent-cv.md](ai/agents/agent-cv.md#testes)                               |
+| [ai/agents/agent-cl.md](ai/agents/agent-cl.md#testes)                               |
+| [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
+| [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
+
+## Fase 1 — Auditoria (automática)
+
+Após gerar todos os documentos solicitados:
+
+1. Rode os testes de **todos** os documentos gerados, usando os comandos definidos em cada agente/skill acima
+2. Salve os resultados brutos em `.tmp/audit-<timestamp>.txt`
+3. **Não faça nenhuma correção ainda**
+
+## Fase 2 — Relatório ao usuário
+
+Após a auditoria, apresente ao usuário:
+
+- **Se todos os testes passaram:** informe ao usuário e encerre o fluxo
+- **Se houve falhas:** apresente um relatório com:
+  - Quais documentos tiveram possíveis infrações
+  - Quais regras foram violadas em cada um (com valores atual vs. esperado quando disponível)
+  - Quais regras **não cobertas pelos testes** você identificou manualmente como possíveis problemas
+  - Sugestão de revisão manual
+
+  Ao final do relatório, pergunte:
+  > "Deseja que eu faça uma rodada de correção automática para esses documentos?"
+
+## Fase 3 — Correção (somente se o usuário autorizar)
+
+- Se o usuário **não aceitar**: encerre o fluxo
+- Se o usuário **aceitar**:
+  1. Faça correções apenas nos documentos com falha, alterando o mínimo possível sem infringir outras regras
+  2. Rode os testes novamente para esses documentos
+  3. Volte para a **Fase 2** com o novo relatório
 

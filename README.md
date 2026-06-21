@@ -89,8 +89,11 @@ Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
    - Você pode e deve pedir para remover as vagas em que o seu score está muito baixo.
 3. Feito a revisão dos fits, peça para gerar os CVs e/ou CLs. Você também pode pedir para gerar somente um dos dois pelo número da vaga.
 Exemplo: 1) CV; 2) CL; 3) CV e CL.
-4. Reveja os CVs/CLs no dashboard `http://localhost:3001/index.html`. Veja o que foi gerado e se está coerente. Caso queira ajustes, peça para corrigir o CV/CL da vaga específica.
-5. Para baixar o CV/CL, existe um botão no canto inferior direito da tela **Baixar PDF**
+4. Após gerar os documentos, Sebastian roda uma auditoria automática e apresenta um relatório informando quais CVs/CLs tiveram possíveis infrações de regras quantitativas (tamanho, quantidade de bullets, etc.) e quais passaram. Se houver infrações, ele vai te perguntar se deseja uma rodada de correção automática:
+   - **Não:** encerra o fluxo — você pode revisar e pedir ajustes manualmente depois
+   - **Sim:** Sebastian corrige os documentos com falha e apresenta um novo relatório. Esse ciclo se repete até você encerrar ou todos passarem
+5. Reveja os CVs/CLs no dashboard `http://localhost:3001/index.html`. Veja o que foi gerado e se está coerente. Caso queira ajustes, peça para corrigir o CV/CL da vaga específica.
+6. Para baixar o CV/CL, existe um botão no canto inferior direito da tela **Baixar PDF**
 
 Após autorização, os botões de CV/CL da vaga são liberados no dashboard.
 
