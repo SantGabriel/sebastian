@@ -39,16 +39,16 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 13. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
 
 ### Resumo profissional
-1. Deve ser um parágrafo de 500 - 600 caracteres
+1. Deve ser um parágrafo de 400 - 500 caracteres
 2. Deve apresentar sempre o tempo de experiência profissional
 3. Apresentar pelo menos um cargo, o que foi feito e os resultados obtidos. Preferir o cargo mais recente que esteja adequado à vaga.
 4. Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
 
 ### Experiência Profissional
-1. A soma de todos os bullets deve ter entre 2000 a 2500 caracteres
+1. A soma de todos os bullets deve ter entre 1500 a 2000 caracteres
 2. Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
 3. As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a experiência profissional mais recente. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
-4. A soma de todos os bullets da experiência profissional mais relevantes ter no mínimo 800 caracteres
+4. A soma de todos os bullets da experiência profissional mais relevantes ter no mínimo 600 caracteres
    - A experiência profissional mais relevante é aquela que:
        - É mais recente;
        - Que tenha relação com a vaga
@@ -76,7 +76,7 @@ educacao = [
 ### Projetos Pessoais
 - **Seção opcional**: incluir somente se existirem projetos documentados no `ai/skills/cv-base/SKILL.md`
 - Selecione no máximo 2 projetos que sejam relevantes para a vaga
-- Cada projeto deve ter entre 300 a 500 caracteres
+- Cada projeto deve ter entre 100 a 200 caracteres
 Formato:
 ```js
 projetos: [
@@ -182,11 +182,11 @@ cv = {
 
     | Teste                                                                              | Regra infrigida                                                 |
     |------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-    | Validar tamanho resumo de 500 a 600 caracteres                                     | [Resumo profissional](#resumo-profissional) Regra 1             |
+    | Validar tamanho resumo de 400 a 500 caracteres                                     | [Resumo profissional](#resumo-profissional) Regra 1             |
     | Contar 3 a 5 negrito no sumário                                                    | [Geral](#geral)  Regra 11.1.1                                   |
     | Contar 5 a 10 negrito na experiencia profissional                                  | [Geral](#geral)  Regra 11.1.2                                   |
     | Validar tamanho de 1500 a 2000 caracteres para todas as experiencias               | [Experiência Profissional](#experiência-profissional) Regra 1   |
-    | Validar experiencia mais relevante com no minimo 700 caracteres                    | [Experiência Profissional](#experiência-profissional) Regra 4   |
+    | Validar experiencia mais relevante com no minimo 600 caracteres                    | [Experiência Profissional](#experiência-profissional) Regra 4   |
     | Validar experiencia mais relevante tem que ter mais caracteres que todas as outras | [Experiência Profissional](#experiência-profissional) Regra 3   |
     | Validar bullet com tamanho entre 100 a 300 caracteres                              | [Experiência Profissional](#experiência-profissional) Regra 5.1 |
     | Contar bullets entre 1 e 6 em cada experiencia                                     | [Experiência Profissional](#experiência-profissional) Regra 5.2 |
