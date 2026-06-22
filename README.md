@@ -7,6 +7,10 @@
 O agente de IA capaz de processar vagas em lote, fazer o fit com a vaga, gerar currículo (Curriculum Vitae - CV) e carta de apresentação (Cover Letter - CL) por vaga seguindos critérios de ATS, com dashboard local, seja para uma vaga no Brasil ou na gringa.
 O dashboard exibe informações importantes sobre cada vaga, incluindo: modalidade de trabalho (Remoto, Presencial ou Híbrida), tipo de contratação (CLT, PJ ou CLT/PJ), score de fit, pontos positivos e gaps.
 
+<div align="center">
+   <img src="assets/papel%20de%20parede.jpg" alt="Sebastian wallpaper" width="100%" />
+</div>
+
 ## Requisitos
 
 - Node.js 22.21+
@@ -132,7 +136,3 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
 - **Botão PDF falha:** confirme se `npm start` está rodando na porta `3001`.
 - **CV/CL bloqueado:** a vaga ainda não foi autorizada.
-
-<div align="center">
-   <img src="assets/papel%20de%20parede.jpg" alt="Sebastian wallpaper" width="100%" />
-</div>
