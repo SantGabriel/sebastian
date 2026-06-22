@@ -21,3 +21,7 @@ insights.md
 ai/skills/cv-base/SKILL.md
 ai/skills/contexto/SKILL.md
 desenvolvedor.md
+
+# Fixtures gerados (dados fictícios)
+fixtures/fake-candidates/*/cv.fixture.js
+fixtures/fake-candidates/*/candidate.fixture.js
