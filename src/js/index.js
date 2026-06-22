@@ -8,6 +8,53 @@ export function abrirCVDropdown(value) {
   document.getElementById('cv-select').value = '';
 }
 
+const EXAMPLES = [
+  { name: 'example-1', label: 'Exemplo 1 - Marina (15 anos)', langs: ['pt', 'en'] },
+  { name: 'example-2', label: 'Exemplo 2 - Rafael (1 ano)', langs: ['pt', 'en'] },
+  { name: 'example-3', label: 'Exemplo 3 - Felipe (5 anos)', langs: ['pt', 'en'] },
+];
+
+export async function loadAvailableExamples() {
+  const available = [];
+
+  for (const ex of EXAMPLES) {
+    try {
+      const mod = await import(`../../fixtures/fake-candidates/${ex.name}/cv.fixture.js`);
+      if (mod.CV_FIXTURE && mod.CV_FIXTURE.length) {
+        available.push(ex);
+      }
+    } catch {
+      // arquivo não existe ou inválido — ignora
+    }
+  }
+
+  return available;
+}
+
+export function renderExampleDropdown(available) {
+  const section = document.getElementById('example-section');
+  const select = document.getElementById('cv-select');
+
+  if (!available.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  select.innerHTML = '<option value="">Escolher CV...</option>';
+
+  for (const ex of available) {
+    for (const lang of ex.langs) {
+      const suffix = lang === 'en' ? ' - EN' : ' - PT';
+      const jobId = lang === 'en' ? 'generico-en' : 'generico';
+      const option = document.createElement('option');
+      option.value = `${ex.name}|${jobId}`;
+      option.textContent = `${ex.label}${suffix}`;
+      select.appendChild(option);
+    }
+  }
+}
+
 export function scoreClass(s) {
   if (s >= 8) return 'score-green';
   if (s >= 5) return 'score-yellow';
@@ -245,4 +292,5 @@ if (typeof window !== 'undefined') {
 // import fica livre de efeitos colaterais.
 if (typeof document !== 'undefined') {
   render();
+  loadAvailableExamples().then(renderExampleDropdown);
 }
