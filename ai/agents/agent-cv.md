@@ -175,9 +175,8 @@ cv = {
 - Nunca assuma que "cv genérico" se refere a estes CVs do `fixtures/fake-candidates`
 
 # Testes
-- Aqui será definido os detalhes dos destes para esse agente
-- Após gerar todos os CVs, rode os testes definidos em `test/cv.test.js` para consultar a qualidade do CV gerado.
-- Rode os testes com `JOB_ID=${cv.id} npm run test "cv|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cv|ats"`
+- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](ai/agents/agent-testes.md)
+- O comando para rodar os testes é: `JOB_ID=${cv.id} npm run test "cv|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cv|ats"`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
     | Teste                                                                              | Regra infrigida                                                 |
@@ -194,4 +193,4 @@ cv = {
     | CV - Educação                                                                      | [Formação Acadêmica](#formação-acadêmica)                       |
 
 - Para rodar os testes em CVs genéricos, use `npm run test:generic`
-- Para rodar os testes nos CVs fakes que estão em `fixtures/fake-candidates/*` e usados apenas para desenvolvimento, use `npm run test:examples`
+- Para rodar os testes nos CVs fixtures que estão em `fixtures/fake-candidates/*` e usados apenas para desenvolvimento, use `npm run test:examples`

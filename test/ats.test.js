@@ -11,13 +11,14 @@ describe('ATS', () => {
       let allTextCV = getAllTextCV(cv);
 
       const validationCV = validateATSCharacters(allTextCV);
-      expect(validationCV.valid).toBe(true);
+      console.log(validationCV.forbiddenChars);
+      if (!validationCV.valid) throw new Error("Carcateres proibidos encontrados: " + validationCV.forbiddenChars.join(", "));
     }
 
     if (hasAuthorizedCL(item)) {
       const allTextCL = (cl.paragrafos || []).join(' ');
       const validationCL = validateATSCharacters(allTextCL);
-      expect(validationCL.valid).toBe(true);
+      if (!validationCL.valid) throw new Error("Carcateres proibidos encontrados: " + validationCL.forbiddenChars.join(", "));
     }
   });
 

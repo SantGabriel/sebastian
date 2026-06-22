@@ -138,9 +138,8 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - **Nunca altere `ai/skills/cv-base/SKILL.md` sem autorização explícita**
 
 # Testes
-- Aqui será definido os detalhes dos destes para esse agente
-- Após gerar todos os fits, rode os testes definidos em `test/fit.test.js` para consultar a qualidade do fit gerado.
-- Rode os testes com `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
+- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
+- O comando para rodar os testes é: `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
   
   | Teste                              | Regra infrigida                                                                                                                                  |

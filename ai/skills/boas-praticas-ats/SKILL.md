@@ -48,9 +48,8 @@ As regras serão aplicadas tanto para CVs quanto para os CLs.
 - Se a vaga é em português, citar valores apenas em R$; caso contrário, em USD
 
 # Testes
-- Aqui será definido os detalhes dos destes para esse agente
-- Após geração de todos os CL/CV, rode os testes definidos em `test/ats.test.js` para consultar a qualidade do documento gerado.
-- Rode os testes com `JOB_ID=${cl.id} npm test -- test/ats.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/ats.test.js`
+- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](../../agents/agent-testes.md)
+- O comando para rodar os testes é: `JOB_ID=${cl.id} npm test -- test/ats.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/ats.test.js`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 
 | Teste                               | Regra infrigida                                                                                 |

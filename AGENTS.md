@@ -22,6 +22,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 | `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                                |
 | `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                |
 | `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                     |
+| `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                            |
 
 ---
 
@@ -138,32 +139,3 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 ### Perguntas e Correções do usuário
 Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de análise apontado pelo usuário. Se o usuário questionar o descumprimento de uma regra, admita o erro, explique o motivo e apenas proponha a alteração nos arquivos permitidos em [Caso 2](#caso-2--erros-identificados--novas-instruções)
-
-# Testes
-- Após gerar todos os documentos solicitados pelo usuário (seja CV, CL ou fit), serão rodados alguns testes para consultar a qualidade do que foi gerado.
-- Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
-- Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-- Você deve rodar os testes **APENAS UMA ÚNICA VEZ**. Após gerar todos os documentos, rode os testes uma única vez. Guarde os resultados em um tmp. Corrija com base nos erros sem rodar os testes novamente. O resultado dos testes é um relatório de auditoria, não um checkpoint iterativo. Aceite o estado final.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
-- Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos.
-- Você não deve informar ao usuário final sobre os resultados dos testes. Faça tudo em modo silent.
-- A tabela abaixo tem o mapeamento de quais agentes/skills precisam desses testes, incluindo os detalhes de como rodar e as regras que cada teste abrange:
-
-  | Agente/skill                                                                        |
-  |-------------------------------------------------------------------------------------|
-  | [ai/agents/agent-cv.md](ai/agents/agent-cv.md#testes)                               |
-  | [ai/agents/agent-cl.md](ai/agents/agent-cl.md#testes)                               |
-  | [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
-  | [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
-
-- As demais regras não citadas dentro dos agentes citados na tabela acima devem ser revisadas por você manualmente, portanto, após gerar o documento, revise cada regra e verifique se todas estão sendo seguidas. 
-- Após a sua análise manual + testes automatizados, você deve revisar cada regra, identificar quais foram infringidas e fazer uma correção, alterando o mínimo possível o conteúdo original sem infringir as demais regras.
-- Estes são os passos ideias de como fazer um bom teste:
-  1) Rode todos os testes para um documento **APENAS**.
-  2) Confira os resultados, identificando quais regras foram infringidas e faça as correções apenas para esse único documento.
-  3) Refaça o processo para o próximo documento, sem usar o feedback dos testes dos documentos anteriores. Cada documento, resultado de testes e correção tem um contexto único, portanto não devem ser compartilhados entre si.
-  4) Não repita esses passos mais de uma vez para cada documento. Você deve encerrar por aqui e assumir que o documento está na melhor qualidade possível no momento.
-  5) Exemplos
-     1) Gerou 10 CVs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> fim
-     2) Gerou 7 CVs + 3 CLs -> testa CV 1 -> identificar e corrigir x regras infringidas no CV 1 -> testa CV 2 -> ... -> testa CL 1 -> identificar e corrigir x regras infringidas no CL 1 -> testa CL 2 -> ... -> fim
-
