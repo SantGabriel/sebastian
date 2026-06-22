@@ -22,6 +22,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 | `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                                |
 | `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                |
 | `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                     |
+| `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                            |
 
 ---
 
@@ -138,47 +139,3 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 ### Perguntas e Correções do usuário
 Nunca altere arquivos .md (agentes ou skills) para "justificar" um erro de análise apontado pelo usuário. Se o usuário questionar o descumprimento de uma regra, admita o erro, explique o motivo e apenas proponha a alteração nos arquivos permitidos em [Caso 2](#caso-2--erros-identificados--novas-instruções)
-
-# Testes
-
-Os testes são métricas consultivas — passar em todos não implica documento perfeito, e reprovar não implica documento ruim. Eles cobrem apenas regras quantitativas; problemas de qualidade fora do escopo dos testes devem ser levados ao usuário junto ao relatório.
-
-A tabela abaixo mapeia os agentes/skills que possuem testes automatizados:
-
-| Agente/skill                                                                        |
-|-------------------------------------------------------------------------------------|
-| [ai/agents/agent-cv.md](ai/agents/agent-cv.md#testes)                               |
-| [ai/agents/agent-cl.md](ai/agents/agent-cl.md#testes)                               |
-| [ai/agents/agent-fit.md](ai/agents/agent-fit.md#testes)                             |
-| [ai/skills/boas-praticas-ats/SKILL.md](ai/skills/boas-praticas-ats/SKILL.md#testes) |
-
-## Fase 1 — Auditoria (automática)
-
-Após gerar todos os documentos solicitados:
-
-1. Rode os testes de **todos** os documentos gerados, usando os comandos definidos em cada agente/skill acima
-2. Salve os resultados brutos em `.tmp/audit-<timestamp>.txt`
-3. **Não faça nenhuma correção ainda**
-
-## Fase 2 — Relatório ao usuário
-
-Após a auditoria, apresente ao usuário:
-
-- **Se todos os testes passaram:** informe ao usuário e encerre o fluxo
-- **Se houve falhas:** apresente um relatório com:
-  - Quais documentos tiveram possíveis infrações
-  - Quais regras foram violadas em cada um (com valores atual vs. esperado quando disponível)
-  - Quais regras **não cobertas pelos testes** você identificou manualmente como possíveis problemas
-  - Sugestão de revisão manual
-
-  Ao final do relatório, pergunte:
-  > "Deseja que eu faça uma rodada de correção automática para esses documentos?"
-
-## Fase 3 — Correção (somente se o usuário autorizar)
-
-- Se o usuário **não aceitar**: encerre o fluxo
-- Se o usuário **aceitar**:
-  1. Faça correções apenas nos documentos com falha, alterando o mínimo possível sem infringir outras regras
-  2. Rode os testes novamente para esses documentos
-  3. Volte para a **Fase 2** com o novo relatório
-
