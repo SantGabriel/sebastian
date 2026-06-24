@@ -1,7 +1,7 @@
-const { validateATSCharacters, wrongAnsiiConvertionDetection, getDataCVList, hasAuthorizedCV, hasAuthorizedCL, eachOrSkip } = require('./utils/utils');
+const { validateATSCharacters, wrongAnsiiConvertionDetection, getJobsList, hasAuthorizedCV, hasAuthorizedCL, eachOrSkip } = require('./utils/utils');
 
-/** @type {DataCV[]|Job[]} */
-const allList = getDataCVList();
+/** @type {Job[]} */
+const allList = getJobsList();
 
 describe('ATS', () => {
   eachOrSkip(allList)('Caracteres proibidos ($id)', (item) => {

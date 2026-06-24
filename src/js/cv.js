@@ -1,4 +1,3 @@
-/** @typedef {import('../interfaces/job-data').DataCV} DataCV */
 /** @typedef {import('../interfaces/job-data').Job} Job */
 
 import { gerarPDF } from './pdf.js';
@@ -9,7 +8,7 @@ const fakeCandidateName = params.get('candidate');
 const isGeneric = params.get('isGeneric');
 const root = document.getElementById('cv-root');
 
-/** @type {DataCV | Job | undefined} */
+/** @type {Job | undefined} */
 let doc;
 let CANDIDATE_DATA;
 
@@ -42,7 +41,7 @@ async function getDoc() {
 }
 
 /**
- * @param {DataCV | Job} item
+ * @param {Job} item
  * @param {string} candidateLocation
  * @returns {string}
  */
@@ -82,7 +81,7 @@ function render() {
 
   const cv = doc.cv;
   if (!isGeneric && !cv.authorized) {
-    notAuthorized(`CV para "${doc.vaga}${doc.empresa ? ' - ' + doc.empresa : ''}" ainda não autorizado.`);
+    notAuthorized(`CV para "${doc.vaga} - ${doc.empresa || 'Não informado'}" ainda não autorizado.`);
     return;
   }
 
@@ -110,7 +109,7 @@ function render() {
 
   document.getElementById('page-title').textContent = [doc.vaga, doc.empresa].filter(Boolean).join(' - ') + ` | ${candidateName}`;
 
-  window._pdfData = { vaga: doc.vaga, empresa: doc.empresa || '', candidateName };
+  window._pdfData = { vaga: doc.vaga, empresa: doc.empresa || 'Não informado', candidateName };
 
   const phoneHtml = candidatePhone
     ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';

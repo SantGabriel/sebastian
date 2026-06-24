@@ -220,7 +220,7 @@ function render() {
                 : ''}
             </h2>
             <div class="company">
-              <i class="fa-solid fa-building"></i> ${job.empresa}
+              <i class="fa-solid fa-building"></i> ${job.empresa || 'Não informado'}
               ${badge(job.modalidade)}
               ${badge(job.contratacao)}
             </div>

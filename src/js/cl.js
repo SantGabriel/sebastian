@@ -41,13 +41,13 @@ if (!jobId || !job) {
     : (c.location && c.location.pt) || (job.cv && job.cv.local) || '';
 
   if (!cl || !cl.authorized) {
-    notAuthorized(`Cover Letter for "${job.vaga}${job.empresa ? ' - ' + job.empresa : ''}" not authorized yet.`);
+    notAuthorized(`Cover Letter for "${job.vaga} - ${job.empresa || 'Não informado'}" not authorized yet.`);
   } else {
     document.documentElement.lang = isEN ? 'en' : 'pt-BR';
     document.getElementById('page-title').textContent = `Cover Letter${job.empresa ? ' - ' + job.empresa : ''} | ${name}`;
 
     const vagaLabel = job.vaga || (job.vagaTexto || '').slice(0, 60).split('\n')[0].trim() || 'Cover Letter';
-    window._pdfData = { vaga: vagaLabel, empresa: job.empresa, candidateName: name };
+    window._pdfData = { vaga: vagaLabel, empresa: job.empresa || 'Não informado', candidateName: name };
 
     const paragrafosHtml = (cl.paragrafos || []).map(p => `<p>${p}</p>`).join('');
     const applicationLabel = isEN ? 'Application' : 'Candidatura';
@@ -69,7 +69,7 @@ if (!jobId || !job) {
           ${linkedinHtml}
         </div>
       </div>
-      <p class="job-target">${applicationLabel}: ${job.vaga}${job.empresa ? ' - ' + job.empresa : ''}</p>
+      <p class="job-target">${applicationLabel}: ${job.vaga} - ${job.empresa || 'Não informado'}</p>
       <div class="cl-body">${paragrafosHtml}</div>
       <div class="signature">
         ${closingLabel}

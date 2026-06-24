@@ -54,6 +54,7 @@ export type GapTipo =
   | 'Requisito Core'
   | 'Requisito Importante'
   | 'Requisito Secundário'
+  | 'Requisito Baixo'
   | 'Fortemente desejável'
   | 'Noção, conhecimento'
   | 'Desejável/Diferencial';
@@ -75,31 +76,25 @@ export interface Candidatura {
   url?: string;
 }
 
-/**
- * CV não direcionado a uma vaga específica (genérico). É a base comum: uma
- * vaga real (`Job`) é um `DataCV` com os campos adicionais da vaga.
- */
-export interface DataCV {
+export interface Job {
+  /** Índice sequencial (começa em 1) para referenciar vagas por número. */
   id: string;
   vaga: string;
   /** Idioma do CV: "pt" ou "en". */
   lang: string;
-  tipos: string[];
-  cv: CV;
-}
-
-export interface Job extends DataCV {
-  /** Índice sequencial (começa em 1) para referenciar vagas por número. */
-  index: number;
+  tipos: "cv"|"cl"[];
+  /** Campos abaixo só existem em vagas reais; CVs genéricos omitem. */
+  index?: number;
   empresa?: string;
-  link: string;
-  modalidade: string;
+  link?: string;
+  modalidade?: string;
   contratacao?: string;
   cidadeVaga?: string;
-  vagaTexto: string;
+  vagaTexto?: string;
   candidatura?: Candidatura;
-  fit: Fit;
-  cl: CL;
+  fit?: Fit;
+  cl?: CL;
+  cv: CV;
 }
 
 /** Dados pessoais do candidato (src/json/candidate-data.js). */

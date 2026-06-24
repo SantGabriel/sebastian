@@ -1,13 +1,13 @@
 const {
-  getDataCVList,
+  getJobsList,
   hasAuthorizedCV,
   eachOrSkip,
   countBoldItems,
   getTextLength,
 } = require('./utils/utils');
 
-/** @type {DataCV[]|Job[]} */
-const allCVList = getDataCVList().filter(hasAuthorizedCV);
+/** @type {Job[]} */
+const allCVList = getJobsList().filter(hasAuthorizedCV);
 describe('CV - Campos obrigatórios', () => {
   eachOrSkip(allCVList)('Todos os campos obrigatórios definidos ($id)', ({id, cv}) => {
     expect(cv.local).toBeDefined();

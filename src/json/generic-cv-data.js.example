@@ -1,5 +1,5 @@
 // CVs genéricos — não direcionados a nenhuma vaga específica
 // Renderizados via src/pages/cv.html?job=generico e src/pages/cv.html?job=generico-en
-/** @type {import('../interfaces/job-data').DataCV} */
+/** @type {import('../interfaces/job-data').Job} */
 export const GENERIC_CV_DATA = [
 ];

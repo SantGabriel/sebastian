@@ -2,11 +2,10 @@
  * @typedef {import('../../src/interfaces/job-data').Job} Job
  * @typedef {import('../../src/interfaces/job-data').CV} CV
  * @typedef {import('../../src/interfaces/job-data').CL} CL
- * @typedef {import('../../src/interfaces/job-data').DataCV} DataCV
  */
 
 /**
- * @returns {DataCV[]}
+ * @returns {Job[]}
  */
 function getGenericCVData() {
   if (process.env.TEST_DATA === 'generic') {
@@ -28,27 +27,27 @@ function getGenericCVData() {
 /**
  * Retorna todos os jobs (sem filtro de autorização) com suporte a JOB_ID.
  * Usado pelos testes de fit, que devem rodar mesmo em jobs não autorizados.
- * @returns {Job[]|DataCV[]}
+ * @returns {Job[]}
  */
-function getDataCVList() {
-  let dataCVList = [];
+function getJobsList() {
+  let jobsList = [];
   if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') {
-    dataCVList = getGenericCVData();
+    jobsList = getGenericCVData();
   }else {
-    dataCVList = getJobsData();
+    jobsList = getJobsData();
   }
-  return dataCVList;
+  return jobsList;
 }
 
 /**
  * Retorna todos os jobs (sem filtro de autorização) com suporte a JOB_ID.
  * Usado pelos testes de fit, que devem rodar mesmo em jobs não autorizados.
- * @returns {Job[]|DataCV[]}
+ * @returns {Job[]}
  */
 function getJobsData() {
   if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') return [];
   const jobs = require('../../src/json/jobs-data.js').JOBS_DATA;
-  return selectDataCVs(jobs);
+  return selectJobs(jobs);
 }
 
 
@@ -193,10 +192,10 @@ function getTextLength(html) {
 
 
 /**
- * @param {DataCV[]} data
- * @returns {DataCV[]}
+ * @param {Job[]} data
+ * @returns {Job[]}
  */
-function selectDataCVs(data) {
+function selectJobs(data) {
   const ids = (process.env.JOB_ID || '')
     .split(',')
     .map(s => s.trim())
@@ -209,7 +208,7 @@ function selectDataCVs(data) {
  * Indica se o CV de um item de teste está autorizado para publicação.
  * Itens sem `cv` ou com `cv.authorized === false` são considerados
  * não autorizados e devem ser filtrados antes do `test.each`.
- * @param {Job | DataCV} item - Job ou item de CV genérico.
+ * @param {Job} item - Job ou item de CV genérico.
  * @returns {boolean} `true` se o CV existe e não está marcado como não autorizado.
  */
 function hasAuthorizedCV(item) {
@@ -220,7 +219,7 @@ function hasAuthorizedCV(item) {
  * Indica se a CL de um item de teste está autorizada para publicação.
  * Itens sem `cl` ou com `cl.authorized === false` são considerados
  * não autorizados e devem ser filtrados antes do `test.each`.
- * @param {Job | DataCV} item - Job ou item de CV genérico (cujo `cl` é sempre `null`).
+ * @param {Job} item - Job ou item de CV genérico (cujo `cl` é sempre `null`).
  * @returns {boolean} `true` se a CL existe e não está marcada como não autorizada.
  */
 function hasAuthorizedCL(item) {
@@ -230,12 +229,12 @@ function hasAuthorizedCL(item) {
 /**
  * Igual a `test.each`, mas registra um teste pulado quando a tabela está vazia,
  * evitando o erro "`.each` called with an empty Array of table data".
- * @template {object} DataCV
- * @param {DataCV[]} dataCVList
- * @returns {(name: string, fn: (row: DataCV) => void) => void}
+ * @template {object} Job
+ * @param {Job[]} jobList
+ * @returns {(name: string, fn: (row: Job) => void) => void}
  */
-function eachOrSkip(dataCVList) {
-  if (dataCVList && dataCVList.length) return test.each(dataCVList);
+function eachOrSkip(jobList) {
+  if (jobList && jobList.length) return test.each(jobList);
   return (name) => test.skip(String(name).replace(/\$\w+/g, '—'), () => {});
 }
 
@@ -244,7 +243,7 @@ module.exports = {
   hasAuthorizedCL,
   eachOrSkip,
   countBoldItems,
-  getDataCVList,
+  getJobsList,
   getJobsData,
   validateATSCharacters,
   getTextLength,
