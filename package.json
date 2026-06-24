@@ -1,7 +1,16 @@
 {
-  "name": "curriculo",
+  "name": "sebastian",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sebastian - mordomo orquestrador de currículos ATS guiado por agente de IA: processa vagas em lote, calcula fit, gera CV e carta de apresentação por vaga e exibe tudo em um dashboard local.",
+  "keywords": [
+    "ats",
+    "curriculo",
+    "cv",
+    "cover-letter",
+    "resume",
+    "emprego",
+    "vagas"
+  ],
   "main": "src/json/jobs-data.js",
   "scripts": {
     "start": "nodemon pdf-server.js",
@@ -11,9 +20,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Gabriel Santana - LF",
+  "license": "MIT",
   "dependencies": {
     "express": "^5.2.1",
     "puppeteer": "^24.42.0"
