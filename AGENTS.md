@@ -5,24 +5,25 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 ## Mapa de arquivos do sistema
 
-| Arquivo                                | Papel                                                                                |
-|----------------------------------------|--------------------------------------------------------------------------------------|
-| `vagas.txt`                            | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                     |
-| `src/json/jobs-data.js`                | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
-| `src/json/candidate-data.js`           | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
-| `src/json/generic-cv-data.js`          | Dados gerados/atualizados pelo agente para o CV genêrico                             |
-| `index.html`                           | Dashboard com fits e links CV/CL por vaga                                            |
-| `src/pages/cv.html`                    | Template de CV — renderiza via `?job=id`                                             |
-| `src/pages/cl.html`                    | Template de CL — renderiza via `?job=id`                                             |
-| `ai/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização                        |
-| `ai/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                                  |
-| `ai/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                          |
-| `ai/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                              |
-| `ai/agents/agent-fit.md`               | Agente especializado em análise de fit                                               |
-| `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                                |
-| `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                |
-| `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                     |
-| `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                            |
+| Arquivo                                  | Papel                                                                                |
+|------------------------------------------|--------------------------------------------------------------------------------------|
+| `vagas.txt`                              | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                     |
+| `src/json/jobs-data.js`                  | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga (`window.JOBS_DATA`) |
+| `src/json/candidate-data.js`             | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização)          |
+| `src/json/generic-cv-data.js`            | Dados gerados/atualizados pelo agente para o CV genêrico                             |
+| `src/interfaces/job-data.d.ts`           | **Fonte de verdade da forma** dos dados (Job, CV, CL, Fit, Gap, etc.)                |
+| `index.html`                             | Dashboard com fits e links CV/CL por vaga                                            |
+| `src/pages/cv.html`                      | Template de CV — renderiza via `?job=id`                                          |
+| `src/pages/cl.html`                      | Template de CL — renderiza via `?job=id`                                          |
+| `ai/skills/cv-base/SKILL.md`             | Fonte de verdade do candidato — nunca alterar sem autorização                        |
+| `ai/skills/contexto/SKILL.md`            | Instruções específicas do candidato                                                  |
+| `ai/skills/boas-praticas-ats/SKILL.md`   | Boas práticas ATS genéricas                                                          |
+| `ai/skills/iniciar-projeto/SKILL.md`     | Onboarding — configura o projeto para um novo candidato                              |
+| `ai/agents/agent-fit.md`                 | Agente especializado em análise de fit                                               |
+| `ai/agents/agent-cv.md`                  | Agente especializado em geração de CV                                                |
+| `ai/agents/agent-cl.md`                  | Agente especializado em geração de CL                                                |
+| `ai/agents/agent-interview.md`           | Agente especializado em preparação de entrevista                                     |
+| `ai/agents/agent-testes.md`              | Agente de auditoria e relatório de testes                                            |
 
 ---
 
@@ -63,31 +64,14 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 Os arquivos de dados (`src/json/*.js`) são **ES modules**: exportam uma constante nomeada (`export const JOBS_DATA = [...]`), em vez de atribuir a `window.*`. As páginas (`index.html`, `cv.html`, `cl.html`) consomem via `import`; nunca usar `<script src>` de dados nem `window.JOBS_DATA = ...`.
 
-```js
-export const JOBS_DATA = [
-  {
-    index: 1,             // índice sequencial começando em 1 — usado para referenciar vagas por número (ex: "remova a vaga 3"). Sempre reatribuir ao adicionar ou remover vagas.
-    id: "xpto",           // string simples, sem espaços/acentos — usada na URL
-    empresa: "XPTO Ltda",
-    vaga: "Product Engineer",
-    link: "https://www.linkedin.com/jobs/view/123456789",  // link direto da vaga
-    modalidade: "Remoto",  // "Remoto", "Presencial" ou "Híbrida"
-    contratacao: "CLT",  // "CLT", "PJ" ou "CLT/PJ" — omitir se não houver informação
-    cidadeVaga: "",        // cidade da vaga — preencher se Presencial/Híbrida (ex: "São Paulo, SP"); omitir se Remoto
-    lang: "pt",            // idioma da vaga: "pt" ou "en"
-    tipos: ["cv", "cl"],   // quais documentos esta vaga requer
-    vagaTexto: "...",      // texto integral da vaga
-    candidatura: {         // omitir se não houver instrução explícita de candidatura
-      aviso: "Candidatar-se por e-mail: vaga@empresa.com",  // texto exibido no dashboard
-      url: "mailto:vaga@empresa.com"  // mailto: ou https:// — omitir se não houver link clicável
-    },
-    fit: { /* ver agent-fit.md */ },
-    cv: { /* ver agent-cv.md */ },
-    cl: { /* ver agent-cl.md */ }
-  },
-  // ... mais vagas aqui
-]
-```
+**A forma de cada entrada é a interface `Job` em [`src/interfaces/job-data.d.ts`](src/interfaces/job-data.d.ts)** — essa é a fonte de verdade dos campos e tipos. Não redesenhe a estrutura aqui; consulte o `.d.ts`.
+
+Regras de preenchimento que **não** estão (nem cabem) na interface:
+
+- `index` — sequencial começando em 1, usado para referenciar vagas por número (ex.: "remova a vaga 3"). **Sempre reatribuir** ao adicionar ou remover vagas.
+- `id` — string simples, **sem espaços/acentos** (é usada na URL).
+- Quando omitir campos opcionais (`empresa`, `contratacao`, `cidadeVaga`, `candidatura`) e os valores válidos de `modalidade`/`contratacao`: ver `ai/agents/agent-fit.md`.
+- Conteúdo de `fit`, `cv` e `cl`: ver `agent-fit.md`, `agent-cv.md` e `agent-cl.md`.
 
 ---
 

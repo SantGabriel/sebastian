@@ -66,41 +66,23 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
 2. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
 3. Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
-Formato:
-```js
-educacao = [
-  { curso: "Nome do curso", inst: "Nome da instituição", periodo: "AAAA - AAAA", stack: "Tech1 | Tech2" },
-]
-```
+
+Forma: interface `Education` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts).
 
 ### Projetos Pessoais
 - **Seção opcional**: incluir somente se existirem projetos documentados no `ai/skills/cv-base/SKILL.md`
 - Selecione no máximo 2 projetos que sejam relevantes para a vaga
 - Cada projeto deve ter entre 100 a 200 caracteres
-Formato:
-```js
-projetos: [
-  {
-    nome: "Nome do Projeto",
-    url: "https://github.com/...", // opcional
-    stack: "Tech1 | Tech2",
-    periodo: "AAAA - AAAA",
-    descricao: "Descrição do projeto em um parágrafo."
-  }
-]
-```
+
+Forma: interface `Project` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) (`url` é opcional).
 
 ### Certificados
 - **Seção opcional**: incluir somente se existirem certificados documentados no `ai/skills/cv-base/SKILL.md`
 - Inclua certificados relevantes para a vaga.
 - Máximo de 5 certificações. Se houver mais de 5, priorize os mais recentes e relevantes para a vaga.
 - `url` é opcional
-Formato:
-```js
-certificados: [
-  { nome: "Nome da Certificação", url: "https://...", periodo: "AAAA" }
-]
-```
+
+Forma: interface `Certificate` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts).
 
 ### Idiomas
 - Formato simples: Idioma - nível (ex: "Inglês - Avançado", "Espanhol - Intermediário")
@@ -120,37 +102,14 @@ Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `lo
 
 ## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 
-```js
-cv = {
-  authorized: true,
-  local: "[CANDIDATE_DATA.location.pt]",
-  titulo: "Título do Cargo",
-  subtitulo: "Tech 1 | Tech 2 | Tech 3",
-  resumo: "...",
-  experiencias: [
-    {
-      cargo: "Cargo - Nível",
-      empresa: "Nome da Empresa",
-      url: "https://empresa.com",
-      inicio: "Mês AAAA",
-      fim: "Mês AAAA",
-      stack: "Tech 1 | Tech 2 | Tech 3",
-      bullets: ["bullet 1", "bullet 2"]
-    }
-  ],
-  skills: ["Tech 1", "Tech 2", "..."],
-  projetos: [ // Opcional — omitir se não houver projetos no cv-base
-    { nome: "Nome", url: "https://...", stack: "Tech1 | Tech2", periodo: "AAAA - AAAA", descricao: "Parágrafo." }
-  ],
-  educacao: [
-    { curso: "Nome do Curso", inst: "Instituição de Ensino", periodo: "AAAA - AAAA", stack: "Tech1 | Tech2" }
-  ],
-  certificados: [ // Opcional — omitir se não houver certificados no cv-base
-    { nome: "Nome da Certificação", url: "https://...", periodo: "AAAA" }
-  ],
-  idiomas: ["Idioma 1 - Nível", "Idioma 2 - Nível"]
-}
-```
+A forma do objeto é a interface `CV` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) — fonte de verdade dos campos e tipos.
+
+Regras de preenchimento (não estão na interface):
+
+- `local`: usar `CANDIDATE_DATA.location.pt` ou `.en` conforme o idioma da vaga (ver [Localização e idioma](#localização-e-idioma)).
+- `projetos` e `certificados`: **seções opcionais** — omitir se não houver itens documentados no `ai/skills/cv-base/SKILL.md`.
+- `stack` (em experiências/educação/projetos): tecnologias separadas por ` | `.
+- Demais regras de conteúdo e limites: seções acima deste documento.
 
 ## Protocolo de autorização
 

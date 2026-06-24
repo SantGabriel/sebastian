@@ -19,6 +19,8 @@ example-N/
 
 ## Schema
 
+> A forma dos dados é a mesma das interfaces em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) (`Job`/`CV` para o CV, `CandidateData` para o candidato) — fonte de verdade. Os blocos abaixo são exemplos prontos para copiar ao criar fixtures à mão.
+
 ### cv.fixture.js
 
 ```js

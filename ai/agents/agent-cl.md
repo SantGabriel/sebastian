@@ -26,12 +26,7 @@ Ao receber "autoriza CL para [empresa]" — após fit aprovado pelo usuário.
 
 ## Estrutura do objeto `cl` em `src/json/jobs-data.js`
 
-```js
-cl = {
-  authorized: true,
-  paragrafos: ["parágrafo 1", "parágrafo 2", "parágrafo 3"]
-}
-```
+A forma do objeto é a interface `CL` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts). O conteúdo de `paragrafos` segue as [Regras de conteúdo](#regras-de-conteúdo) acima.
 
 ## Protocolo de autorização
 

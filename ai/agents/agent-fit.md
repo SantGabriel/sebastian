@@ -82,19 +82,14 @@ Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we u
 
 ## Estrutura do fit no `src/json/jobs-data.js`
 
-Os tipos válidos para `tipo` são exatamente os 7 da tabela da fórmula do gap:
-`"Requisito Core"`, `"Requisito Importante"`, `"Requisito Secundário"`, `"Requisito Baixo"`, `"Fortemente desejável"`, `"Noção, conhecimento"`, `"Desejável/Diferencial"`.
+A forma do objeto é a interface `Fit` (e `Gap`) em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) — essa é a fonte de verdade dos campos.
 
-```js
-fit = {
-  score: 9,                          // 0–10, baseado nos requisitos obrigatórios
-  positivos: ["ponto 1", "..."],     // requisitos claramente atendidos
-  negativos: [                       // requisitos não atendidos — cada item é um objeto
-    { descricao: "Sem experiência com Docker", tipo: "Requisito Secundário" }
-  ],
-  summary: "Resumo em 1-2 frases."
-}
-```
+Regras de preenchimento (não estão na interface):
+
+- `score`: 0–10, baseado nos requisitos obrigatórios (ver [Fórmula do gap](#fórmula-do-gap)).
+- `positivos`: requisitos claramente atendidos.
+- `negativos`: requisitos não atendidos — cada item é um objeto `{ descricao, tipo }`.
+- Os valores válidos de `gap.tipo` são exatamente os **7** da tabela da [Fórmula do gap](#fórmula-do-gap) (tipados como `GapTipo` no `.d.ts`).
 
 ## Campos `modalidade`, `cidadeVaga` e `contratacao`
 
@@ -114,6 +109,8 @@ Ao processar cada vaga, verifique se há instrução explícita de candidatura.
 - **Se candidatura é por e-mail:** inclua o campo `candidatura` com `aviso` (texto legível) e `url` (mailto: link)
 - **Se candidatura é por link/formulário externo:** inclua o campo `candidatura` com `aviso` (texto legível) e `url` (https:// link)
 - **Se não houver instrução explícita:** **omita o campo `candidatura`** completamente
+
+Forma: interface `Candidatura` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts). Exemplos ilustrativos dos dois casos:
 
 ```js
 // e-mail direto — USAR CAMPO candidatura
@@ -146,4 +143,4 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
   |------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
   | Score entre 0 e 10                 | [Fórmula do gap](#fórmula-do-gap) Regra 1                                                                                                        |
   | Sem gaps = score 10                | [Sem negativos = score 10](#sem-negativos--score-10)                                                                                             |
-  | Score coerente com os tipos de gap | [Fórmula do gap](#fórmula-do-gap) — calcula `10 - Σ pesos` e compara com `fit.score`; também valida que todo `gap.tipo` é um dos 6 tipos válidos |
+  | Score coerente com os tipos de gap | [Fórmula do gap](#fórmula-do-gap) — calcula `10 - Σ pesos` e compara com `fit.score`; também valida que todo `gap.tipo` é um dos 7 tipos válidos |
