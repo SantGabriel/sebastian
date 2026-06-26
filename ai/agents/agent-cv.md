@@ -45,18 +45,23 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 4. Citar no máximo 3 tecnologias mais relevantes para a vaga, preferindo as que o candidato tem mais experiência e resultados comprovados.
 
 ### Experiência Profissional
-1. A soma de todos os bullets deve ter entre 1500 a 2000 caracteres
-2. Cite no máximo 4 experiências profissionais. Caso o candidato tenha mais de 4 experiências, não é necessário citar todas. Nesse caso, se houver alguma sem **qualquer** relação com a vaga, ela deve ser omitida. caso contrário, não omita nenhuma.
-3. As experiências mais recentes devem ser priorizadas e devem ter mais detalhes, principalmente a experiência profissional mais recente. As experiências mais antigas devem ser mais resumidas ou até omitidas se necessário.
+1. A soma dos bullets de todas as experiências **detalhadas** deve ter entre 1500 a 2000 caracteres (experiências condensadas não entram nessa soma)
+2. Cite no máximo 4 experiências profissionais **detalhadas**. Se o candidato tiver mais de 4 e a vaga exigir um tempo de experiência que as detalhadas sozinhas não cobrem, você pode incluir também no máximo 2 experiências profissionais **condensadas** (Ver Regra 7), preservando a linha do tempo, omitindo as demais experiências se ela não tiver **qualquer** relação com a vaga.
+3. As experiências mais recentes e relevantes são detalhadas e priorizadas. As mais antigas vão sendo condensadas conforme perdem relevância, podendo ser omitidas se necessário, especialmente se não houver  **qualquer** relação com a vaga.
 4. A soma de todos os bullets da experiência profissional mais relevantes ter no mínimo 600 caracteres
    - A experiência profissional mais relevante é aquela que:
        - É mais recente;
        - Que tenha relação com a vaga
        - Tenha durado pele menos 1 ano ou continua em andamento
+   - **Marque essa experiência com o campo `maisRelevante: true`** (campo `boolean` da interface `Experience`). Exatamente **uma** experiência do CV deve ter esse campo; todas as outras devem omiti-lo. É essa flag — e não a posição na lista — que identifica a experiência de maior destaque. Ela deve ser também a experiência com mais caracteres de bullets entre todas.
 5. Em cada experiência profissional: 
-   1. Cada bullet deve ter entre 100 e 300 caracteres.
+   1. Cada bullet deve ter entre 100 e 300 caracteres (Exceto experiência condensada).
    2. Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais relevantes para a vaga.
 6. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
+7. **Experiência condensada**:
+   - Deve ser um único bullet entre 70 a 150 caracteres
+   - Deve ser marcado com `condensada: true` (campo `boolean` da interface `Experience`)
+   - Não terá lista de stacks
 
 ### Competências Técnicas
 1. Deve citar entre a 1 a 15 skills.
@@ -144,10 +149,14 @@ Regras de preenchimento (não estão na interface):
     | Contar 3 a 5 negrito no sumário                                                    | [Geral](#geral)  Regra 11.1.1                                   |
     | Contar 5 a 10 negrito na experiencia profissional                                  | [Geral](#geral)  Regra 11.1.2                                   |
     | Validar tamanho de 1500 a 2000 caracteres para todas as experiencias               | [Experiência Profissional](#experiência-profissional) Regra 1   |
+    | Exatamente uma experiência marcada como mais relevante                             | [Experiência Profissional](#experiência-profissional) Regra 4   |
     | Validar experiencia mais relevante com no minimo 600 caracteres                    | [Experiência Profissional](#experiência-profissional) Regra 4   |
     | Validar experiencia mais relevante tem que ter mais caracteres que todas as outras | [Experiência Profissional](#experiência-profissional) Regra 3   |
     | Validar bullet com tamanho entre 100 a 300 caracteres                              | [Experiência Profissional](#experiência-profissional) Regra 5.1 |
     | Contar bullets entre 1 e 6 em cada experiencia                                     | [Experiência Profissional](#experiência-profissional) Regra 5.2 |
+    | Validar experiência condensada com 1 bullet de 70 a 150 caracteres                 | [Experiência Profissional](#experiência-profissional) Regra 7   |
+    | Máximo de 4 experiências detalhadas                                                | [Experiência Profissional](#experiência-profissional) Regra 2   |
+    | Máximo de 2 experiências condensadas                                               | [Experiência Profissional](#experiência-profissional) Regra 2   |
     | Validar de 1 a 15 skills                                                           | [Competências Técnicas](#competências-técnicas)                 |
     | CV - Educação                                                                      | [Formação Acadêmica](#formação-acadêmica)                       |
 

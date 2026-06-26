@@ -37,6 +37,11 @@ describe('CV - Campos obrigatórios', () => {
       expect(edu.stack).toBeDefined();
     });
   });
+
+  eachOrSkip(allCVList)('Exatamente uma experiência marcada como mais relevante ($id)', ({id, cv}) => {
+    const flagged = cv.experiencias.filter(exp => exp.maisRelevante === true);
+    expect(flagged.length).toBe(1);
+  });
 });
 
 describe('CV - Experiência Profissional', () => {
@@ -84,31 +89,39 @@ describe('CV - Professional Experience', () => {
   });
 
   eachOrSkip(allCVList)('Validar experiencia mais relevante com no minimo 600 caracteres ($id)', ({id, cv}) => {
-    const firstExp = cv.experiencias[0];
-    let text = (firstExp.cargo || '') + ' ' + (firstExp.stack || '') + ' ';
-    firstExp.bullets.forEach(bullet => { text += bullet + ' '; });
+    const relevante = cv.experiencias.find(exp => exp.maisRelevante === true);
+    expect(relevante).toBeDefined();
+
+    let text = (relevante.cargo || '') + ' ' + (relevante.stack || '') + ' ';
+    relevante.bullets.forEach(bullet => { text += bullet + ' '; });
 
     const textLength = getTextLength(text);
     expect(textLength).toBeGreaterThanOrEqual(600);
   });
 
   eachOrSkip(allCVList)('Validar experiencia mais relevante tem que ter mais caracteres que todas as outras ($id)', ({id, cv}) => {
-    const firstExpLength = getTextLength(cv.experiencias[0].bullets.join(' '));
+    const relevante = cv.experiencias.find(exp => exp.maisRelevante === true);
+    expect(relevante).toBeDefined();
 
-    for (let i = 1; i < cv.experiencias.length; i++) {
-      const otherExpLength = getTextLength(cv.experiencias[i].bullets.join(' '));
-      expect(firstExpLength).toBeGreaterThanOrEqual(otherExpLength);
-    }
+    const relevanteLength = getTextLength(relevante.bullets.join(' '));
+
+    cv.experiencias.forEach(exp => {
+      if (exp === relevante) return;
+      const otherExpLength = getTextLength(exp.bullets.join(' '));
+      expect(relevanteLength).toBeGreaterThanOrEqual(otherExpLength);
+    });
   });
 
   eachOrSkip(allCVList)('Validar bullet com tamanho entre 100 a 300 caracteres ($id)', ({id, cv}) => {
-    cv.experiencias.forEach(exp => {
-      exp.bullets.forEach(bullet => {
-        const textLength = getTextLength(bullet);
-        expect(textLength).toBeGreaterThanOrEqual(100);
-        expect(textLength).toBeLessThanOrEqual(300);
+    cv.experiencias
+      .filter(exp => exp.condensada !== true)
+      .forEach(exp => {
+        exp.bullets.forEach(bullet => {
+          const textLength = getTextLength(bullet);
+          expect(textLength).toBeGreaterThanOrEqual(100);
+          expect(textLength).toBeLessThanOrEqual(300);
+        });
       });
-    });
   });
 
   eachOrSkip(allCVList)('Contar bullets entre 1 e 6 em cada experiencia ($id)', ({id, cv}) => {
@@ -116,6 +129,29 @@ describe('CV - Professional Experience', () => {
       expect(exp.bullets.length).toBeGreaterThanOrEqual(1);
       expect(exp.bullets.length).toBeLessThanOrEqual(6);
     });
+  });
+
+  eachOrSkip(allCVList)('Validar experiência condensada com 1 bullet de 70 a 150 caracteres ($id)', ({id, cv}) => {
+    cv.experiencias
+      .filter(exp => exp.condensada === true)
+      .forEach(exp => {
+        // Uma condensada nunca pode ser a experiência de maior destaque
+        expect(exp.maisRelevante).not.toBe(true);
+        expect(exp.bullets.length).toBe(1);
+        const textLength = getTextLength(exp.bullets[0]);
+        expect(textLength).toBeGreaterThanOrEqual(70);
+        expect(textLength).toBeLessThanOrEqual(150);
+      });
+  });
+
+  eachOrSkip(allCVList)('Máximo de 4 experiências detalhadas ($id)', ({id, cv}) => {
+    const detalhadas = cv.experiencias.filter(exp => exp.condensada !== true);
+    expect(detalhadas.length).toBeLessThanOrEqual(4);
+  });
+
+  eachOrSkip(allCVList)('Máximo de 2 experiências condensadas ($id)', ({id, cv}) => {
+    const condensadas = cv.experiencias.filter(exp => exp.condensada === true);
+    expect(condensadas.length).toBeLessThanOrEqual(2);
   });
 });
 
@@ -129,5 +165,25 @@ describe('CV - Competências Técnicas', () => {
 describe('CV - Educação', () => {
   eachOrSkip(allCVList)('Validar Máximo 4 formações ($id)', ({id, cv}) => {
     expect(cv.educacao.length).toBeLessThanOrEqual(4);
+  });
+});
+
+describe('CV - Projetos Pessoais', () => {
+  eachOrSkip(allCVList)('Máximo de 2 projetos pessoais ($id)', ({id, cv}) => {
+    expect((cv.projetos || []).length).toBeLessThanOrEqual(2);
+  });
+
+  eachOrSkip(allCVList)('Validar descrição de projeto entre 100 a 200 caracteres ($id)', ({id, cv}) => {
+    (cv.projetos || []).forEach(projeto => {
+      const textLength = getTextLength(projeto.descricao);
+      expect(textLength).toBeGreaterThanOrEqual(100);
+      expect(textLength).toBeLessThanOrEqual(200);
+    });
+  });
+});
+
+describe('CV - Certificados', () => {
+  eachOrSkip(allCVList)('Máximo de 5 certificados ($id)', ({id, cv}) => {
+    expect((cv.certificados || []).length).toBeLessThanOrEqual(5);
   });
 });

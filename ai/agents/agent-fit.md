@@ -108,6 +108,7 @@ Ao processar cada vaga, verifique se há instrução explícita de candidatura.
 
 - **Se candidatura é por e-mail:** inclua o campo `candidatura` com `aviso` (texto legível) e `url` (mailto: link)
 - **Se candidatura é por link/formulário externo:** inclua o campo `candidatura` com `aviso` (texto legível) e `url` (https:// link)
+- **Se a vaga vier do domínio gupy.io:** informe que talvez valvez ele prefira gerar apenas um CL, já que a gupy.io não permite anexar CVs, apenas CLs.
 - **Se não houver instrução explícita:** **omita o campo `candidatura`** completamente
 
 Forma: interface `Candidatura` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts). Exemplos ilustrativos dos dois casos:
@@ -118,6 +119,9 @@ candidatura = { aviso: "Candidatar-se por e-mail: vaga@empresa.com", url: "mailt
 
 // formulário externo — USAR CAMPO candidatura
 candidatura = { aviso: "A candidatura deve ser feita por formulário externo", url: "https://..." }
+
+// vaga da gupy — USAR CAMPO candidatura
+candidatura = { aviso: "A vaga é pela Gupy, você só vai precisar de gerar o CL" }
 ```
 
 ## Saída

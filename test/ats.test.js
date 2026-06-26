@@ -11,7 +11,6 @@ describe('ATS', () => {
       let allTextCV = getAllTextCV(cv);
 
       const validationCV = validateATSCharacters(allTextCV);
-      console.log(validationCV.forbiddenChars);
       if (!validationCV.valid) throw new Error("Carcateres proibidos encontrados: " + validationCV.forbiddenChars.join(", "));
     }
 

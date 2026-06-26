@@ -13,8 +13,8 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 | `src/json/generic-cv-data.js`            | Dados gerados/atualizados pelo agente para o CV genêrico                             |
 | `src/interfaces/job-data.d.ts`           | **Fonte de verdade da forma** dos dados (Job, CV, CL, Fit, Gap, etc.)                |
 | `index.html`                             | Dashboard com fits e links CV/CL por vaga                                            |
-| `src/pages/cv.html`                      | Template de CV — renderiza via `?job=id`                                          |
-| `src/pages/cl.html`                      | Template de CL — renderiza via `?job=id`                                          |
+| `src/pages/cv.html`                      | Template de CV — renderiza via `?job=id`                                             |
+| `src/pages/cl.html`                      | Template de CL — renderiza via `?job=id`                                             |
 | `ai/skills/cv-base/SKILL.md`             | Fonte de verdade do candidato — nunca alterar sem autorização                        |
 | `ai/skills/contexto/SKILL.md`            | Instruções específicas do candidato                                                  |
 | `ai/skills/boas-praticas-ats/SKILL.md`   | Boas práticas ATS genéricas                                                          |
@@ -53,7 +53,6 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
   - remover a vaga do `vagas.txt`
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
-  - Se a vaga vier do domínio gupy.io, pergunte ao usuário se ele não quer um CL apenas para essa vaga, já que a gupy.io não permite anexar CVs, apenas CLs.
 
 ## Modo entrevista
 - Quando o usuário pedir análise de entrevista para uma vaga, leia `ai/agents/agent-interview.md` e siga suas instruções

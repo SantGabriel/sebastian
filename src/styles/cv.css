@@ -76,7 +76,7 @@ li { margin-bottom: 3px; }
 /* ---------- projects ---------- */
 
 .project-item {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 /* ---------- skills ---------- */
@@ -102,7 +102,7 @@ li { margin-bottom: 3px; }
 .edu-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px 30px;
+  gap: 10px 30px;
 }
 
 .edu-item        { flex: 1; }

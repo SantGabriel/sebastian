@@ -6,6 +6,18 @@ export interface Experience {
   fim: string;
   stack: string;
   bullets: string[];
+  /**
+   * Marca a experiência mais relevante para a vaga (a de maior destaque).
+   * Exatamente uma experiência do CV deve ter `true`; as demais omitem o campo.
+   */
+  maisRelevante?: boolean;
+  /**
+   * Marca uma experiência condensada: entrada enxuta (1 bullet de 70 a 150
+   * caracteres) usada para preservar a linha do tempo sem gastar espaço.
+   * Fica fora dos limites de bullet/caracteres das experiências detalhadas e
+   * nunca pode ser a `maisRelevante`. As demais omitem o campo.
+   */
+  condensada?: boolean;
 }
 
 export interface Education {

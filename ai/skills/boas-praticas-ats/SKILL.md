@@ -26,7 +26,7 @@ As regras serão aplicadas tanto para CVs quanto para os CLs.
 ## Datas
 - Não abreviar meses: "Mai/2024" → "Maio 2024"
 - Não usar tracos especiais entre datas: "Mai/2024 – Jul/2025" → "Maio 2024 - Julho 2025"
-- Anos sozinhos são aceitos: "2016 - 2022"
+- Anos sozinhos são aceitos, exceto para experiência profissional: "2016 - 2022"
 
 ## Icones no HTML
 - Importar Font Awesome via CDN para usar icones sem emojis:
