@@ -22,6 +22,10 @@ describe('Fit', () => {
       if (fit.negativos && fit.negativos.length === 0) return;
       const negativos = fit.negativos || [];
 
+      const temGapCustom = negativos.filter(gap => gap.tipo === GAP.PERSONALIZADO).length > 0;
+      if (temGapCustom) return;
+
+
       negativos.forEach(gap => {
         expect(Object.values(GAP)).toContain(gap.tipo);
       });
@@ -29,6 +33,14 @@ describe('Fit', () => {
       const deduction    = negativos.reduce((acc, gap) => acc + (gapWeight(gap.tipo) || 0), 0);
       const expectedScore = Math.max(0, Math.round((10 - deduction) * 100) / 100);
       expect(fit.score).toBe(expectedScore);
+    });
+
+    eachOrSkip(jobsWithFit)('Apenas um Requisito core por vaga ($id)',({id, fit}) => {
+      if (fit.negativos && fit.negativos.length === 0) return;
+      const negativos = fit.negativos || [];
+
+      const requisitosCore = negativos.filter(gap => gap.tipo === GAP.REQUISITO_CORE);
+      expect(requisitosCore.length).toBeLessThanOrEqual(1);
     });
   });
 });

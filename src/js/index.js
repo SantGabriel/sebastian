@@ -69,6 +69,7 @@ export const GAP = Object.freeze({
   FORTEMENTE_DESEJAVEL:  'Fortemente desejável',
   NOCAO_CONHECIMENTO:    'Noção, conhecimento',
   DESEJAVEL_DIFERENCIAL: 'Desejável/Diferencial',
+  PERSONALIZADO: 'personalizado',
 });
 
 export function gapWeight(tipo) {
