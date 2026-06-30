@@ -69,7 +69,8 @@ export type GapTipo =
   | 'Requisito Baixo'
   | 'Fortemente desejável'
   | 'Noção, conhecimento'
-  | 'Desejável/Diferencial';
+  | 'Desejável/Diferencial'
+  | 'Personalizado';
 
 export interface Gap {
   descricao: string;
@@ -94,7 +95,7 @@ export interface Job {
   vaga: string;
   /** Idioma do CV: "pt" ou "en". */
   lang: string;
-  tipos: "cv"|"cl"[];
+  tipos: ("cv"|"cl")[];
   /** Campos abaixo só existem em vagas reais; CVs genéricos omitem. */
   index?: number;
   empresa?: string;
