@@ -24,7 +24,6 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
 # Sumário
 - [Por que usar o Sebastian?](#por-que-usar-o-sebastian)
 - [Sobre os ATS e AI match](#sobre-os-ats-e-ai-match)
-- [Alertas e avisos por vaga](#alertas-e-avisos-por-vaga)
 - [Glossário](#glossário)
 - [Mapa de arquivos](#mapa-de-arquivos)
 - [Privacidade — seus dados ficam com você](#privacidade--seus-dados-ficam-com-você)
@@ -37,11 +36,13 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
     - [ai/skills/cv-base/SKILL.md](#aiskillscv-baseskillmd)
     - [ai/skills/contexto/SKILL.md](#aiskillscontextoskillmd)
     - [Vagas](#vagas)
-  - [Fluxo com o agente para gerar CV/CL](#3-fluxo-com-o-agente-para-gerar-cvcl)
-  - [CV genérico](#4-cv-genérico)
-  - [Entrevista](#5-entrevista)
-  - [Pós uso](#6-pós-uso)
-  - [Solução rápida de problemas](#7-solução-rápida-de-problemas)
+  - [Dashboard](#3-dashboard)
+    - [Alertas e avisos por vaga](#alertas-e-avisos-por-vaga)
+  - [Fluxo com o agente para gerar CV/CL](#4-fluxo-com-o-agente-para-gerar-cvcl)
+  - [CV genérico](#5-cv-genérico)
+  - [Entrevista](#6-entrevista)
+  - [Pós uso](#7-pós-uso)
+  - [Solução rápida de problemas](#8-solução-rápida-de-problemas)
 - [Regras de geração de fits, CV e CL](#regras-de-geração-de-fits-cv-e-cl)
   - [Testes Automatizados](#testes-automatizados)
     - [Hacking Reward](#hacking-reward)
@@ -77,16 +78,6 @@ Exemplo de plataformas de vagas conhecidas que usam ATS com filtros e/ou AI matc
 | **GeekHunter**                       | "recursos automatizados aplicados pela GeekHunter para apoiar entrevistas, enriquecer perfis, gerar recomendações, realizar matching ..."                                   | [geekhunter.com.br](https://www.geekhunter.com.br/pt/termos-de-uso)                         |
 
 **Observação:** O fato de uma empresa não estar listada aqui não significa que ela usa ou não usa ATS e/ou AI match.
-
-# Alertas e avisos por vaga
-
-Além do score de fit e dos gaps, o dashboard sinaliza automaticamente alguns pontos de atenção em cada vaga, para você não perder requisitos importantes na hora de se candidatar:
-
-- **Candidatura externa:** quando a vaga exige aplicação por e-mail ou por formulário/link externo (em vez do fluxo padrão da plataforma), o dashboard exibe um aviso com o atalho direto — link `mailto:` para e-mail ou `https://` para o formulário.
-- **Localização divergente:** quando a vaga é **Presencial** ou **Híbrida** em uma cidade diferente da sua, o dashboard destaca a modalidade e a cidade da vaga, alertando que pode exigir deslocamento ou mudança.
-- **Vagas da Gupy:** como a Gupy não permite anexar currículo (apenas carta de apresentação), o Sebastian sugere gerar uma CL para essas vagas.
-
-> Esses avisos são apenas indicativos, gerados a partir do texto da vaga. Sempre confira a descrição original antes de se candidatar.
 
 # Glossário
 
@@ -127,7 +118,7 @@ O repositório versiona apenas os equivalentes `*.example` (modelos sem dados re
 # Como usar? 
 
 ## Resumo do fluxo
-- Inicie a conversa com o Sebastian e responda os dados pessoais que ele solicitar que serão colocados no CV e CL
+- Inicie a conversa com o Sebastian com um "olá Sebastian" e responda os dados pessoais que ele solicitar que serão colocados no CV e CL
 - Cole as vagas no arquivo `vagas.txt` que você pretende se candidatar.
 - Peça para processar as vagas. O Sebastian vai analisar cada vaga e gerar um fit (score + gaps) com o seu perfil antes de gerar qualquer CV ou CL.
 - Acesse o dashboard `http://localhost:3001/index.html` e veja os fits para decidir quais vagas você ainda tem interesse de se candidatar. O fit vai te ajudar a decidir se vale a pena se candidatar ou não a partir dos gaps que você tem com a vaga e o score do seu fit
@@ -204,7 +195,43 @@ https://www.linkedin.com/jobs/view/987654321
 <br>
 Você pode usar o arquivo [vagas.txt.example](vagas.txt.example) como base.
 
-## 3) Fluxo com o agente para gerar CV/CL
+
+## 3) Dashboard
+
+Acesse o dashboard em `http://localhost:3001/index.html` após iniciar o projeto com `npm start`.
+
+<div align="center">
+   <img src="assets/dashboard.png" alt="dashboard" width="100%" />
+</div>
+
+O dashboard centraliza todas as informações geradas pelo Sebastian por vaga:
+
+- **Score de fit** — nota de 0 a 10 indicando o quão alinhado o seu perfil está com a vaga
+- **Pontos positivos e gaps** — o que joga a seu favor e o que falta para a vaga
+- **Modalidade e tipo de contratação** — Remoto, Presencial ou Híbrido; CLT, PJ ou CLT/PJ
+- **Botões de CV e CL** — ficam bloqueados até o Sebastian ser autorizado a gerar os documentos; após a geração, abrem a página correspondente
+- **Link direto para a vaga** — acesso à vaga original para conferir antes de se candidatar
+
+Use o dashboard para comparar as vagas, decidir quais têm fit suficiente para prosseguir e acessar os documentos gerados. Além dos dados de fit, o dashboard também exibe [alertas automáticos](#alertas-e-avisos-por-vaga) por vaga.
+
+<div align="center">
+   <img src="assets/bloco-vaga.png" alt="bloco vaga" width="100%" />
+</div>
+
+### Alertas e avisos por vaga
+Além do score de fit e dos gaps, o dashboard sinaliza automaticamente alguns pontos de atenção em cada vaga, para você não perder requisitos importantes na hora de se candidatar:
+
+- **Candidatura externa:** quando a vaga exige aplicação por e-mail ou por formulário/link externo (em vez do fluxo padrão da plataforma), o dashboard exibe um aviso com o atalho direto — link `mailto:` para e-mail ou `https://` para o formulário.
+- **Localização divergente:** quando a vaga é **Presencial** ou **Híbrida** em uma cidade diferente da sua, o dashboard destaca a modalidade e a cidade da vaga, alertando que pode exigir deslocamento ou mudança.
+- **Vagas da Gupy:** como a Gupy não permite anexar currículo (apenas carta de apresentação), o Sebastian sugere gerar uma CL para essas vagas.
+
+> Esses avisos são apenas indicativos, gerados a partir do texto da vaga. Sempre confira a descrição original antes de se candidatar.
+
+<div align="center">
+   <img src="assets/aviso.png" alt="exemplo de aviso" width="100%" />
+</div>
+
+## 4) Fluxo com o agente para gerar CV/CL
 
 1. Peça para processar as vagas. No meio do processo, o Sebastian pode te fazer perguntas de sobre os requisitos da vaga para ter certeza se você tem ou não uma habilidade específica, ou alguma outra dúvida. Responda às perguntas para que ele possa ter um melhor entendimento do seu perfil e gerar um fit mais preciso. Baseado nas respostas, o Sebastian pode sugerir alterações no seu CV ou no contexto.
 2. Após os fits serem gerados, acesse-os no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
@@ -220,12 +247,12 @@ O Sebastian também pode identificar alguns problemas e sugerir ajustes.
 
 Após autorização, os botões de CV/CL da vaga são liberados no dashboard.
 
-## 4) CV genérico
+## 5) CV genérico
 
 Em algumas plataformas de vagas, é necessário subir um CV genérico para depois aplicar para as vagas. O Sebastian pode te ajudar a gerar esse CV genérico baseado no seu CV base e contexto.
 Basta pedir "gere um CV genérico" que ele vai gerar 2, um português e um inglês.
 
-## 5) Entrevista
+## 6) Entrevista
 
 Sebastian também pode te ajudar a se preparar para a entrevista de uma vaga específica. Ele vai analisar os requisitos e gerar perguntas e respostas para você praticar.
 
@@ -237,13 +264,13 @@ Ou você pode colar a vaga no chat com o agente e pedir para gerar a entrevista.
 
 O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
-## 6) Pós uso
+## 7) Pós uso
 
 - Se quiser processar um novo lote de vagas do zero, basta limpar as vagas antigas `vagas.txt` e preencher com as novas e dizer "reiniciar processo" que o Sebastian vai reiniciar o processo.
   - Se você quiser processar apenas adicionar novas vagas, basta adicionar novas vagas no arquivo `vagas.txt` e pedir para processar as demais vagas. 
 - É interessante guardar os CVs e CLs numa pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
 
-## 7) Solução rápida de problemas
+## 8) Solução rápida de problemas
 
 - **Botão PDF falha:** confirme se `npm start` está rodando na porta `3001`.
 - **CV/CL bloqueado:** a vaga ainda não foi autorizada.
@@ -256,6 +283,10 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
 ### Hacking Reward
 O fato da etapa de correção ser "manualmente" solicitada pelo usuário é proposital. Permitir a IA testar e corrigir automaticamente sem a supervisão, em loop e em várias rodadas costuma incentivar a IA a "trapacear" para passar nos testes, inserindo ruídos como frases sem sentido ou sem conexão com a vaga, ou com o candidato. Esse fenômeno é chamado de Hacking Reward. Por isso, o usuário precisa autorizar cada rodada de correção.
+
+# Desenvolvimento
+- Para desenvolvimento e testes, o diretório `fixtures/fake-candidates/` contém CVs de candidatos fictícios prontos para uso. Consulte o [`fixtures/fake-candidates/README.md`](fixtures/fake-candidates/README.md) para entender a estrutura e como criar novos fixtures.
+- O agente está orientado a alterar apenas alguns arquivos específicos listados em [AGENTS.md](AGENTS.md#caso-2--erros-identificados--novas-instruções) para preservar as instruções do Sebastian e layout das páginas para os usuários. Caso queira alterar o comportamento do agente, você pode criar um `desenvolvedor.md` vazio no root do projeto, como está indicado na sessão citada anteriormente
 
 # Disclaimers
 - O Sebastian **NÃO GARANTE** que os fits, CVs e CLs gerados vão passar no filtro do ATS ou que você vai ser chamado para uma entrevista, muito menos que o que foi gerado está coerente com o que foi gerado. É **SUA** responsabilidade revisar o que foi gerado e pedir ajustes caso necessário. O Sebastian é apenas uma ferramenta para te ajudar a gerar CVs e CLs legíveis para ATS, mas não substitui a revisão humana.
