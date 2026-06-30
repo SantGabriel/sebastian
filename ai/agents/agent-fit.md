@@ -19,7 +19,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 3. Não arredonde nenhum score. Ele é um decimal de até 2 casas decimais. Exemplo: 7.75, 9.5, 6.25, 8.0.
 4. Cada gap deve seguir a lista de redução do score nesta ordem:
 
-  | Gap                   | Regras                                                                                                                                                                                                                                                                                      | Tipo de gap                                 | Peso  |
+  | Gap                   | Regras - Todos os requisitos devem ser cumpridos                                                                                                                                                                                                                                            | Tipo de gap                                 | Peso  |
   |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
   | Requisito Core        | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Geralmente termo que mais se repete na vaga; <br> Geralmente o primeiro requisito <br> Geralmente aparece no topo da vaga <br> Apenas um requisito pode ser core | Requisito/Requirement                       | -4    |
   | Requisito Importante  | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Aparece tanto nos requisitos quanto no corpo do texto da vaga                                                                                                    | Requisito/Requirement                       | -3    |
@@ -141,7 +141,7 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 
 # Testes
 - Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
-- O comando para rodar os testes é: `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
+- O comando para rodar os testes é: `JOB_ID=${fit.id} jest -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto jest -- test/fit.test.js`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
   
   | Teste                              | Regra infrigida                                                                                                                                  |

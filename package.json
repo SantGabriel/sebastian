@@ -13,12 +13,7 @@
   ],
   "main": "src/json/jobs-data.js",
   "scripts": {
-    "start": "nodemon pdf-server.js",
-    "test": "jest",
-    "test:examples": "TEST_DATA=examples jest",
-    "test:generic": "TEST_DATA=generic jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "start": "nodemon pdf-server.js"
   },
   "author": "Gabriel Santana - LF",
   "license": "MIT",
