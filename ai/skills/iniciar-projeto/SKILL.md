@@ -24,9 +24,10 @@ cp ai/skills/contexto/SKILL.md.example ai/skills/contexto/SKILL.md
      - Mostrar Exemplo: Belo Horizonte - MG
    - Email
    - Link do LinkedIn
-   - Telefone de contato com código do país
+   - Código de telefone do país
      - Informar que Brasil é +55
-     - Mostrar Exemplo: +55 11 99999-9999
+   - Telefone de contato
+     - Mostrar Exemplo: 11 99999-9999
 
 2. Com esses dados, preencha o `src/json/candidate-data.js`
    - `name`: nome do candidato
