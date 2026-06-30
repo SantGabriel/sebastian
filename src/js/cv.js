@@ -1,4 +1,5 @@
 /** @typedef {import('../interfaces/job-data').Job} Job */
+/** @typedef {import('../interfaces/job-data').CandidateData} CandidateData */
 
 import { gerarPDF } from './pdf.js';
 
@@ -10,6 +11,7 @@ const root = document.getElementById('cv-root');
 
 /** @type {Job | undefined} */
 let doc;
+/** @type {CandidateData} */
 let CANDIDATE_DATA;
 
 const importData = (path) => import(path).catch(() => ({}));

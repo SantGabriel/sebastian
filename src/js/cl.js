@@ -36,6 +36,8 @@ if (!jobId || !job) {
   const name = c.name || '';
   const email = c.email || '';
   const linkedin = c.linkedin || '';
+  const phone = c.phone || '';
+  const phoneCountryCode = c.phoneCountryCode || '';
   const location = isEN
     ? (c.location && c.location.en) || (job.cv && job.cv.local) || ''
     : (c.location && c.location.pt) || (job.cv && job.cv.local) || '';
@@ -53,23 +55,29 @@ if (!jobId || !job) {
     const applicationLabel = isEN ? 'Application' : 'Candidatura';
     const closingLabel = isEN ? 'Best regards,' : 'Atenciosamente,';
 
+    const phoneFormatted = phoneCountryCode ? `${phoneCountryCode} ${phone}` : phone;
     const locationHtml = location
       ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
+    const phoneHtml = phone
+      ? `<a href="tel:${phoneFormatted}"><i class="fa-solid fa-phone"></i> ${phoneFormatted}</a>` : '';
     const emailHtml = email
       ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
     const linkedinHtml = linkedin
       ? `<a href="${linkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
+
+    const jobTarget = [job.vaga, job.empresa].filter(Boolean).join(' - ');
 
     root.innerHTML = `
       <div class="header">
         <h1>${name}</h1>
         <div class="meta">
           ${locationHtml}
+          ${phoneHtml}
           ${emailHtml}
           ${linkedinHtml}
         </div>
       </div>
-      <p class="job-target">${applicationLabel}: ${job.vaga} - ${job.empresa || 'Não informado'}</p>
+      <p class="job-target">${applicationLabel}: ${jobTarget}</p>
       <div class="cl-body">${paragrafosHtml}</div>
       <div class="signature">
         ${closingLabel}
