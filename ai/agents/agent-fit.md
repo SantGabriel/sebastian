@@ -128,7 +128,7 @@ candidatura = { aviso: "A vaga é pela Gupy, você só vai precisar de gerar o C
 ## Saída
 
 - Escreva o fit diretamente em `src/json/jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`
-- Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA.
+- Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA. Preservar as quebras de linha como `\n` na string JavaScript.
 - **Não exiba os fits no chat** — o usuário os lê abrindo `index.html`
 - Ao terminar, apenas diga: "Fits gerados. Abra http://localhost:3001/index.html para revisar."
 
@@ -140,7 +140,7 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - **Nunca altere `ai/skills/cv-base/SKILL.md` sem autorização explícita**
 
 # Testes
-- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
+- Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
 - O comando para rodar os testes é: `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
   

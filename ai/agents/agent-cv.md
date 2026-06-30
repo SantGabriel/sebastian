@@ -139,7 +139,7 @@ Regras de preenchimento (não estão na interface):
 - Nunca assuma que "cv genérico" se refere a estes CVs do `fixtures/fake-candidates`
 
 # Testes
-- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](ai/agents/agent-testes.md)
+- Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
 - O comando para rodar os testes é: `JOB_ID=${cv.id} npm run test "cv|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cv|ats"`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 

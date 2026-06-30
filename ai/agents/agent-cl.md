@@ -34,7 +34,7 @@ A forma do objeto é a interface `CL` em [`src/interfaces/job-data.d.ts`](../../
 - O link ficará visível automaticamente no dashboard (`index.html`)
 
 # Testes
-- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
+- Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
 - O comando para rodar os testes é: `JOB_ID=${cl.id} npm run test "cl|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cl|ats"`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 

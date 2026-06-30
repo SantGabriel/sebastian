@@ -23,7 +23,11 @@ Após gerar todos os documentos solicitados:
 
 1. Rode os testes de **todos** os documentos gerados, usando os comandos definidos em cada agente/skill acima
 2. Salve os resultados brutos em `.tmp/audit-<timestamp>.txt`
-3. **Não faça nenhuma correção ainda**
+3. **Não faça nenhuma correção ainda se autorização.** É muito caro fazer correções automáticas sem autorização do usuário, pois podem gerar problemas de qualidade e inconsistências. Apenas rode os testes e salve os resultados.
+4. A autorização do usuário para correção é valida para **APENAS UMA** rodada de correção/iteração. Se houver falhas novamente, você deve pedir autorização novamente. Isso significa que você não pode ficar em loop. 
+5. Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
+6. Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
+7. Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos. Se precisar, gere-os em um `/tmp`
 
 ## Fase 2 — Relatório ao usuário
 
@@ -48,6 +52,6 @@ Após a auditoria, apresente ao usuário:
 
 - Se o usuário **não aceitar**: encerre o fluxo
 - Se o usuário **aceitar**:
-  1. Faça correções apenas nos documentos com falha, alterando o mínimo possível sem infringir outras regras
-  2. Rode os testes novamente para esses documentos
-  3. Volte para a **Fase 2** com o novo relatório
+  1. Leia o relatório de auditoria e identifique quais regras foram infringidas.
+  2. Faça correções apenas nos documentos com falha, alterando o mínimo possível o conteúdo original sem infringir as demais regras
+  3. Volte para a **[Fase 1](#fase-1--auditoria-automática)**.
