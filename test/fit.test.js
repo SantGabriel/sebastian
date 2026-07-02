@@ -45,5 +45,11 @@ describe('Fit', () => {
       const requisitosCore = negativos.filter(gap => gap.tipo === GAP_TIPO.REQUISITO_CORE);
       expect(requisitosCore.length).toBeLessThanOrEqual(1);
     });
+
+    eachOrSkip(jobsWithFit)('Quantidade de positivos + gaps entre 3 e 15 ($id)', ({id, fit}) => {
+      const total = (fit.positivos || []).length + (fit.negativos || []).length;
+      expect(total).toBeGreaterThanOrEqual(3);
+      expect(total).toBeLessThanOrEqual(15);
+    });
   });
 });

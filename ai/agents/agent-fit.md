@@ -75,11 +75,12 @@ Quando os requisitos são genéricos ("domínio de uma ou mais linguagens", "fra
 Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we use" descrevem o que a EMPRESA usa — não o que o candidato precisa trazer. Criar gaps apenas a partir de seções explicitamente de requisitos ("Requirements", "Requisitos", "What we expect", "O que esperamos").
 
 ### Lista de gaps e pontos positivos
-- A soma de pontos positivos e gaps devem ser igual a 10. Exemplos: 
-  - 7 pontos positivos e 3 gaps ou;
-  - 10 pontos positivos ou;
-  - 5 gaps ou
-  - 3 gaps e 5 pontos positivos.
+- A quantidade de pontos positivos e gaps juntos deve ser entre 3 e 15. Exemplos:
+  - 7 pontos positivos e 3 gaps (10 no total) ou;
+  - 10 pontos positivos (10 no total) ou;
+  - 2 gaps e 1 ponto positivo (3 no total) ou;
+  - 3 gaps e 5 pontos positivos (8 no total) ou;
+  - 10 pontos positivos e 5 gaps (15 no total).
 
 ## Estrutura do fit no `src/json/jobs-data.js`
 
@@ -149,3 +150,4 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
   | Score entre 0 e 10                 | [Fórmula do gap](#fórmula-do-gap) Regra 1                                                                                                        |
   | Sem gaps = score 10                | [Sem negativos = score 10](#sem-negativos--score-10)                                                                                             |
   | Score coerente com os tipos de gap | [Fórmula do gap](#fórmula-do-gap) — calcula `10 - Σ pesos` e compara com `fit.score`; também valida que todo `gap.tipo` é um dos 7 tipos válidos |
+  | Quantidade de positivos + gaps entre 3 e 15 | [Lista de gaps e pontos positivos](#lista-de-gaps-e-pontos-positivos)                                                                   |
