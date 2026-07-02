@@ -66,7 +66,7 @@ export type GapTipo =
   | 'Requisito Core'
   | 'Requisito Importante'
   | 'Requisito Secundário'
-  | 'Requisito Baixo'
+  | 'Requisito Fraco'
   | 'Fortemente desejável'
   | 'Noção, conhecimento'
   | 'Desejável/Diferencial'

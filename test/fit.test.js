@@ -1,4 +1,5 @@
-const { scoreClass, gapWeight } = require('../src/js/index');
+const { scoreClass } = require('../src/js/index');
+const { gapWeight } = require('../src/js/utils');
 const { getJobsData, eachOrSkip } = require('./utils/utils');
 const {GAP_TIPO} = require("../src/js/enum");
 

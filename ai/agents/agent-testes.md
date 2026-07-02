@@ -37,7 +37,7 @@ Após gerar todos os documentos solicitados:
 4. A autorização do usuário para correção é valida para **APENAS UMA** rodada de correção/iteração. Se houver falhas novamente, você deve pedir autorização novamente. Isso significa que você não pode ficar em loop. 
 5. Os testes são métricas consultivas, não são metas a serem seguidas, portanto, passar em todos os testes não implicam em um documento perfeito.
 6. Os testes abrangem apenas algumas das regras quantitativas, portanto mesmo que o documento passe em todos os testes, ele ainda pode ter problemas de qualidade que não são capturados pelos testes.
-7. Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos. Se precisar, gere-os em um `/tmp`
+7. Você pode gerar outros bash para testar outras regras, porém eles não devem ser persistidos. Se precisar, gere-os no `.tmp` aqui no root, mas apague-os dps
 
 ## Fase 2 — Relatório ao usuário
 
