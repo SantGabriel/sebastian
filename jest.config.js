@@ -9,6 +9,7 @@ module.exports = {
   ],
   verbose: true,
   testTimeout: 10000,
+  reporters: ['default', '<rootDir>/test/reporters/custom-reporter.js'],
   projects: [
     {
       displayName: 'dom',
