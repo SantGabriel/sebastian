@@ -137,8 +137,6 @@ function render() {
 
     const cvAuthorized = job.cv && job.cv.authorized;
     const clAuthorized = job.cl && job.cl.authorized;
-    const hasCv = (job.tipos || []).includes('cv');
-    const hasCl = (job.tipos || []).includes('cl');
 
     const candidaturaHtml = job.candidatura ? `
       <div class="candidatura-aviso">
@@ -163,15 +161,13 @@ function render() {
          </div>`
       : '';
 
-    const cvBtn = hasCv
-      ? cvAuthorized
-        ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank">
-             <i class="fa-solid fa-file-pdf"></i> CV
-           </a>`
-        : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`
-      : '';
+    const cvBtn = cvAuthorized
+      ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank">
+           <i class="fa-solid fa-file-pdf"></i> CV
+         </a>`
+      : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`;
 
-    const clBtn = hasCl
+    const clBtn = job.cl
       ? clAuthorized
         ? `<a class="btn btn-cl" href="src/pages/cl.html?job=${job.id}" target="_blank">
              <i class="fa-solid fa-envelope"></i> Cover Letter
@@ -179,7 +175,7 @@ function render() {
         : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`
       : '';
 
-    const pendingLabel = (!cvAuthorized && hasCv) || (!clAuthorized && hasCl)
+    const pendingLabel = !cvAuthorized || (job.cl && !clAuthorized)
       ? `<span class="pending-label"><i class="fa-solid fa-clock"></i> Aguardando autorização</span>`
       : '';
 
@@ -228,7 +224,12 @@ function render() {
             : ''}
           ${negativos
             ? `<div class="fit-section">
-                 <strong><i class="fa-solid fa-circle-xmark icon-danger"></i> Gaps / Pontos negativos</strong>
+                 <strong>
+                   <i class="fa-solid fa-circle-xmark icon-danger"></i> Gaps / Pontos negativos
+                   <a class="gap-help-link" href="src/pages/ajuda.html#gaps" target="_blank" title="Como funciona a classificação dos gaps">
+                     <i class="fa-solid fa-circle-question"></i>
+                   </a>
+                 </strong>
                  <ul>${negativos}</ul>
                </div>`
             : ''}

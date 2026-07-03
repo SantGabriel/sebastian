@@ -320,6 +320,29 @@ body {
 
 .page-header { text-align: center; margin-bottom: 24px; }
 
+.help-link {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 40px;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.help-link .fa-circle-question {
+  width: 30px;
+}
+
+/* ---------- gap help icon ---------- */
+
+.gap-help-link {
+  color: #aaa;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.gap-help-link:hover { color: var(--brand); }
+
 /* ---------- job number ---------- */
 
 .job-number { font-weight: normal; margin-right: 6px; }

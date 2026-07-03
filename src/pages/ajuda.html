@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebastian - Como funciona</title>
+  <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/ajuda.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+</head>
+<body>
+
+  <div class="page-header">
+    <img src="../../assets/logo.png" alt="Sebastian Logo" height="80" />
+    <h1>Como funciona</h1>
+    <p class="subtitle">Referência dos conceitos usados no dashboard do Sebastian.</p>
+  </div>
+
+  <nav class="toc">
+    <a href="#gaps">Classificação dos gaps</a>
+  </nav>
+
+  <section id="gaps" class="help-section">
+    <h2><i class="fa-solid fa-circle-xmark icon-danger"></i> Classificação dos gaps</h2>
+    <p>
+      Cada vaga começa com nota <strong>10</strong>. Todo requisito não atendido pelo candidato
+      vira um <strong>gap</strong>, listado em "Gaps / Pontos negativos" com uma etiqueta indicando
+      seu tipo e o quanto ele reduz a nota. A nota final nunca é menor que <strong>0</strong>.
+    </p>
+
+    <div class="table-wrap">
+      <table class="help-table">
+        <thead>
+          <tr>
+            <th>Classificação</th>
+            <th>O que significa</th>
+            <th>Peso no score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Requisito Core</td>
+            <td>Requisito essencial da vaga - geralmente o mais citado ou o primeiro da lista.</td>
+            <td>-4</td>
+          </tr>
+          <tr>
+            <td>Requisito Importante</td>
+            <td>Requisito obrigatório de destaque, mencionado tanto na lista de requisitos quanto no corpo da vaga.</td>
+            <td>-3</td>
+          </tr>
+          <tr>
+            <td>Requisito Secundário</td>
+            <td>Requisito obrigatório, mas com menos destaque que os anteriores.</td>
+            <td>-2</td>
+          </tr>
+          <tr>
+            <td>Requisito Fraco</td>
+            <td>Requisito obrigatório mencionado de forma mais branda.</td>
+            <td>-1</td>
+          </tr>
+          <tr>
+            <td>Fortemente desejável</td>
+            <td>Não é obrigatório, mas a vaga recomenda fortemente.</td>
+            <td>-1</td>
+          </tr>
+          <tr>
+            <td>Noção, conhecimento</td>
+            <td>A vaga pede apenas noção básica ou vontade de aprender sobre o tema.</td>
+            <td>-0.5</td>
+          </tr>
+          <tr>
+            <td>Desejável/Diferencial</td>
+            <td>Um diferencial - não obrigatório para a vaga.</td>
+            <td>-0.25</td>
+          </tr>
+          <tr>
+            <td>Personalizado</td>
+            <td>Regra específica de contexto do candidato, fora dos padrões acima.</td>
+            <td>Variável</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="help-example">
+      Exemplo: 1 gap <strong>Core</strong> + 2 gaps <strong>Desejável/Diferencial</strong>
+      → 10 - 4 - (0,25 × 2) = <strong>5,5</strong>.
+    </p>
+  </section>
+
+</body>
+</html>

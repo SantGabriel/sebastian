@@ -47,7 +47,7 @@ export interface CV {
   /** Localização específica do CV; quando ausente, usa a do candidato. */
   local?: string;
   titulo: string;
-  subtitulo: string;
+  subtitulo: string; // Listagem das stacks mais importantes - Ex: "React | Node.js | AWS"
   resumo: string;
   experiencias: Experience[];
   projetos?: Project[];
@@ -95,7 +95,6 @@ export interface Job {
   vaga: string;
   /** Idioma do CV: "pt" ou "en". */
   lang: string;
-  tipos: ("cv"|"cl")[];
   /** Campos abaixo só existem em vagas reais; CVs genéricos omitem. */
   index?: number;
   empresa?: string;

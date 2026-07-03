@@ -7,7 +7,6 @@ export const JOBS_DATA = [
   //   link: "https://linkedin.com/jobs/view/123456",
   //   modalidade: "Remoto",
   //   contratacao: "CLT",
-  //   tipos: ["cv", "cl"],
   //   vagaTexto: "Full text of job posting",
   //   fit: {
   //     score: 8,

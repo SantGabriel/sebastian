@@ -30,7 +30,6 @@ export const CV_FIXTURE = [
     empresa: "CV Genérico",
     vaga: "Título da Vaga",
     lang: "pt",              // "pt" ou "en"
-    tipos: ["cv"],
     cv: {
       authorized: true,
       local: "Cidade - UF",
