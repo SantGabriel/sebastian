@@ -111,7 +111,7 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 # Schema do `src/json/jobs-data.js`
 
-Os arquivos de dados (`src/json/*.js`) são **ES modules**: exportam uma constante nomeada (`export const JOBS_DATA = [...]`), em vez de atribuir a `window.*`. As páginas (`index.html`, `cv.html`, `cl.html`) consomem via `import`; nunca usar `<script src>` de dados nem `window.JOBS_DATA = ...`.
+Os arquivos de dados (`src/json/*.js`) são **ES modules**: exportam uma constante nomeada (`export const JOBS = [...]`). As páginas (`index.html`, `cv.html`, `cl.html`) consomem via `import`
 
 **A forma de cada entrada é a interface `Job` em [`src/interfaces/job-data.d.ts`](src/interfaces/job-data.d.ts)** — essa é a fonte de verdade dos campos e tipos. Não redesenhe a estrutura aqui; consulte o `.d.ts`.
 

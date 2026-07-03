@@ -7,11 +7,17 @@ const BASE_URL = 'http://localhost:3001/pdf';
  * @param {string} [opts.doc='cv'] - Tipo de documento ('cv' ou 'cl')
  * @param {string} [opts.isGeneric] - 'true' se for CV genérico
  * @param {string} [opts.candidate] - Nome do diretório de fixture
+ * @param {string} [opts.vaga] - Nome da vaga, usado no nome do arquivo
+ * @param {string} [opts.empresa] - Nome da empresa, usado no nome do arquivo
+ * @param {string} [opts.candidateName] - Nome do candidato, usado no nome do arquivo
  */
-export function gerarPDF({ job, doc = 'cv', isGeneric, candidate } = {}) {
+export function gerarPDF({ job, doc = 'cv', isGeneric, candidate, vaga, empresa, candidateName } = {}) {
   const params = new URLSearchParams({ job, doc });
   if (isGeneric) params.set('isGeneric', isGeneric);
   if (candidate) params.set('candidate', candidate);
+  if (vaga) params.set('vaga', vaga);
+  if (empresa) params.set('empresa', empresa);
+  if (candidateName) params.set('candidateName', candidateName);
 
   const btn = document.getElementById('btn-pdf');
   btn.disabled = true;

@@ -96,15 +96,15 @@ export interface Job {
   /** Idioma do CV: "pt" ou "en". */
   lang: string;
   /** Campos abaixo só existem em vagas reais; CVs genéricos omitem. */
-  index?: number;
+  index: number;
   empresa?: string;
   link?: string;
   modalidade?: string;
   contratacao?: string;
   cidadeVaga?: string;
-  vagaTexto?: string;
+  vagaTexto: string;
   candidatura?: Candidatura;
-  fit?: Fit;
+  fit: Fit;
   cl?: CL;
   cv: CV;
 }

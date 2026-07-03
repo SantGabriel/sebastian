@@ -122,7 +122,7 @@ Regras de preenchimento (não estão na interface):
 - O link ficará visível automaticamente no dashboard (`index.html`)
 
 ## Nome dos CVs
-- Nome e título dos CVs devem ter o formato: "${vaga}-${nome do candidato}-${nome da empresa}"
+- O título da página e do PDF (`<title>`) dos CVs devem ter o formato: "${vaga} | ${nome do candidato} | ${nome da empresa}"
   - Se o nome da empresa não estiver explícito na vaga, deixe vazio
   - Se o nome da vaga também não estiver, crie um nome baseado no conteúdo da vaga.
   - Em ambos os casos, não é necessário perguntar ao candidato nenhuma dessas duas ultimas informações, caso elas não estejam presentes na vaga, apenas continue com o que você tem. 

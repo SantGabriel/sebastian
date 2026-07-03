@@ -1,5 +1,5 @@
-/** @type {import('../interfaces/job-data').JobsData} */
-export const JOBS_DATA = [
+/** @type {import('../interfaces/job-data').Job} */
+export const JOBS = [
   // {
   //   id: "job-id",
   //   empresa: "Empresa Ltda",

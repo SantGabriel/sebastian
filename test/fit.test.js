@@ -1,10 +1,10 @@
 const { scoreClass } = require('../src/js/index');
 const { gapWeight } = require('../src/js/utils');
-const { getJobsData, eachOrSkip } = require('./utils/utils');
+const { getJob, eachOrSkip } = require('./utils/utils');
 const {GAP_TIPO} = require("../src/js/enum");
 
 
-const jobList = getJobsData();
+const jobList = getJob();
 const jobsWithFit = jobList.filter(job => job.fit);
 describe('Fit', () => {
   describe('Score', () => {

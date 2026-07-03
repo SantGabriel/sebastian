@@ -1,4 +1,4 @@
-import { JOBS_DATA } from '../json/jobs-data.js';
+import { JOBS } from '../json/jobs-data.js';
 import { CANDIDATE_DATA } from '../json/candidate-data.js';
 import { gapWeight } from './utils.js';
 
@@ -112,7 +112,7 @@ function badge(label) {
 
 function render() {
   const container = document.getElementById('jobs-container');
-  const jobsArray = Array.isArray(JOBS_DATA) ? JOBS_DATA : Object.values(JOBS_DATA || {});
+  const jobsArray = Array.isArray(JOBS) ? JOBS : Object.values(JOBS || {});
   const jobs      = jobsArray.filter(j => j.fit);
 
   if (jobs.length === 0) {
