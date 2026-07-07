@@ -67,10 +67,10 @@ function toggleFit(id) {
   const btn = document.getElementById('toggle-' + id);
   if (el.classList.contains('open')) {
     el.classList.remove('open');
-    btn.textContent = 'Ver detalhes do fit ▸';
+    btn.innerHTML = 'Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>';
   } else {
     el.classList.add('open');
-    btn.textContent = 'Ocultar detalhes ▾';
+    btn.innerHTML = 'Ocultar detalhes <i class="fa-solid fa-caret-down"></i>';
   }
 }
 
@@ -79,10 +79,10 @@ function toggleVaga(id) {
   const btn = document.getElementById('vaga-toggle-' + id);
   if (el.style.display === 'block') {
     el.style.display = 'none';
-    btn.textContent = 'Ver vaga ▸';
+    btn.innerHTML = 'Ver vaga <i class="fa-solid fa-caret-right"></i>';
   } else {
     el.style.display = 'block';
-    btn.textContent = 'Ocultar vaga ▾';
+    btn.innerHTML = 'Ocultar vaga <i class="fa-solid fa-caret-down"></i>';
   }
 }
 
@@ -207,11 +207,11 @@ function render() {
         ${candidaturaHtml}
 
         <button class="fit-toggle" id="toggle-${job.id}" onclick="toggleFit('${job.id}')">
-          Ver detalhes do fit ▸
+          Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>
         </button>
         ${job.vagaTexto
           ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
-               Ver vaga ▸
+               Ver vaga <i class="fa-solid fa-caret-right"></i>
              </button>`
           : ''}
 
