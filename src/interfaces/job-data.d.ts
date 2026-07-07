@@ -42,7 +42,6 @@ export interface Certificate {
 }
 
 export interface CV {
-  /** Só vagas reais usam o portão de autorização; CVs genéricos omitem. */
   authorized?: boolean;
   /** Localização específica do CV; quando ausente, usa a do candidato. */
   local?: string;

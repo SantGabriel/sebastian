@@ -102,9 +102,7 @@ function render() {
   const secProjetos = isInternational ? 'Personal Projects' : 'Projetos Pessoais';
   const secCertificados = isInternational ? 'Certifications' : 'Certificações';
 
-  const candidateLocation = cv.local || (isInternational
-    ? CANDIDATE_DATA.location.en
-    : CANDIDATE_DATA.location.pt);
+  const candidateLocation = isInternational ? CANDIDATE_DATA.location.en : CANDIDATE_DATA.location.pt;
 
   const vagaLocation = getLocationDisplay(job, candidateLocation);
 

@@ -31,8 +31,8 @@ if (!jobId || !job) {
   const email = c.email;
   const linkedin = c.linkedin;
   const location = isEN
-    ? (c.location && c.location.en) || (job.cv && job.cv.local)
-    : (c.location && c.location.pt) || (job.cv && job.cv.local);
+    ? c.location.en
+    : c.location.pt;
 
   if (!cl || !cl.authorized) {
     notAuthorized(`Cover Letter for "${job.vaga} - ${job.empresa || 'Não informado'}" not authorized yet.`);
