@@ -1,13 +1,13 @@
 /**
  * Testes de dom para CLs (Cartas de Apresentação)
- * Carrega dados reais de window.JOBS_DATA
+ * Carrega dados reais de JOBS
  * Valida estrutura, conteúdo e regras ATS dos CLs
  */
 
-const { getTextLength, hasAuthorizedCL, eachOrSkip, getJobsData } = require('./utils/utils');
+const { getTextLength, hasAuthorizedCL, eachOrSkip, getJob } = require('./utils/utils');
 
 /** @type Job[] */
-const jobList = getJobsData().filter(hasAuthorizedCL);
+const jobList = getJob().filter(hasAuthorizedCL);
 
 describe('CL Estrutura', () => {
   eachOrSkip(jobList)('Soma de todos os parágrafos deve ter entre 800 a 1500 caracteres (Job "$id")', ({id, cl}) => {

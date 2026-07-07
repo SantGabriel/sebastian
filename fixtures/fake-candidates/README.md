@@ -14,7 +14,7 @@ example-N/
 ## Como gerar
 
 1. Crie o diretório `example-N/` com um `cv-base.input.md` seguindo o formato do `ai/skills/cv-base/SKILL.md`
-2. Execute `npm run test:examples` para validar
+2. Execute `TEST_DATA=examples jest` para validar
 3. Os arquivos `*.fixture.js` devem ser criados manualmente seguindo o schema abaixo
 
 ## Schema
@@ -30,7 +30,6 @@ export const CV_FIXTURE = [
     empresa: "CV Genérico",
     vaga: "Título da Vaga",
     lang: "pt",              // "pt" ou "en"
-    tipos: ["cv"],
     cv: {
       authorized: true,
       local: "Cidade - UF",

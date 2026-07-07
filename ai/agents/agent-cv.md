@@ -28,7 +28,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 11. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
     1. Tem que ter 8 a 15 itens em negrito (usando <strong>) no CV:
        1. 3 a 5 no [Resumo profissional](#resumo-profissional);
-       2. 5 a 10 na [Experiência Profissional](#experiência-profissional)
+       2. 5 a 10 nos bullets de [Experiência Profissional](#experiência-profissional)
        3. Excesso polui e dilui o efeito, portanto é importante seguir o limite de 15 itens.
     2. Priorize os de maior relevância para a vaga;  
     3. Um item é uma palavra ou expressão curta de no máximo 3 palavras
@@ -68,7 +68,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 2. Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
 
 ### Formação Acadêmica
-1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
+1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite.
 2. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
 3. Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
 
@@ -122,7 +122,7 @@ Regras de preenchimento (não estão na interface):
 - O link ficará visível automaticamente no dashboard (`index.html`)
 
 ## Nome dos CVs
-- Nome e título dos CVs devem ter o formato: "${vaga}-${nome do candidato}-${nome da empresa}"
+- O título da página e do PDF (`<title>`) dos CVs devem ter o formato: "${vaga} | ${nome do candidato} | ${nome da empresa}"
   - Se o nome da empresa não estiver explícito na vaga, deixe vazio
   - Se o nome da vaga também não estiver, crie um nome baseado no conteúdo da vaga.
   - Em ambos os casos, não é necessário perguntar ao candidato nenhuma dessas duas ultimas informações, caso elas não estejam presentes na vaga, apenas continue com o que você tem. 
@@ -139,7 +139,7 @@ Regras de preenchimento (não estão na interface):
 - Nunca assuma que "cv genérico" se refere a estes CVs do `fixtures/fake-candidates`
 
 # Testes
-- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](ai/agents/agent-testes.md)
+- Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
 - O comando para rodar os testes é: `JOB_ID=${cv.id} npm run test "cv|ats"`. Exemplo `JOB_ID=empresa-xpto npm run test "cv|ats"`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
 

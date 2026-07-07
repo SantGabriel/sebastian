@@ -1,5 +1,6 @@
-import { JOBS_DATA } from '../json/jobs-data.js';
+import { JOBS } from '../json/jobs-data.js';
 import { CANDIDATE_DATA } from '../json/candidate-data.js';
+import { gapWeight } from './utils.js';
 
 export function abrirCVDropdown(value) {
   if (!value) return;
@@ -61,39 +62,15 @@ export function scoreClass(s) {
   return 'score-red';
 }
 
-export const GAP = Object.freeze({
-  REQUISITO_CORE:        'Requisito Core',
-  REQUISITO_IMPORTANTE:  'Requisito Importante',
-  REQUISITO_SECUNDARIO:  'Requisito Secundário',
-  REQUISITO_BAIXO:       'Requisito Baixo',
-  FORTEMENTE_DESEJAVEL:  'Fortemente desejável',
-  NOCAO_CONHECIMENTO:    'Noção, conhecimento',
-  DESEJAVEL_DIFERENCIAL: 'Desejável/Diferencial',
-  PERSONALIZADO: 'personalizado',
-});
-
-export function gapWeight(tipo) {
-  switch (tipo) {
-    case GAP.REQUISITO_CORE:        return 4;
-    case GAP.REQUISITO_IMPORTANTE:  return 3;
-    case GAP.REQUISITO_SECUNDARIO:  return 2;
-    case GAP.REQUISITO_BAIXO:       return 1;
-    case GAP.FORTEMENTE_DESEJAVEL:  return 1;
-    case GAP.NOCAO_CONHECIMENTO:    return 0.5;
-    case GAP.DESEJAVEL_DIFERENCIAL: return 0.25;
-    default:                        return null;
-  }
-}
-
 function toggleFit(id) {
   const el  = document.getElementById('fit-' + id);
   const btn = document.getElementById('toggle-' + id);
   if (el.classList.contains('open')) {
     el.classList.remove('open');
-    btn.textContent = 'Ver detalhes do fit ▸';
+    btn.innerHTML = 'Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>';
   } else {
     el.classList.add('open');
-    btn.textContent = 'Ocultar detalhes ▾';
+    btn.innerHTML = 'Ocultar detalhes <i class="fa-solid fa-caret-down"></i>';
   }
 }
 
@@ -102,10 +79,10 @@ function toggleVaga(id) {
   const btn = document.getElementById('vaga-toggle-' + id);
   if (el.style.display === 'block') {
     el.style.display = 'none';
-    btn.textContent = 'Ver vaga ▸';
+    btn.innerHTML = 'Ver vaga <i class="fa-solid fa-caret-right"></i>';
   } else {
     el.style.display = 'block';
-    btn.textContent = 'Ocultar vaga ▾';
+    btn.innerHTML = 'Ocultar vaga <i class="fa-solid fa-caret-down"></i>';
   }
 }
 
@@ -135,7 +112,7 @@ function badge(label) {
 
 function render() {
   const container = document.getElementById('jobs-container');
-  const jobsArray = Array.isArray(JOBS_DATA) ? JOBS_DATA : Object.values(JOBS_DATA || {});
+  const jobsArray = Array.isArray(JOBS) ? JOBS : Object.values(JOBS || {});
   const jobs      = jobsArray.filter(j => j.fit);
 
   if (jobs.length === 0) {
@@ -160,8 +137,6 @@ function render() {
 
     const cvAuthorized = job.cv && job.cv.authorized;
     const clAuthorized = job.cl && job.cl.authorized;
-    const hasCv = (job.tipos || []).includes('cv');
-    const hasCl = (job.tipos || []).includes('cl');
 
     const candidaturaHtml = job.candidatura ? `
       <div class="candidatura-aviso">
@@ -186,15 +161,13 @@ function render() {
          </div>`
       : '';
 
-    const cvBtn = hasCv
-      ? cvAuthorized
-        ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank">
-             <i class="fa-solid fa-file-pdf"></i> CV
-           </a>`
-        : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`
-      : '';
+    const cvBtn = cvAuthorized
+      ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank">
+           <i class="fa-solid fa-file-pdf"></i> CV
+         </a>`
+      : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`;
 
-    const clBtn = hasCl
+    const clBtn = job.cl
       ? clAuthorized
         ? `<a class="btn btn-cl" href="src/pages/cl.html?job=${job.id}" target="_blank">
              <i class="fa-solid fa-envelope"></i> Cover Letter
@@ -202,7 +175,7 @@ function render() {
         : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`
       : '';
 
-    const pendingLabel = (!cvAuthorized && hasCv) || (!clAuthorized && hasCl)
+    const pendingLabel = !cvAuthorized || (job.cl && !clAuthorized)
       ? `<span class="pending-label"><i class="fa-solid fa-clock"></i> Aguardando autorização</span>`
       : '';
 
@@ -234,11 +207,11 @@ function render() {
         ${candidaturaHtml}
 
         <button class="fit-toggle" id="toggle-${job.id}" onclick="toggleFit('${job.id}')">
-          Ver detalhes do fit ▸
+          Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>
         </button>
         ${job.vagaTexto
           ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
-               Ver vaga ▸
+               Ver vaga <i class="fa-solid fa-caret-right"></i>
              </button>`
           : ''}
 
@@ -251,7 +224,12 @@ function render() {
             : ''}
           ${negativos
             ? `<div class="fit-section">
-                 <strong><i class="fa-solid fa-circle-xmark icon-danger"></i> Gaps / Pontos negativos</strong>
+                 <strong>
+                   <i class="fa-solid fa-circle-xmark icon-danger"></i> Gaps / Pontos negativos
+                   <a class="gap-help-link" href="src/pages/ajuda.html#gaps" target="_blank" title="Como funciona a classificação dos gaps">
+                     <i class="fa-solid fa-circle-question"></i>
+                   </a>
+                 </strong>
                  <ul>${negativos}</ul>
                </div>`
             : ''}

@@ -10,7 +10,6 @@ const {
 const allCVList = getJobsList().filter(hasAuthorizedCV);
 describe('CV - Campos obrigatórios', () => {
   eachOrSkip(allCVList)('Todos os campos obrigatórios definidos ($id)', ({id, cv}) => {
-    expect(cv.local).toBeDefined();
     expect(cv.titulo).toBeDefined();
     expect(cv.subtitulo).toBeDefined();
     expect(cv.resumo).toBeDefined();

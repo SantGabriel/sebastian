@@ -34,7 +34,7 @@ function getJobsList() {
   if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') {
     jobsList = getGenericCVData();
   }else {
-    jobsList = getJobsData();
+    jobsList = getJob();
   }
   return jobsList;
 }
@@ -44,9 +44,9 @@ function getJobsList() {
  * Usado pelos testes de fit, que devem rodar mesmo em jobs não autorizados.
  * @returns {Job[]}
  */
-function getJobsData() {
+function getJob() {
   if (process.env.TEST_DATA === 'examples' || process.env.TEST_DATA === 'generic') return [];
-  const jobs = require('../../src/json/jobs-data.js').JOBS_DATA;
+  const jobs = require('../../src/json/jobs-data.js').JOBS;
   return selectJobs(jobs);
 }
 
@@ -244,7 +244,7 @@ module.exports = {
   eachOrSkip,
   countBoldItems,
   getJobsList,
-  getJobsData,
+  getJob,
   validateATSCharacters,
   getTextLength,
   wrongAnsiiConvertionDetection,

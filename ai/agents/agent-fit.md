@@ -19,16 +19,16 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 3. Não arredonde nenhum score. Ele é um decimal de até 2 casas decimais. Exemplo: 7.75, 9.5, 6.25, 8.0.
 4. Cada gap deve seguir a lista de redução do score nesta ordem:
 
-  | Gap                   | Regras                                                                                                                                                                                                                                                                                      | Tipo de gap                                 | Peso  |
-  |-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
-  | Requisito Core        | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Geralmente termo que mais se repete na vaga; <br> Geralmente o primeiro requisito <br> Geralmente aparece no topo da vaga <br> Apenas um requisito pode ser core | Requisito/Requirement                       | -4    |
-  | Requisito Importante  | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Aparece tanto nos requisitos quanto no corpo do texto da vaga                                                                                                    | Requisito/Requirement                       | -3    |
-  | Requisito Secundário  | Acompanhado de verbos: required, experience, familiarity. <br> Os 5 primeiros itens da lista de requisitos se encaixam aqui                                                                                                                                                                 | Requisito/Requirement                       | -2    |
-  | Requisito Baixo       | Acompanhado de verbos: required, experience, familiarity.                                                                                                                                                                                                                                   | Requisito/Requirement                       | -1    |
-  | Fortemente desejável  | Acompanhado de verbos fortes: strongly recommended, highly recommended, highly desirable <br>.                                                                                                                                                                                              | Nice to have/optional/desirable/diferencial | -1    |
-  | Noção, conhecimento   | Acompanhado de verbos: knowledge, noção, conhecimento.                                                                                                                                                                                                                                      | Requisito/Requirement                       | -0.5  |
-  | Desejável/Diferencial | Acompanhado de verbos: desejável, nice to have, recommended, desirable.                                                                                                                                                                                                                     | Nice to have/optional/desirable/diferencial | -0.25 |
-  | Personalizado         | Alguma regra especial definido em `ai/skills/contexto/SKILL.md`                                                                                                                                                                                                                             | Personalizado                               | ?     |
+  | Gap                                      | Regras - Todos os requisitos devem ser cumpridos                                                                                                                                                                                                                                            | Tipo de gap                                 | Peso  |
+  |------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|-------|
+  | Requisito Core                           | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Geralmente termo que mais se repete na vaga; <br> Geralmente o primeiro requisito <br> Geralmente aparece no topo da vaga <br> Apenas um requisito pode ser core | Requisito/Requirement                       | -4    |
+  | Requisito Importante                     | Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc.... <br>Aparece tanto nos requisitos quanto no corpo do texto da vaga                                                                                                    | Requisito/Requirement                       | -3    |
+  | Requisito Secundário                     | Acompanhado de verbos: required, experience, familiarity, vivência. <br> Os 5 primeiros itens da lista de requisitos se encaixam aqui                                                                                                                                                       | Requisito/Requirement                       | -2    |
+  | Requisito Fraco                          | Acompanhado de verbos: required, experience, familiarity, vivência.                                                                                                                                                                                                                         | Requisito/Requirement                       | -1    |
+  | Fortemente desejável                     | Acompanhado de verbos fortes: strongly recommended, highly recommended, highly desirable <br>.                                                                                                                                                                                              | Nice to have/optional/desirable/diferencial | -1    |
+  | Noção, conhecimento, vontade de aprender | Acompanhado de verbos: knowledge, noção, conhecimento.                                                                                                                                                                                                                                      | Requisito/Requirement                       | -0.5  |
+  | Desejável/Diferencial                    | Acompanhado de verbos: desejável, nice to have, recommended, desirable, willing, vontade de aprender.                                                                                                                                                                                       | Nice to have/optional/desirable/diferencial | -0.25 |
+  | Personalizado                            | Alguma regra especial definido em `ai/skills/contexto/SKILL.md`                                                                                                                                                                                                                             | Personalizado                               | ?     |
 
 - Exemplos:
   1) 1 gap core e 2 gap desejável -> 10 - 4 - 0.5 * 2 = 5
@@ -41,7 +41,7 @@ Após o Passo 1 (clarificações) do orquestrador — ao gerar ou corrigir fits.
 Quando a vaga lista várias tecnologias numa frase (ex: "PHP, Python, Node.js, Ruby"), interpretar como OR — conhecer qualquer uma qualifica. Só tratar como AND se a vaga descrever uso simultâneo explícito.
 
 ### Conhecimento acadêmico e projetos pessoais são válidos
-Marcar como gap **apenas** quando a vaga exige explicitamente "experiência profissional". Se a vaga diz "conhecimento", "noções", "familiaridade" ou simplesmente lista uma tecnologia sem qualificar, projetos pessoais e estudos contam como cobertura.
+Marcar como gap **apenas** quando a vaga exige explicitamente "experiência" ou "experiência profissional". Se a vaga diz "conhecimento", "noções", "familiaridade" ou simplesmente lista uma tecnologia sem qualificar, projetos pessoais e estudos contam como cobertura.
 
 **Exceção — termo "experiência":** Quando a vaga usa a palavra "experiência" (ou "experience") isolada, sem adjetivo, pressupor **sempre** experiência profissional. Acadêmico e projetos pessoais **não** cobrem requisitos com esse termo.
 
@@ -75,11 +75,12 @@ Quando os requisitos são genéricos ("domínio de uma ou mais linguagens", "fra
 Seções chamadas "Tech stack", "Nossa stack", "Stack atual", "Technologies we use" descrevem o que a EMPRESA usa — não o que o candidato precisa trazer. Criar gaps apenas a partir de seções explicitamente de requisitos ("Requirements", "Requisitos", "What we expect", "O que esperamos").
 
 ### Lista de gaps e pontos positivos
-- A soma de pontos positivos e gaps devem ser igual a 10. Exemplos: 
-  - 7 pontos positivos e 3 gaps ou;
-  - 10 pontos positivos ou;
-  - 5 gaps ou
-  - 3 gaps e 5 pontos positivos.
+- A quantidade de pontos positivos e gaps juntos deve ser entre 3 e 15. Exemplos:
+  - 7 pontos positivos e 3 gaps (10 no total) ou;
+  - 10 pontos positivos (10 no total) ou;
+  - 2 gaps e 1 ponto positivo (3 no total) ou;
+  - 3 gaps e 5 pontos positivos (8 no total) ou;
+  - 10 pontos positivos e 5 gaps (15 no total).
 
 ## Estrutura do fit no `src/json/jobs-data.js`
 
@@ -128,7 +129,7 @@ candidatura = { aviso: "A vaga é pela Gupy, você só vai precisar de gerar o C
 ## Saída
 
 - Escreva o fit diretamente em `src/json/jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`
-- Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA.
+- Sempre incluir `vagaTexto` com o **texto integral e verbatim da vaga** — copie palavra por palavra do `vagas.txt`, sem resumir, parafrasear ou omitir nenhuma seção. NUNCA RESUMA. Preservar as quebras de linha como `\n` na string JavaScript.
 - **Não exiba os fits no chat** — o usuário os lê abrindo `index.html`
 - Ao terminar, apenas diga: "Fits gerados. Abra http://localhost:3001/index.html para revisar."
 
@@ -140,8 +141,8 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
 - **Nunca altere `ai/skills/cv-base/SKILL.md` sem autorização explícita**
 
 # Testes
-- Siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
-- O comando para rodar os testes é: `JOB_ID=${fit.id} npm test -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto npm test -- test/fit.test.js`
+- Leia e siga as instruções gerais de testes em [`ai/agents/agent-testes.md`](agent-testes.md)
+- O comando para rodar os testes é: `JOB_ID=${fit.id} jest -- test/fit.test.js`. Exemplo `JOB_ID=empresa-xpto jest -- test/fit.test.js`
 - A tabela abaixo tem o mapeamento de quais regras foram infringidas para cada teste:
   
   | Teste                              | Regra infrigida                                                                                                                                  |
@@ -149,3 +150,4 @@ Ao final, siga o protocolo de "Fim do fluxo" em `AGENTS.md`:
   | Score entre 0 e 10                 | [Fórmula do gap](#fórmula-do-gap) Regra 1                                                                                                        |
   | Sem gaps = score 10                | [Sem negativos = score 10](#sem-negativos--score-10)                                                                                             |
   | Score coerente com os tipos de gap | [Fórmula do gap](#fórmula-do-gap) — calcula `10 - Σ pesos` e compara com `fit.score`; também valida que todo `gap.tipo` é um dos 7 tipos válidos |
+  | Quantidade de positivos + gaps entre 3 e 15 | [Lista de gaps e pontos positivos](#lista-de-gaps-e-pontos-positivos)                                                                   |

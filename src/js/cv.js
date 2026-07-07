@@ -1,5 +1,4 @@
 /** @typedef {import('../interfaces/job-data').Job} Job */
-/** @typedef {import('../interfaces/job-data').CandidateData} CandidateData */
 
 import { gerarPDF } from './pdf.js';
 
@@ -9,10 +8,10 @@ const fakeCandidateName = params.get('candidate');
 const isGeneric = params.get('isGeneric');
 const root = document.getElementById('cv-root');
 
-/** @type {Job | undefined} */
-let doc;
-/** @type {CandidateData} */
+/** @type {Job} */
+let job;
 let CANDIDATE_DATA;
+let pdfMeta = {};
 
 const importData = (path) => import(path).catch(() => ({}));
 
@@ -32,13 +31,13 @@ async function getCandidateData() {
 async function getDoc() {
   if (fakeCandidateName) {
     const { CV_FIXTURE = [] } = await importData(`../../fixtures/fake-candidates/${fakeCandidateName}/cv.fixture.js`);
-    doc = CV_FIXTURE.find(c => c.id === jobId);
+    job = CV_FIXTURE.find(c => c.id === jobId);
   } else if (isGeneric) {
     const { GENERIC_CV_DATA = [] } = await importData(`../json/generic-cv-data.js`);
-    doc = GENERIC_CV_DATA.find(c => c.id === jobId);
+    job = GENERIC_CV_DATA.find(c => c.id === jobId);
   } else {
-    const { JOBS_DATA = [] } = await importData('../json/jobs-data.js');
-    doc = JOBS_DATA.find(j => j.id === jobId);
+    const { JOBS = [] } = await importData('../json/jobs-data.js');
+    job = JOBS.find(j => j.id === jobId);
   }
 }
 
@@ -76,14 +75,14 @@ function notAuthorized(msg) {
 }
 
 function render() {
-  if (!jobId || !doc) {
+  if (!jobId || !job) {
     notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
     return;
   }
 
-  const cv = doc.cv;
+  const cv = job.cv;
   if (!isGeneric && !cv.authorized) {
-    notAuthorized(`CV para "${doc.vaga} - ${doc.empresa || 'Não informado'}" ainda não autorizado.`);
+    notAuthorized(`CV para "${job.vaga} - ${job.empresa || 'Não informado'}" ainda não autorizado.`);
     return;
   }
 
@@ -92,9 +91,9 @@ function render() {
   const candidatePhoneCountryCode = CANDIDATE_DATA.phoneCountryCode;
   const candidateLinkedin = CANDIDATE_DATA.linkedin;
 
-  document.documentElement.lang = doc.lang;
+  document.documentElement.lang = job.lang;
 
-  const isInternational = doc.lang === 'en';
+  const isInternational = job.lang === 'en';
   const secResumo = isInternational ? 'Professional Summary' : 'Resumo Profissional';
   const secExp = isInternational ? 'Professional Experience' : 'Experiência Profissional';
   const secSkills = isInternational ? 'Technical Skills' : 'Competências Técnicas';
@@ -103,15 +102,13 @@ function render() {
   const secProjetos = isInternational ? 'Personal Projects' : 'Projetos Pessoais';
   const secCertificados = isInternational ? 'Certifications' : 'Certificações';
 
-  const candidateLocation = cv.local || (isInternational
-    ? CANDIDATE_DATA.location.en
-    : CANDIDATE_DATA.location.pt);
+  const candidateLocation = isInternational ? CANDIDATE_DATA.location.en : CANDIDATE_DATA.location.pt;
 
-  const vagaLocation = getLocationDisplay(doc, candidateLocation);
+  const vagaLocation = getLocationDisplay(job, candidateLocation);
 
-  document.getElementById('page-title').textContent = [doc.vaga, doc.empresa].filter(Boolean).join(' - ') + ` | ${candidateName}`;
+  document.getElementById('page-title').textContent = [job.vaga, job.empresa].filter(Boolean).join(' - ') + ` | ${candidateName}`;
 
-  window._pdfData = { vaga: doc.vaga, empresa: doc.empresa || 'Não informado', candidateName };
+  pdfMeta = { vaga: job.vaga, empresa: job.empresa || 'Não informado', candidateName };
 
   const phoneHtml = candidatePhone
     ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';
@@ -165,7 +162,7 @@ function render() {
 
   root.innerHTML = `
     <h1>${candidateName}</h1>
-    <p class="subtitle">${cv.titulo} | ${cv.subtitulo}</p>
+    <p class="subtitle">${job.vaga} | ${cv.subtitulo}</p>
     <div class="contact-line">
       ${locationHtml}
       ${phoneHtml}
@@ -197,7 +194,7 @@ function render() {
 }
 
 document.getElementById('btn-pdf').addEventListener('click', () => {
-  gerarPDF({ job: jobId, isGeneric: isGeneric || undefined, candidate: fakeCandidateName || undefined });
+  gerarPDF({ job: jobId, isGeneric: isGeneric || undefined, candidate: fakeCandidateName || undefined, ...pdfMeta });
 });
 
 window.addEventListener('beforeprint', () => {

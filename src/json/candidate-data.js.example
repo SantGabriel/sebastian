@@ -2,7 +2,7 @@
 /** @type {import('../interfaces/job-data').CandidateData} */
 export const CANDIDATE_DATA = {
   name: "",
-  phoneCountryCode: "+55",
+  phoneCountryCode: "",
   phone: "",
   email: "",
   linkedin: "",

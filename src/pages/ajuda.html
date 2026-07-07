@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebastian - Ajuda</title>
+  <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/ajuda.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="toc">
+    <a href="../../index.html" class="toc-brand">
+      <img src="../../assets/logo.png" alt="Sebastian Logo" height="50" />
+      <span class="nome-logo fonte-baskerville">Sebastian</span>
+    </a>
+    <a href="#fonte-verdade">Sobre esta página</a>
+    <a href="#glossario">Glossário</a>
+    <a href="#fluxo">Resumo do fluxo</a>
+    <a href="#gaps">Classificação dos gaps</a>
+    <a href="#regras-fit">Regras de Fit</a>
+    <a href="#regras-cv">Regras de CV</a>
+    <a href="#regras-cl">Regras de CL</a>
+    <a href="#regras-ats">Regras de texto ATS</a>
+    <a href="#testes">Testes automatizados</a>
+    <a href="#campos-vaga">Campos da vaga</a>
+    <a href="#alertas">Alertas automáticos no dashboard</a>
+    <a href="#cafe">Me compre um café</a>
+  </nav>
+
+  <div class="content">
+    <div class="page-header">
+      <h1 class="fonte-baskerville">Ajuda</h1>
+      <p class="subtitle fonte-baskerville">Referência dos conceitos usados no dashboard do Sebastian.</p>
+    </div>
+
+    <section id="fonte-verdade" class="help-section">
+      <h2><i class="fa-solid fa-book-open icon-info"></i> Sobre esta página </h2>
+      <p>
+        Todos os detalhes descritos nesta paǵina de ajuda estão definidos em <code>README.md</code>, <code>AGENTS.md</code> e nos arquivos de
+        <code>ai/agents/</code> e <code>ai/skills/</code>.
+        <br>
+        A seguir está um resumo dos pontos mais importantes.
+      </p>
+    </section>
+
+    <section id="glossario" class="help-section">
+    <h2><i class="fa-solid fa-book icon-info"></i> Glossário</h2>
+    <div class="table-wrap">
+      <table class="help-table plain">
+        <thead>
+          <tr>
+            <th>Termo</th>
+            <th>Significado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ATS</td>
+            <td><em>Applicant Tracking System</em> — software que as empresas usam para filtrar currículos automaticamente. O CV precisa ser legível por ele.</td>
+          </tr>
+          <tr>
+            <td>CV</td>
+            <td><em>Curriculum Vitae</em> — o currículo gerado para uma vaga específica.</td>
+          </tr>
+          <tr>
+            <td>CL</td>
+            <td><em>Cover Letter</em> — carta de apresentação.</td>
+          </tr>
+          <tr>
+            <td>Fit</td>
+            <td>Quão alinhado o seu perfil está com a vaga.</td>
+          </tr>
+          <tr>
+            <td>Score</td>
+            <td>Nota do fit, de 0 a 10.</td>
+          </tr>
+          <tr>
+            <td>Gap</td>
+            <td>Requisito da vaga que o seu perfil não cobre (reduz o score).</td>
+          </tr>
+          <tr>
+            <td>CV base</td>
+            <td>Seu "grande currículo" com todas as experiências (<code>ai/skills/cv-base/SKILL.md</code>) — a fonte de verdade da qual o Sebastian extrai cada CV personalizado.</td>
+          </tr>
+          <tr>
+            <td>Contexto</td>
+            <td>Instruções específicas suas sobre como o Sebastian deve preencher certas informações (<code>ai/skills/contexto/SKILL.md</code>).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="fluxo" class="help-section">
+    <h2><i class="fa-solid fa-route icon-info"></i> Resumo do fluxo</h2>
+    <ol class="help-list">
+      <li>Inicie a conversa com um "olá Sebastian" e responda os dados pessoais solicitados.</li>
+      <li>Cole as vagas que pretende se candidatar em <code>vagas.txt</code>, separadas por <code>-----</code>.</li>
+      <li>Peça para processar as vagas. O Sebastian pode fazer perguntas de clarificação antes de gerar o fit (score + gaps) de cada uma — nenhum CV/CL é gerado nessa etapa.</li>
+      <li>Rode <code>npm run start</code> e abra o dashboard (<code>http://localhost:3001/index.html</code>), revise os fits e decida quais vagas seguir.</li>
+      <li>Autorize a geração de CV e/ou CL das vagas que valem a pena.</li>
+      <li>Volte ao dashboard, revise os documentos gerados e peça ajustes se necessário.</li>
+      <li>Baixe o PDF pelo botão <strong>Baixar PDF</strong> no canto inferior direito da página do CV/CL.</li>
+    </ol>
+  </section>
+
+  <section id="gaps" class="help-section">
+    <h2><i class="fa-solid fa-circle-xmark icon-danger"></i> Classificação dos gaps</h2>
+    <p>
+      Cada vaga começa com nota <strong>10</strong>. Todo requisito não atendido pelo candidato
+      vira um <strong>gap</strong>, listado em "Gaps / Pontos negativos" com uma etiqueta indicando
+      seu tipo e o quanto ele reduz a nota. A nota final nunca é menor que <strong>0</strong>.
+    </p>
+
+    <div class="table-wrap">
+      <table class="help-table">
+        <thead>
+          <tr>
+            <th>Classificação</th>
+            <th>Regras - todos os requisitos devem ser cumpridos</th>
+            <th>Tipo de gap</th>
+            <th>Peso no score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Requisito Core</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc...</li>
+                <li>Geralmente termo que mais se repete na vaga</li>
+                <li>Geralmente o primeiro requisito</li>
+                <li>Geralmente aparece no topo da vaga</li>
+                <li>Apenas um requisito pode ser core</li>
+              </ul>
+            </td>
+            <td>Requisito / Requirement</td>
+            <td>-4</td>
+          </tr>
+          <tr>
+            <td>Requisito Importante</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos fortes: solid/strong experience, expertise, domínio, advanced, essencial, indispensável, etc...</li>
+                <li>Aparece tanto nos requisitos quanto no corpo do texto da vaga</li>
+              </ul>
+            </td>
+            <td>Requisito / Requirement</td>
+            <td>-3</td>
+          </tr>
+          <tr>
+            <td>Requisito Secundário</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos: required, experience, familiarity, vivência.</li>
+                <li>Os 5 primeiros itens da lista de requisitos se encaixam aqui</li>
+              </ul>
+            </td>
+            <td>Requisito / Requirement</td>
+            <td>-2</td>
+          </tr>
+          <tr>
+            <td>Requisito Fraco</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos: required, experience, familiarity, vivência.</li>
+              </ul>
+            </td>
+            <td>Requisito / Requirement</td>
+            <td>-1</td>
+          </tr>
+          <tr>
+            <td>Fortemente desejável</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos fortes: strongly recommended, highly recommended, highly desirable.</li>
+              </ul>
+            </td>
+            <td>Nice to have / optional / desirable / diferencial</td>
+            <td>-1</td>
+          </tr>
+          <tr>
+            <td>Noção, conhecimento, vontade de aprender</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos: knowledge, noção, conhecimento.</li>
+              </ul>
+            </td>
+            <td>Requisito / Requirement</td>
+            <td>-0.5</td>
+          </tr>
+          <tr>
+            <td>Desejável/Diferencial</td>
+            <td>
+              <ul>
+                <li>Acompanhado de verbos: desejável, nice to have, recommended, desirable, willing, vontade de aprender.</li>
+              </ul>
+            </td>
+            <td>Nice to have / optional / desirable / diferencial</td>
+            <td>-0.25</td>
+          </tr>
+          <tr>
+            <td>Personalizado</td>
+            <td>
+              <ul>
+                <li>Alguma regra especial definida em <code>ai/skills/contexto/SKILL.md</code></li>
+              </ul>
+            </td>
+            <td>Personalizado</td>
+            <td>Variável</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="help-example">
+      Exemplo: 1 gap <strong>Core</strong> + 2 gaps <strong>Desejável/Diferencial</strong>
+      → 10 - 4 - (0,25 × 2) = <strong>5,5</strong>.
+    </p>
+  </section>
+
+  <section id="regras-fit" class="help-section">
+    <h2><i class="fa-solid fa-magnifying-glass-chart icon-info"></i> Regras de Fit</h2>
+    <p>Regras definidas em <code>ai/agents/agent-fit.md</code>.</p>
+    <ul class="help-list">
+      <li><strong>Sem gaps, a nota é sempre 10.</strong></li>
+      <li><strong>O score sempre fica entre 0 e 10</strong>, mesmo que a soma dos pesos dos gaps ultrapasse 10.</li>
+      <li><strong>Score = 10 − soma dos pesos de cada gap</strong> (ver <a href="#gaps">classificação dos gaps</a>), exceto quando há algum gap <em>Personalizado</em>, cujo peso é livre.</li>
+      <li><strong>No máximo um gap do tipo Requisito Core por vaga.</strong></li>
+      <li><strong>A soma de pontos positivos + gaps fica sempre entre 3 e 15 itens.</strong></li>
+    </ul>
+    <p>Regras adicionais que definem se um requisito conta como coberto (qualitativas, dependem da leitura da vaga, sem teste automatizado):</p>
+    <ul class="help-list">
+      <li><strong>Listas de tecnologia são OR, não AND:</strong> quando a vaga cita várias tecnologias numa frase (ex: "PHP, Python, Node.js"), basta conhecer uma delas para cobrir o requisito.</li>
+      <li><strong>Acadêmico e projetos pessoais valem, com uma exceção:</strong> cobrem requisitos de "conhecimento" ou "noção", mas não cobrem quando a vaga pede "experiência" isolada — nesse caso, presume-se experiência profissional.</li>
+      <li><strong>Interesse declarado conta:</strong> se a vaga pede "interesse em X" ou "vontade de aprender X", basta você ter interesse declarado nisso.</li>
+      <li><strong>Frameworks similares cobrem requisito sem exigência profissional:</strong> ex. Angular cobre React, Redis cobre Kafka em contexto de mensageria — desde que a vaga não exija experiência profissional na tecnologia específica.</li>
+      <li><strong>Tech stack ≠ requisito:</strong> seções como "Nossa stack" ou "Technologies we use" descrevem o que a empresa usa, não o que você precisa ter. Só viram gap se estiverem na seção de requisitos.</li>
+      <li><strong>Overqualified nunca é gap:</strong> "candidato sênior demais para a vaga" não entra na análise técnica de fit.</li>
+    </ul>
+  </section>
+
+  <section id="regras-cv" class="help-section">
+    <h2><i class="fa-solid fa-file-lines icon-info"></i> Regras de CV</h2>
+    <p>Regras definidas em <code>ai/agents/agent-cl.md</code>.</p>
+    <p><a href="#regras-ats">Regras de texto ATS</a> também são aplicadas no CL</p>
+    
+    <h3>Geral</h3>
+    <ul class="help-list">
+      <li>Baseado sempre no CV base (<code>ai/skills/cv-base/SKILL.md</code>) — nunca inventa experiências não documentadas, nem afirma "experiência sólida" em algo sem histórico profissional real.</li>
+      <li>Prioriza experiência profissional; experiências pessoais/acadêmicas entram só quando úteis para o ATS.</li>
+      <li>Resumo e experiência profissional são sempre personalizados para a vaga — podem ser parecidos entre vagas, nunca idênticos.</li>
+      <li>
+        Entre 8 e 15 termos em negrito no total:
+        <ul class="sublist">
+          <li>3 a 5 no resumo profissional.</li>
+          <li>5 a 10 na experiência profissional.</li>
+        </ul>
+      </li>
+      <li>Cada termo em negrito é uma palavra ou expressão curta (no máximo 3 palavras) — tecnologias, cargos ou resultados. Nunca preposições, artigos, frases inteiras ou verbos de ação.</li>
+    </ul>
+
+    <h3>Resumo profissional</h3>
+    <ul class="help-list">
+      <li>Entre 400 e 500 caracteres.</li>
+    </ul>
+
+    <h3>Experiência Profissional</h3>
+    <ul class="help-list">
+      <li>
+        Exatamente uma experiência marcada como "mais relevante":
+        <ul class="sublist">
+          <li>Tem no mínimo 600 caracteres somando cargo, stack e bullets.</li>
+          <li>Sempre tem mais caracteres de bullets do que qualquer outra.</li>
+        </ul>
+      </li>
+      <li>
+        Máximo de experiências por tipo:
+        <ol class="sublist">
+          <li>4 detalhadas.</li>
+          <li>2 condensadas.</li>
+        </ol>
+      </li>
+      <li>
+        Em cada experiência detalhada:
+        <ul class="sublist">
+          <li>Entre 1 e 6 bullets.</li>
+          <li>Cada bullet tem entre 100 e 300 caracteres.</li>
+        </ul>
+      </li>
+      <li>A soma dos bullets de todas as experiências fica entre 1500 e 2000 caracteres.</li>
+      <li>Uma experiência condensada tem exatamente 1 bullet, de 70 a 150 caracteres, e nunca é a mais relevante.</li>
+    </ul>
+
+    <h3>Competências Técnicas</h3>
+    <ul class="help-list">
+      <li>Entre 1 e 15 competências técnicas (skills).</li>
+    </ul>
+
+    <h3>Formação Acadêmica</h3>
+    <ul class="help-list">
+      <li>Máximo 4 formações acadêmicas.</li>
+    </ul>
+
+    <h3>Projetos Pessoais</h3>
+    <ul class="help-list">
+      <li>Seção opcional — só aparece se houver projetos documentados no CV base.</li>
+      <li>Máximo 2 projetos pessoais, cada um com descrição de 100 a 200 caracteres.</li>
+    </ul>
+
+    <h3>Certificados</h3>
+    <ul class="help-list">
+      <li>Seção opcional — só aparece se houver certificados documentados no CV base.</li>
+      <li>Máximo 5 certificados.</li>
+    </ul>
+
+    <h3>Idiomas</h3>
+    <ul class="help-list">
+      <li>Formato simples: "Idioma - nível" (ex: "Inglês - Avançado").</li>
+      <li>Português nativo só aparece em vagas em inglês; vagas em português podem omitir o idioma português.</li>
+    </ul>
+
+  </section>
+
+  <section id="regras-cl" class="help-section">
+    <h2><i class="fa-solid fa-envelope-open-text icon-info"></i> Regras de CL</h2>
+    <p>Regras definidas em <code>ai/agents/agent-cl.md</code>.</p>
+    <p><a href="#regras-ats">Regras de texto ATS</a> também são aplicadas no CL</p>
+
+    <h3>Antes de gerar</h3>
+    <ul class="help-list">
+      <li>Baseada no fit aprovado e no CV base (<code>ai/skills/cv-base/SKILL.md</code>).</li>
+      <li>O idioma da CL segue o idioma da vaga.</li>
+    </ul>
+
+    <h3>Regras de conteúdo</h3>
+    <ul class="help-list">
+      <li>
+        Tamanho:
+        <ul class="sublist">
+          <li>Entre 2 e 3 parágrafos.</li>
+          <li>Soma de todos os parágrafos entre 800 e 1500 caracteres.</li>
+        </ul>
+      </li>
+      <li>Conecta as experiências reais do candidato com os requisitos da vaga.</li>
+    </ul>
+
+    <h3>Tratamento de gaps de tecnologia no CL</h3>
+    <p>Regra qualitativa, sem teste automatizado — a CL conecta suas experiências reais aos requisitos, sem confissões desnecessárias:</p>
+    <ol class="help-list">
+      <li>Nunca declara explicitamente "não tenho experiência com X".</li>
+      <li>
+        Em vez disso, menciona a tecnologia equivalente que você domina, enquadrada no contexto da vaga:
+        <ul class="sublist">
+          <li>Ex: escrever sobre banco relacional em vez de admitir que não conhece SQL Server especificamente.</li>
+        </ul>
+      </li>
+      <li><strong>Exceção:</strong> quando o gap é central e sem equivalente real (ex: vaga exclusivamente de Golang), a CL é honesta sobre isso — evita problemas na entrevista.</li>
+    </ol>
+
+  </section>
+
+  <section id="regras-ats" class="help-section">
+    <h2><i class="fa-solid fa-shield-halved icon-info"></i> Regras de texto ATS</h2>
+    <p>Regras definidas em <code>ai/skills/boas-praticas-ats/SKILL.md</code>.</p>
+    <p>São aplicadas tanto no CV quanto no CL</p>
+
+    <h3>Caracteres permitidos</h3>
+    <ul class="help-list">
+      <li>Acentuação portuguesa (ã, ê, ç, ó, ú etc) é mantida — nunca normalizar para ASCII ("programacao", "gestao", "experiencia" etc).</li>
+      <li>Hífen simples (-), barra (/) e pipe (|) são sempre aceitos.</li>
+    </ul>
+
+    <h3>Caracteres proibidos</h3>
+    <ul class="help-list">
+      <li>Sem emojis, travessão (—), meia-risca (–), seta (→) ou ponto médio (·) — quebram o parsing de alguns ATS.</li>
+    </ul>
+
+    <h3>Datas</h3>
+    <ul class="help-list">
+      <li>Meses nunca abreviados: "Maio 2024" em vez de "Mai/2024".</li>
+      <li>Sem traços especiais entre datas: "Maio 2024 - Julho 2025" em vez de "Mai/2024 – Jul/2025".</li>
+    </ul>
+
+    <h3>Estrutura semântica</h3>
+    <ul class="help-list">
+      <li>O ATS lê o texto bruto do HTML — cores, bordas, fontes e layout não interferem na leitura.</li>
+      <li>O que importa é a estrutura semântica: h1, h2, h3, ul, li, p.</li>
+    </ul>
+
+    <h3>Idioma e moeda</h3>
+    <ul class="help-list">
+      <li>Vaga em português: valores citados em R$. Vaga em inglês: valores em USD.</li>
+    </ul>
+  </section>
+
+  <section id="testes" class="help-section">
+    <h2><i class="fa-solid fa-vial-circle-check icon-info"></i> Testes automatizados</h2>
+    <p>Definidos em <code>ai/agents/agent-testes.md</code>.</p>
+
+    <h3>Auditoria</h3>
+    <ul class="help-list">
+      <li>Depois de gerar todos os documentos solicitados (fit, CV, CL), os testes rodam automaticamente e o resultado é salvo em <code>.tmp/audit-&lt;timestamp&gt;.txt</code>.</li>
+      <li>São métricas consultivas: passar em todos não significa documento perfeito, e reprovar não significa documento ruim — cobrem apenas regras quantitativas.</li>
+      <li>Se houver falhas, você recebe uma tabela com vaga, documento, teste e descrição da falha, e é perguntado se quer autorizar uma correção.</li>
+      <li>No máximo uma rodada de correção por auditoria — se falhar de novo depois de corrigido, é preciso autorizar novamente.</li>
+    </ul>
+  </section>
+
+  <section id="campos-vaga" class="help-section">
+    <h2><i class="fa-solid fa-list-check icon-info"></i> Campos da vaga</h2>
+    <p>O dashboard exibe alguns campos extraídos automaticamente do texto de cada vaga:</p>
+    <div class="table-wrap">
+      <table class="help-table plain">
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Valores possíveis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Modalidade</td>
+            <td>Remoto, Presencial ou Híbrida</td>
+          </tr>
+          <tr>
+            <td>Contratação</td>
+            <td>CLT, PJ ou CLT/PJ — omitido se a vaga não informar claramente</td>
+          </tr>
+          <tr>
+            <td>Candidatura</td>
+            <td>Aviso + link, exibido quando a vaga exige e-mail ou formulário externo em vez do fluxo padrão da plataforma</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="alertas" class="help-section">
+    <h2><i class="fa-solid fa-triangle-exclamation icon-warning"></i> Alertas automáticos no dashboard</h2>
+    <p>
+      Além do score de fit e dos gaps, o dashboard sinaliza automaticamente alguns pontos de atenção
+      em cada vaga, para você não perder requisitos importantes na hora de se candidatar:
+    </p>
+    <ul class="help-list">
+      <li><strong>Candidatura externa:</strong> quando a vaga exige aplicação por e-mail ou por formulário/link externo, o dashboard exibe um atalho direto (<code>mailto:</code> ou o link do formulário).</li>
+      <li><strong>Localização divergente:</strong> quando a vaga é Presencial ou Híbrida em uma cidade diferente da sua, o dashboard destaca a modalidade e a cidade, alertando sobre possível deslocamento ou mudança.</li>
+      <li><strong>Vagas da Gupy:</strong> como a Gupy não permite anexar currículo (apenas carta de apresentação), o Sebastian sugere gerar apenas uma CL para essas vagas.</li>
+    </ul>
+    <p class="help-example">Esses avisos são apenas indicativos, gerados a partir do texto da vaga. Sempre confira a descrição original antes de se candidatar.</p>
+    </section>
+
+    <section id="cafe" class="help-section">
+      <h2><img src="../../assets/logo.png" alt="" class="icon-logo" /> Me compre um café</h2>
+      <p>
+        Se você curtiu o projeto do Sebastian, especialmente se ele te ajudou a conseguir uma nova vaga,
+        considere apoiar esse projeto aberto com o valor de um cafezinho a partir do PIX.
+        <br>
+        O projeto é e sempre será open source e gratuito, e o seu apoio ajuda a manter o projeto vivo e a melhorar cada vez mais.
+      </p>
+      <div align="center">
+        <img src="../../assets/pix.jpeg" alt="qrcode pix" width="200" />
+      </div>
+      <p>PIX copia e cola:</p>
+      <div class="pix-copy-wrap">
+        <pre><code id="pix-code">00020126800014br.gov.bcb.pix01368a2736bc-1b9e-4655-ba11-1017ea798f610218Sebastian agradece5204000053039865802BR5918Gabriel O. Santana6002NA62070503***630442B8</code></pre>
+        <button type="button" id="pix-copy-btn" class="pix-copy-btn">
+          <i class="fa-solid fa-copy"></i> Copiar
+        </button>
+      </div>
+    </section>
+
+    <div class="card-stack">
+      <div class="card card--ledger">
+        <img src="../../assets/mordomo%20-%20full.png" alt="Sebastian, o mordomo" />
+        <h2 class="txt fonte-baskerville">Sebastian · o mordomo</h2>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/ajuda.js"></script>
+</body>
+</html>

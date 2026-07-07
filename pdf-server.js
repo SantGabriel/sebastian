@@ -2,7 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.static(__dirname));
 
@@ -11,6 +11,9 @@ app.get('/pdf', async (req, res) => {
   const doc = (req.query.doc || 'cv').toString().toLowerCase();
   const isGeneric = req.query.isGeneric || '';
   const candidate = req.query.candidate || '';
+  const vaga = req.query.vaga || '';
+  const empresa = req.query.empresa || '';
+  const candidateName = req.query.candidateName || '';
   if (!jobId) return res.status(400).send('Parâmetro ?job= obrigatório');
 
   const pageName = doc === 'cl' ? 'src/pages/cl.html' : 'src/pages/cv.html';
@@ -25,22 +28,19 @@ app.get('/pdf', async (req, res) => {
     if (candidate) pageParams.set('candidate', candidate);
     await page.goto(`http://localhost:${PORT}/${pageName}?${pageParams}`, { waitUntil: 'networkidle0' });
 
-    const { pdfData, contentHeightMm } = await page.evaluate(() => {
+    const contentHeightMm = await page.evaluate(() => {
       const mmToPx = 96 / 25.4;
       const totalMm = document.body.scrollHeight / mmToPx + 12 * 2;
-      return {
-        pdfData: window._pdfData || {},
-        contentHeightMm: Math.max(297, Math.ceil(totalMm)),
-      };
+      return Math.max(297, Math.ceil(totalMm));
     });
 
     await page.addStyleTag({ content: `@page { size: 217mm ${contentHeightMm}mm !important; }` });
 
-    const vaga = (pdfData.vaga || '').replace(/[<>:"/\\|?*]/g, '').trim();
-    const empresa = pdfData.empresa ? pdfData.empresa.replace(/[<>:"/\\|?*]/g, '').trim() : '';
-    const candidateName = (pdfData.candidateName || '').replace(/[<>:"/\\|?*]/g, '').trim();
+    const cleanVaga = vaga.toString().replace(/[<>:"/\\|?*]/g, '').trim();
+    const cleanEmpresa = empresa.toString().replace(/[<>:"/\\|?*]/g, '').trim();
+    const cleanCandidateName = candidateName.toString().replace(/[<>:"/\\|?*]/g, '').trim();
 
-    const parts = [vaga, empresa, candidateName].filter(Boolean);
+    const parts = [cleanVaga, cleanEmpresa, cleanCandidateName].filter(Boolean);
     const filename = parts.join(' - ') + '.pdf';
 
     const pdf = await page.pdf({

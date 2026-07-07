@@ -1,7 +1,9 @@
-const { scoreClass, GAP, gapWeight } = require('../src/js/index');
-const { getJobsData, eachOrSkip } = require('./utils/utils');
+const { gapWeight } = require('../src/js/utils');
+const { getJob, eachOrSkip } = require('./utils/utils');
+const {GAP_TIPO} = require("../src/js/enum");
 
-const jobList = getJobsData();
+
+const jobList = getJob();
 const jobsWithFit = jobList.filter(job => job.fit);
 describe('Fit', () => {
   describe('Score', () => {
@@ -22,12 +24,12 @@ describe('Fit', () => {
       if (fit.negativos && fit.negativos.length === 0) return;
       const negativos = fit.negativos || [];
 
-      const temGapCustom = negativos.filter(gap => gap.tipo === GAP.PERSONALIZADO).length > 0;
+      const temGapCustom = negativos.filter(gap => gap.tipo === GAP_TIPO.PERSONALIZADO).length > 0;
       if (temGapCustom) return;
 
 
       negativos.forEach(gap => {
-        expect(Object.values(GAP)).toContain(gap.tipo);
+        expect(Object.values(GAP_TIPO)).toContain(gap.tipo);
       });
 
       const deduction    = negativos.reduce((acc, gap) => acc + (gapWeight(gap.tipo) || 0), 0);
@@ -39,8 +41,14 @@ describe('Fit', () => {
       if (fit.negativos && fit.negativos.length === 0) return;
       const negativos = fit.negativos || [];
 
-      const requisitosCore = negativos.filter(gap => gap.tipo === GAP.REQUISITO_CORE);
+      const requisitosCore = negativos.filter(gap => gap.tipo === GAP_TIPO.REQUISITO_CORE);
       expect(requisitosCore.length).toBeLessThanOrEqual(1);
+    });
+
+    eachOrSkip(jobsWithFit)('Quantidade de positivos + gaps entre 3 e 15 ($id)', ({id, fit}) => {
+      const total = (fit.positivos || []).length + (fit.negativos || []).length;
+      expect(total).toBeGreaterThanOrEqual(3);
+      expect(total).toBeLessThanOrEqual(15);
     });
   });
 });
