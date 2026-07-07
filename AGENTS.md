@@ -45,6 +45,7 @@ Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticame
 - Só pule se todos os requisitos relevantes já estiverem cobertos
 - Não pergunte sobre itens já documentados (mesmo que implicitamente)
 - Depois de todas as perguntas respondidas, siga para o passo 2 para gerar os fits.
+- Se limite a fazer no máximo 10 perguntas
 
 ## Passo 2 — Fit
 - Leia `ai/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `src/json/jobs-data.js`
