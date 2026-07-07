@@ -28,7 +28,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 11. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
     1. Tem que ter 8 a 15 itens em negrito (usando <strong>) no CV:
        1. 3 a 5 no [Resumo profissional](#resumo-profissional);
-       2. 5 a 10 na [Experiência Profissional](#experiência-profissional)
+       2. 5 a 10 nos bullets de [Experiência Profissional](#experiência-profissional)
        3. Excesso polui e dilui o efeito, portanto é importante seguir o limite de 15 itens.
     2. Priorize os de maior relevância para a vaga;  
     3. Um item é uma palavra ou expressão curta de no máximo 3 palavras
@@ -68,7 +68,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 2. Foque nas tecnologias mais relevantes para a vaga e nas quais o candidato tem mais experiência comprovada, preferindo as que foram citadas no resumo profissional e na experiência profissional. Se necessário, cite outras tecnologias relevantes para a vaga, mesmo que o candidato tenha menos experiência nelas, mas evite citar tecnologias que não tenham nenhuma experiência comprovada.
 
 ### Formação Acadêmica
-1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite
+1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite.
 2. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
 3. Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
 
