@@ -44,7 +44,7 @@ Após gerar todos os documentos solicitados:
 Após a auditoria, apresente ao usuário:
 
 - **Se todos os testes passaram:** Apenas diga "Feito" e encerre (pule para o fim)
-- **Se houve falhas:** apresente um relatório. Segue um exemplo:
+- **Se houve falhas:** apresente um relatório, no exato formato abaixo:
 
   Os seguintes documentos apresentaram falhas nos testes automatizados:
 
@@ -73,5 +73,3 @@ Sua ÚNICA saída agora é a tabela de falhas + a pergunta abaixo:
   4. Apresente o resultado final e **encerre**
   5. **NÃO volte para a Fase 1.** A Fase 3 é o ÚLTIMO passo.
 
-# IMPORTANTE: fim do fluxo
-Ao finalizar qualquer caminho (feito, correção, ou rejeição), diga: ALELUIA BULBASSAURO
