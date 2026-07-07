@@ -2,7 +2,7 @@
    <img src="assets/logo.png" alt="Sebastian Logo" height="200" />
 </div>
 
-# Sebastian - O seu mordomo orquestrador de Currículo para ATS
+# Sebastian · o mordomo - O seu orquestrador de Currículo para ATS
 
 <div align="center">
 
@@ -23,11 +23,12 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
 
 # Sumário
 - [Por que usar o Sebastian?](#por-que-usar-o-sebastian)
-- [Sobre os ATS e AI match](#sobre-os-ats-e-ai-match)
+- [Sobre os ATS e AI match - Você acha que sabe o que é, mas provavelmente não sabe](#sobre-os-ats-e-ai-match---você-acha-que-sabe-o-que-é-mas-provavelmente-não-sabe)
 - [Glossário](#glossário)
 - [Mapa de arquivos](#mapa-de-arquivos)
 - [Privacidade — seus dados ficam com você](#privacidade--seus-dados-ficam-com-você)
 - [Requisitos](#requisitos)
+- [Agentes e modelos testados](#agentes-e-modelos-testados)
 - [Como usar?](#como-usar-)
   - [Resumo do fluxo](#resumo-do-fluxo)
   - [Instalação e execução](#1-instalação-e-execução)
@@ -47,6 +48,7 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
   - [Testes Automatizados](#testes-automatizados)
     - [Hacking Reward](#hacking-reward)
 - [Disclaimers](#disclaimers)
+- [Me compre um café](#me-compre-um-café)
 
 # Por que usar o Sebastian?
 
@@ -56,19 +58,19 @@ Algumas empresas ou plataformas de vagas onde você costuma se candidatar usam A
 
 O Sebastian ajuda a gerar CVs e CLs legíveis para esses sistemas, aumentando suas chances de ser chamado para uma entrevista, identificando essas palavras-chave e incluíndo no seu CV/CL, tornando-o mais personalizado.
 
-# Sobre os ATS e AI match
+# Sobre os ATS e AI match - Você acha que sabe o que é, mas provavelmente não sabe.
 
-O ATS é uma solução completa que as empresas contratam para gerenciar o processo de recrutamento e seleção do início ao fim. Ele ajuda a organizar o processo de recrutamento, desde a publicação da vaga até a contratação do candidato, incluindo triagem de currículos, agendamento de entrevistas e comunicação com os candidatos. Hoje, as plataformas de vagas onde você costuma se candidatar, elas não são só anunciantes de vagas, mas sim uma solução de ATS que as empresas contratam.
+Diferente do que muitos candidatos acreditam, o ATS não é uma ferramenta de IA para filtrar currículos, ele muito mais que isso! Às vezes até sem IA envolvida. O ATS é uma solução completa que as empresas contratam para gerenciar o processo de recrutamento e seleção do início ao fim. Ele ajuda a organizar o processo de recrutamento, desde a publicação da vaga até a contratação do candidato, incluindo triagem de currículos, agendamento de entrevistas, comunicação com os candidatos, escolher quais plataformas a vaga será divulgada, agendamento de abertura de vagas. Hoje, as plataformas de vagas onde você costuma se candidatar, elas não são só anunciantes de vagas, mas sim uma solução de ATS que as empresas contratam.
 
-Esses ATS permitem usar filtros, por exemplo, palavras-chave. Alguns deles inclusive ranqueia os candidatos e os currículos que não atendem aos critérios do ATS terá uma nota baixa. Os filtros e os ranques podem fazer a seu CV ficar "invisível" para o recrutador, te eliminando indiretamente, mesmo que você seja um candidato qualificado. 
+Esses ATS permitem usar filtros, por exemplo, palavras-chave. Alguns deles inclusive ranqueia os candidatos e os currículos que não atendem aos critérios do ATS terá uma nota baixa. Os filtros e os ranques podem fazer o seu CV ficar "invisível" para o recrutador, te eliminando indiretamente, mesmo que você seja um candidato qualificado. 
 
-O principal motivo do uso dessas soluções é acontece por conta do grande volume de candidatos que se candidatam para uma vaga. Não é incomum no Linkedin, por exemplo, você encontrar vagas com **centenas** de candidatos. O ATS ajuda a filtrar esses currículos e escolhê-los para uma próxima etapa de avaliação "manual", com, por exemplo, 20 candidatos apenas.
+Os principais motivos do uso dessas soluções são: plataforma unificada para gerenciar todas as vagas, análise de dados das candidaturas (tempo de contratação, taxa de conversão, NPS do processo), processos automatizados de comunicação e abertura de vagas e **o que mais impacta os candidatos**, filtrar o grande volume de candidatos que se candidatam para uma vaga. Não é incomum no Linkedin, por exemplo, você encontrar vagas com **centenas** de candidatos. O ATS ajuda a filtrar esses currículos e escolhê-los para uma próxima etapa de avaliação "manual", com, por exemplo, 20 candidatos apenas.
 
 Alguns ATS podem ter ou não um AI match embutido, que ajuda a filtrar os currículos. Quando não tem, o ATS apenas filtra os currículos com base em critérios objetivos, como palavras-chave, experiência e formação, de forma bem manual, de tal forma que se no seu currículo estiver "Back-end" e o recrutador filtrar por "Backend", pode ser que você fique fora da busca. Quando tem, ele vai além e tenta entender o contexto do currículo e da vaga para determinar se o candidato é adequado para a vaga, mas ainda assim, seu currículo tem que estar mais adaptado para a vaga.
 
 Exemplo de plataformas de vagas conhecidas que usam ATS com filtros e/ou AI match:
 
-| Plataforma                           | Evidência de AI match                                                                                                                                                       | Link oficial                                                                                |
+| Plataforma                           | Evidência de Filtros ou AI match                                                                                                                                            | Link oficial                                                                                |
 |--------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | **Workday**                          | "AI-powered candidate matching that identifies exact and similar skills"                                                                                                    | [workday.com](https://www.workday.com/en-us/topics/hr/applicant-tracking-system.html)       |
 | **Greenhouse**                       | "AI-powered filters organize applications based on how they match your defined job criteria, such as skills and experience."                                                | [greenhouse.com](https://www.greenhouse.com/real-talent-candidate-matching)                 |
@@ -77,7 +79,7 @@ Exemplo de plataformas de vagas conhecidas que usam ATS com filtros e/ou AI matc
 | **Catho**                            | "Deixe nossa inteligência artificial trabalhar por você. O Catho Express busca rapidamente os candidatos com maior compatibilidade e com interesse comprovado na sua vaga." | [catho.com.br](https://www.catho.com.br/empresas/)                                          |
 | **GeekHunter**                       | "recursos automatizados aplicados pela GeekHunter para apoiar entrevistas, enriquecer perfis, gerar recomendações, realizar matching ..."                                   | [geekhunter.com.br](https://www.geekhunter.com.br/pt/termos-de-uso)                         |
 
-**Observação:** O fato de uma empresa não estar listada aqui não significa que ela usa ou não usa ATS e/ou AI match.
+**Observação:** O fato de uma empresa não estar listada aqui não significa que ela usa ou não usa ATS e/ou filtros ou AI match.
 
 # Glossário
 
@@ -114,6 +116,19 @@ O repositório versiona apenas os equivalentes `*.example` (modelos sem dados re
 - Node.js 22.21+
 - npm
 - Uma ferramenta de agente de IA compatível com a convenção `AGENTS.md` (ela vai ler as instruções do Sebastian neste repositório)
+
+# Agentes e modelos testados
+
+O Sebastian segue a convenção `AGENTS.md`, então deve funcionar com qualquer ferramenta de agente de IA compatível. Até agora, foi testado com:
+
+**Agentes**
+- GitHub Copilot
+- Claude Code
+- Open Code
+
+**Modelos**
+- Sonnet 4.5 / 4.6 / 5
+- MiMo v2.5
 
 # Como usar? 
 
@@ -290,7 +305,28 @@ O fato da etapa de correção ser "manualmente" solicitada pelo usuário é prop
 
 # Disclaimers
 - O Sebastian **NÃO GARANTE** que os fits, CVs e CLs gerados vão passar no filtro do ATS ou que você vai ser chamado para uma entrevista, muito menos que o que foi gerado está coerente com o que foi gerado. É **SUA** responsabilidade revisar o que foi gerado e pedir ajustes caso necessário. O Sebastian é apenas uma ferramenta para te ajudar a gerar CVs e CLs legíveis para ATS, mas não substitui a revisão humana.
-- O objetivo do Sebastian **NÃO** é gerar documentos falsos ou mentirosos, inventando experiências ou habilidades que o candidato não tem, mas que seriam importantes para a vaga. A fase de avaliação de fit foi feita justamente para identificar vagas que podem não fazer sentido para o candidato, evitando perda de tempo para candidato e recrutador.
+- O objetivo do Sebastian **NÃO** é gerar documentos falsos ou mentirosos, inventando experiências ou habilidades que o candidato não tem, mas que seriam importantes para a vaga. A fase de avaliação de fit foi feita justamente para identificar vagas que podem não fazer sentido para você, evitando perda de tempo para candidato e recrutador.
 - Se o seu score da vaga for vermelho (abaixo de 5), reconsidere se vale a pena se candidatar para essa vaga e revise o fit para ter certeza de que realmente aquela vaga possa não ser para você.
-- O Sebastian **NÃO** buscas de vagas automaticamente para você, muito menos faz scrapping de sites para isso. É você quem procura as vagas e cola no `vagas.txt`, o Sebastian apenas processa as vagas para gerar os fits, CVs e CLs.
+- O Sebastian **NÃO** buscas de vagas automaticamente para você (pelo menos ainda não 👀), muito menos faz scrapping de sites para isso. É você quem procura as vagas e cola no `vagas.txt`, o Sebastian apenas processa as vagas para gerar os fits, CVs e CLs.
 - O Sebastian **NÃO** aplica para as vagas automaticamente para você. É você quem aplica para as vagas após checar o que foi gerado pelo Sebastian.
+
+# Me compre um café
+Se você curtiu o projeto do Sebastian, especialmente se ele te ajudou a conseguir uma nova vaga, considere apoiar esse projeto aberto com o valor de um cafezinho a partir do PIX.
+O projeto é e sempre será open source e gratuito. O seu apoio ajuda a manter o projeto vivo e a desenvolver novas features.
+
+PIX QR-code
+<div align="center">
+   <img src="assets/pix.jpeg" alt="qrcode pix" width="200" />
+</div>
+
+PIX copia e cola: 
+```
+00020126800014br.gov.bcb.pix01368a2736bc-1b9e-4655-ba11-1017ea798f610218Sebastian agradece5204000053039865802BR5918Gabriel O. Santana6002NA62070503***630442B8
+``` 
+
+---
+
+<div align="center">
+   <img src="assets/mordomo.png" alt="qrcode pix"  />
+   <h2 style="padding-top: 0;margin-top:0">Sebastian · o mordomo</h2>
+</div>

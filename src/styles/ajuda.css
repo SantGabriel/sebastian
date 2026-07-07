@@ -1,11 +1,18 @@
+:root {
+  --toc-width: 260px;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  max-width: 780px;
-  margin: 40px auto;
-  padding: 0 24px 60px;
   color: var(--text);
   font-size: 14px;
   background: #f5f7fa;
+  margin: 0;
+}
+
+.content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 24px 0 calc(var(--toc-width) + 24px);
 }
 
 .page-header { text-align: center; margin-bottom: 24px; }
@@ -16,35 +23,76 @@ body {
   margin: 8px 0 12px;
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--brand);
-  text-decoration: none;
-}
-
-.back-link:hover { text-decoration: underline; }
-
 .toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--toc-width);
+  overflow-y: auto;
   background: #fff;
-  border-radius: 8px;
-  padding: 14px 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-right: 1px solid #eee;
+  padding: 20px 16px 40px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
+}
+
+.toc a.toc-brand,
+.toc a.toc-brand:hover {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+  padding: 0 10px;
+  text-decoration: none;
+  background: none;
 }
 
 .toc a {
   font-size: 13px;
-  color: var(--brand);
+  color: var(--text-muted);
   text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border-left: 2px solid transparent;
 }
 
-.toc a:hover { text-decoration: underline; }
+.toc a:hover {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+
+.toc a.active {
+  color: var(--brand);
+  font-weight: bold;
+  background: var(--brand-light);
+  border-left-color: var(--brand);
+}
+
+.nome-logo {
+  font-size: 18px;
+  margin-top: 16px;
+}
+
+@media (max-width: 860px) {
+  .toc {
+    position: static;
+    width: auto;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .content {
+    padding: 24px 16px 60px;
+  }
+}
 
 .help-section {
   background: #fff;
@@ -68,6 +116,16 @@ body {
   color: var(--text-muted);
   line-height: 1.6;
   margin-bottom: 14px;
+}
+
+.help-section h3 {
+  font-size: 14px;
+  color: var(--text-dark);
+  margin: 16px 0 8px;
+}
+
+.help-section h3:first-of-type {
+  margin-top: 0;
 }
 
 .table-wrap {
@@ -103,6 +161,15 @@ body {
   color: #c62828;
 }
 
+.help-table td ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.help-table td ul li + li {
+  margin-top: 4px;
+}
+
 .help-example {
   font-size: 13px;
   color: #444;
@@ -113,4 +180,104 @@ body {
   margin-bottom: 0;
 }
 
+.help-list {
+  margin: 0 0 14px;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.help-list li { margin-bottom: 6px; }
+.help-list li:last-child { margin-bottom: 0; }
+
+.sublist {
+  padding-left: 1.5em;
+}
+
+.help-table.plain td:last-child,
+.help-table.plain th:last-child {
+  white-space: normal;
+  font-weight: normal;
+  color: inherit;
+}
+
+.help-section code {
+  background: #f0f0f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.help-section pre {
+  background: #f0f0f0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.help-section pre code {
+  background: none;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.pix-copy-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pix-copy-wrap pre {
+  flex: 1;
+  margin: 0;
+}
+
+.pix-copy-btn {
+  flex-shrink: 0;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pix-copy-btn:hover {
+  background: var(--brand-dark);
+}
+
+.pix-copy-btn.copied {
+  background: #2e7d32;
+}
+
 .icon-danger { color: #e53935; }
+.icon-info { color: var(--brand); }
+.icon-warning { color: #f9a825; }
+
+.icon-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: fill;
+  margin-top: -8px;
+}
+
+/* ---------- card-stack ---------- */
+
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.card-stack .card {
+  max-width: none;
+}
