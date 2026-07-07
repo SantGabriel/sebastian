@@ -6,6 +6,16 @@ const params = new URLSearchParams(window.location.search);
 const jobId = params.get('job');
 const root = document.getElementById('cl-root');
 
+/**
+ * @param {string} phone
+ * @param {string} countryCode
+ * @returns {string}
+ */
+function formatPhoneWithCountryCode(phone, countryCode) {
+  if (!phone) return '';
+  return countryCode ? `${countryCode} ${phone}` : phone;
+}
+
 function notAuthorized(msg) {
   root.innerHTML = `
     <div class="not-authorized">
@@ -30,6 +40,8 @@ if (!jobId || !job) {
   const name = c.name;
   const email = c.email;
   const linkedin = c.linkedin;
+  const phone = c.phone;
+  const phoneCountryCode = c.phoneCountryCode;
   const location = isEN
     ? c.location.en
     : c.location.pt;
@@ -50,6 +62,8 @@ if (!jobId || !job) {
 
     const locationHtml = location
       ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
+    const phoneHtml = phone
+      ? `<a href="tel:${formatPhoneWithCountryCode(phone, phoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(phone, phoneCountryCode)}</a>` : '';
     const emailHtml = email
       ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
     const linkedinHtml = linkedin
@@ -60,6 +74,7 @@ if (!jobId || !job) {
         <h1>${name}</h1>
         <div class="meta">
           ${locationHtml}
+          ${phoneHtml}
           ${emailHtml}
           ${linkedinHtml}
         </div>
