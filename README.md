@@ -29,7 +29,7 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
 - [Privacidade — seus dados ficam com você](#privacidade--seus-dados-ficam-com-você)
 - [Requisitos](#requisitos)
 - [Agentes e modelos testados](#agentes-e-modelos-testados)
-- [Como usar?](#como-usar-)
+- [Como usar?](#como-usar)
   - [Resumo do fluxo](#resumo-do-fluxo)
   - [Instalação e execução](#1-instalação-e-execução)
   - [Informações que você precisa fornecer](#2-informações-que-você-precisa-fornecer)
@@ -130,7 +130,7 @@ O Sebastian segue a convenção `AGENTS.md`, então deve funcionar com qualquer 
 - Sonnet 4.5 / 4.6 / 5
 - MiMo v2.5
 
-# Como usar? 
+# Como usar?
 
 ## Resumo do fluxo
 - Inicie a conversa com o Sebastian com um "olá Sebastian" e responda os dados pessoais que ele solicitar que serão colocados no CV e CL
