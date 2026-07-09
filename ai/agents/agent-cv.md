@@ -105,6 +105,37 @@ Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `lo
 
 `lang` fica no nível do job (ex: `job.lang = "pt"`), não dentro do objeto `cv`.
 
+## Links de Site (toda entrada com "- Site: URL" no cv-base)
+
+Sempre que uma experiência, formação acadêmica, idioma, certificação ou projeto pessoal tiver uma linha `- Site: URL` logo abaixo do heading no `ai/skills/cv-base/SKILL.md`, o CV gerado deve linkar essa entrada para essa URL. Use exatamente a URL informada naquela seção — não generalize para outra página do mesmo site. Se uma entrada **não** tiver linha "- Site:", não invente URL: deixe o campo como texto puro, sem link.
+
+**Sem a cor `--brand`** no texto — links no corpo do CV usam a classe CSS `link-plain` (definida em `src/styles/cv.css`: `color: var(--text); text-decoration: underline;`), a mesma cor do texto ao redor, só sublinhado. `--brand` fica reservado só para elementos estruturais (`h2`, borda do header, pills de skill) e para os links do header (telefone/e-mail/LinkedIn, via `.contact-line a`) — usá-lo em todo link de corpo (empresa, instituição, projeto, idioma) deixa o CV colorido demais e dilui o destaque da cor.
+
+O indicador de link é só o **sublinhado** — sem ícone. **Nunca use `style` inline** — sempre `class="link-plain"`. A regra de print em `cv.css` está restrita a `.contact-line a`, então não sobrescreve essa classe no PDF.
+
+- **Experiência profissional**: o link cobre **apenas o nome da empresa** (não o cargo). A interface `Experience` já tem campo `url` — preencha com o link do "Site:" e formate `empresa` assim:
+  ```js
+  empresa: "<span class=\"link-plain\">Quero Passagem</span>",
+  url: "https://queropassagem.com.br/",
+  ```
+  O `cv.js` já envolve `empresa` num `<a href="${url}">` quando `url` está preenchido — não adicione a tag `<a>` manualmente aqui.
+
+- **Formação acadêmica**: o link cobre **apenas o nome da instituição** (não o curso). A interface `Education` **não tem** campo `url` — monte o link manualmente dentro do próprio campo `inst`:
+  ```js
+  { curso: "Engenharia de Computação", inst: "<a href=\"https://www.cefetmg.br/\" target=\"_blank\" class=\"link-plain\">CEFET/MG, Campus Timóteo</a>", periodo: "2016 - 2022", stack: "..." }
+  ```
+
+- **Certificações e projetos pessoais**: o link cobre **o título inteiro** (`cert.nome` ou `proj.nome`). Ambas as interfaces já têm campo `url` — preencha com o link do "Site:"/repositório e formate o nome assim:
+  ```js
+  nome: "<span class=\"link-plain\">Sebastian - Orquestrador de Currículos ATS com IA</span>",
+  url: "https://github.com/usuario/sebastian",
+  ```
+
+- **Idiomas**: o link cobre **apenas o nome do idioma** (não o nível). `cv.idiomas` é `string[]` sem campo `url` — a seção `# Idiomas` do cv-base normalmente **não** tem linha "- Site:" (nesse caso, deixe o idioma como texto puro). Se houver, monte o link manualmente:
+  ```js
+  idiomas: ["<a href=\"URL\" target=\"_blank\" class=\"link-plain\">Inglês</a> - Avançado"]
+  ```
+
 ## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 
 A forma do objeto é a interface `CV` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) — fonte de verdade dos campos e tipos.

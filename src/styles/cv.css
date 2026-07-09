@@ -40,7 +40,7 @@ h1 {
 /* ---------- sections ---------- */
 
 h2 {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   color: var(--brand);
   text-transform: uppercase;
@@ -61,7 +61,7 @@ h2 {
 }
 
 .job-header h3        { font-size: 13px; font-weight: bold; }
-.job-header h3 a      { color: var(--brand); text-decoration: none; }
+.job-header h3 a      { color: var(--text); text-decoration: none; }
 .job-header .date     { font-size: 12px; color: var(--text-faint); }
 
 .stack {
@@ -78,6 +78,7 @@ li { margin-bottom: 3px; }
 .project-item {
   margin-bottom: 10px;
 }
+.project-item h3 a { color: var(--text); text-decoration: none; }
 
 /* ---------- skills ---------- */
 
@@ -129,12 +130,16 @@ li { margin-bottom: 3px; }
   margin-bottom: 3px;
 }
 .cert-item .date { font-size: 12px; color: var(--text-faint); white-space: nowrap; margin-left: 12px; }
-.cert-item a { color: var(--brand); text-decoration: none; }
+.cert-item a { color: var(--text); text-decoration: none; }
 
 /* ---------- languages ---------- */
 
 .lang-list    { list-style: none; padding: 0; }
 .lang-list li { margin-bottom: 2px; }
+
+/* ---------- inline data links (empresa, instituição, projeto, idioma) ---------- */
+
+.link-plain { color: var(--text); text-decoration: underline; }
 
 /* ---------- print ---------- */
 
@@ -152,7 +157,7 @@ li { margin-bottom: 3px; }
   .contact-line  { display: flex !important; flex-wrap: wrap !important; }
   .edu-row       { display: grid !important; grid-template-columns: 1fr !important; }
   .lang-list     { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; }
-  a              { color: var(--brand) !important; }
+  .contact-line a { color: var(--brand) !important; }
 
   .pill {
     background: var(--brand-light) !important;

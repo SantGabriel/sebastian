@@ -8,6 +8,7 @@ description: CV base do candidato — fonte de verdade para geração de documen
 # Experiência profissional
 
 ## DevOps Engineer Sênior (06/2023 - Atual) - TechFlow Solutions
+- Site: https://www.techflowsolutions.example.com/
 
 ### Introdução
 TechFlow Solutions é uma consultoria de transformação digital especializada em cloud-native e infraestrutura como código, atendendo empresas Fortune 500.
@@ -76,6 +77,8 @@ Linux (CentOS/RHEL/Ubuntu) | Bash | Nginx | HAProxy | PostgreSQL | MySQL | Zabbi
 # Experiência acadêmica
 
 ## Engenharia de Sistemas de Computação - UFRJ (2014 - 2018)
+- Site: https://www.ufrj.br/
+
 Formação com ênfase em redes, infraestrutura e sistemas operacionais. Projeto de conclusão sobre otimização de clusters Kubernetes em ambientes multi-cloud.
 
 ### Stacks
@@ -90,6 +93,8 @@ Linux Avançado | Bash | Infraestrutura
 # Projetos Pessoais
 
 ## Orquestração de Infraestrutura com Terraform e Kubernetes (2022 - 2024)
+- Site: https://github.com/exemplo/infra-orchestration
+
 Desenvolveu stack completo de infraestrutura como código permitindo provisionamento de ambientes multi-cloud (AWS, Azure, GCP) com um único comando. Implementou módulos reutilizáveis de Terraform, charts Helm customizados e GitOps com ArgoCD. Sistema escalável demonstrando redução de 70% no tempo de provisionamento manual.
 
 ### Stacks
@@ -119,6 +124,7 @@ Kubernetes | Docker | Linux | Terraform | Prometheus | Grafana | PostgreSQL
 
 - Português: Nativo
 - Inglês: C1
+- Site: https://example.com/certificacao-idioma (opcional — só se quiser linkar o idioma, ex.: certificação)
 - Espanhol: B1
 
 # Conceitos que tenho experiência

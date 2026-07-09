@@ -9,6 +9,7 @@ Linkedin: https://www.linkedin.com/in/marina-oliveira-tech
 # Experiência profissional
 
 ## Arquiteto de Soluções Sênior (01/2022 - Atual) - InnovaLabs
+- Site: https://www.google.com/
 
 ### Introdução
 InnovaLabs é uma consultoria de transformação digital focada em soluções enterprise para setor financeiro e varejo.
@@ -25,6 +26,7 @@ Responsável por arquitetar soluções de alta complexidade para clientes Fortun
 AWS | Azure | Kubernetes | Microserviços | Event-Driven Architecture | CQRS | Apache Kafka | PostgreSQL | Python | Go
 
 ## Tech Lead - Backend (06/2019 - 12/2021) - VelocityPay
+- Site: https://www.google.com/
 
 ### Introdução
 VelocityPay é fintech especializada em pagamentos instantâneos e APIs para PMEs, processando R$ 50M/mês.
@@ -41,6 +43,7 @@ Liderou equipe de 6 backends engineers. Redesenhei arquitetura de processamento 
 Java | Spring Boot | PostgreSQL | Kafka | Redis | Docker | GitLab CI/CD | Grafana | ELK Stack
 
 ## Engenheiro de Software Pleno (11/2016 - 05/2019) - DataFlow Systems
+- Site: https://www.google.com/
 
 ### Introdução
 DataFlow Systems desenvolvia plataforma de integração de dados para empresas de análise de crédito e compliance.
@@ -57,6 +60,7 @@ Atuei no redesenho da plataforma de ETL, implementei pipelines de processamento 
 Python | Java | Apache Spark | Hadoop | AWS S3 | PostgreSQL | Git | Jenkins | SQL avançado
 
 ## Engenheiro de Software Júnior (03/2014 - 10/2016) - Nexus Technology
+- Site: https://www.google.com/
 
 ### Introdução
 Nexus Technology é ISV desenvolvendo soluções de business intelligence para varejo.
@@ -73,6 +77,7 @@ Primeira experiência profissional onde aprendia com mentores sêniors. Desenvol
 SQL Server | Python | Tableau | .NET | C# | TSQL | Subversion
 
 ## Desenvolvedor Full Stack (08/2012 - 02/2014) - StartUp Social Media (Encerrada)
+- Site: https://www.google.com/
 
 ### Introdução
 Startup de rede social brasileira com 50k usuários ativos. Ambiente ágil, product-driven.
@@ -89,6 +94,7 @@ Desenvolvimento de features em todo stack. Implementava APIs REST, desenvolveu f
 PHP | MySQL | jQuery | Bootstrap | REST APIs | Apache | Git
 
 ## Suporte Técnico + Desenvolvedor (06/2009 - 07/2012) - WebHost Brasil
+- Site: https://www.google.com/
 
 ### Introdução
 Empresa de hosting brasileira. Primeiro contato com development operacional.
@@ -107,18 +113,21 @@ Linux | Apache | MySQL | PHP | Bash | cPanel | Postfix
 # Experiência acadêmica
 
 ## Mestrado em Ciência da Computação - UFMG (2010 - 2012)
+- Site: https://www.google.com/
 Foco em arquitetura de sistemas distribuídos. Dissertação sobre otimização de algorithms de consensus em redes peer-to-peer.
 
 ### Stacks
 Distributed Systems | Algorithms | C++ | Java
 
 ## Bacharelado em Ciência da Computação - PUC Minas (2008 - 2012)
+- Site: https://www.google.com/
 Formação clássica em CS com ênfase em engenharia de software.
 
 ### Stacks
 Java | C | Banco de Dados | Engenharia de Software | Estruturas de Dados
 
 ## Pós-Graduação Lato Sensu em Cloud Computing - FIAP (2020 - 2021)
+- Site: https://www.google.com/
 Especialização em arquitetura e design de soluções cloud-native.
 
 ### Stacks
@@ -127,18 +136,21 @@ Cloud Architecture | Microserviços | DevOps | AWS
 # Projetos Pessoais
 
 ## Platform de Monitoramento Open Source (2018 - 2020)
+- Site: https://www.google.com/
 Desenvolveu stack de observabilidade para aplicações distribuídas. 200+ stars no GitHub, comunidade ativa com contribuidores de 5 países.
 
 ### Stacks
 Python | Prometheus | Grafana | Docker | GitHub Actions
 
 ## SaaS de Análise de Performance (2021 - Atual)
+- Site: https://www.google.com/
 Produto pessoal em estágio de MVP para análise em tempo real de performance de APIs. Arquitetura serverless com AWS Lambda.
 
 ### Stacks
 Python | AWS Lambda | DynamoDB | React | TypeScript
 
 ## Livro Técnico "Microserviços na Prática" (2019 - 2021)
+- Site: https://www.google.com/
 Publicado pela Editora Tech Brasil. 5k+ cópias vendidas. Usada como referência em cursos de engenharia.
 
 ### Conteúdo
@@ -153,8 +165,11 @@ Design Patterns | Comunicação entre serviços | Deployments | Observabilidade
 # Idiomas
 
 - Português: Nativo
+- Site: https://www.google.com/
 - Inglês: C1 (conversação com nativos, documentação técnica fluente)
+- Site: https://www.google.com/
 - Espanhol: B1
+- Site: https://www.google.com/
 
 # Conceitos que tenho experiência
 

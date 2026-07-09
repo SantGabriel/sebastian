@@ -9,6 +9,7 @@ Linkedin: https://www.linkedin.com/in/felipe-mendes-dev
 # Experiência profissional
 
 ## Desenvolvedor Backend Sênior (08/2023 - Atual) - Solutions Lab
+- Site: https://www.google.com/
 
 ### Introdução
 Solutions Lab é consultoria especializada em soluções mobile-first para varejo, com clientes em 3 países.
@@ -25,6 +26,7 @@ Promovido a sênior pela performance em projetos anteriores. Responsável por de
 Node.js | Python | FastAPI | PostgreSQL | Redis | Docker | AWS | Monitoring basics
 
 ## Desenvolvedor Full Stack (11/2021 - 07/2023) - ByteWeb Studio
+- Site: https://www.google.com/
 
 ### Introdução
 ByteWeb Studio era agência web com 20 pessoas focada em e-commerce e sites corporativos.
@@ -41,6 +43,7 @@ Trabalhava em todo o stack de projetos Web. Frontend com React/Vue, backend com 
 JavaScript | React | Vue | Node.js | Python | PostgreSQL | MongoDB | CSS/SCSS | Git
 
 ## Desenvolvedor Web Júnior (03/2020 - 10/2021) - Agência Digital Nova Era
+- Site: https://www.google.com/
 
 ### Introdução
 Primeira experiência profissional em agência digital pequena (8 pessoas) criando sites corporativos e landing pages.
@@ -59,12 +62,14 @@ HTML | CSS | JavaScript | PHP | WordPress | MySQL | jQuery | Apache
 # Projetos Pessoais
 
 ## API de Rastreamento de Pedidos para E-commerce (2023 - Atual)
+- Site: https://www.google.com/
 API REST em Node.js com webhooks para notificações em tempo real. Usada por 2 clientes reais da ByteWeb que me contrataram diretamente. Código aberto no GitHub.
 
 ### Stacks
 Node.js | Express | PostgreSQL | Redis | Docker | GitHub Actions
 
 ## CLI de Migração de Banco de Dados (2022 - 2023)
+- Site: https://www.google.com/
 Ferramenta de linha de comando para automatizar migrações de MySQL para PostgreSQL, com validação de schema e rollback automático. Usada internamente na ByteWeb para acelerar projetos de migração.
 
 ### Stacks
@@ -73,6 +78,7 @@ Python | SQLAlchemy | Click | PostgreSQL | MySQL | Docker
 # Experiência acadêmica
 
 ## Ensino Médio Completo - Colégio Estadual do Paraná (2017 - 2019)
+- Site: https://www.google.com/
 
 # Certificações
 
@@ -85,7 +91,9 @@ Python | SQLAlchemy | Click | PostgreSQL | MySQL | Docker
 # Idiomas
 
 - Português: Nativo
+- Site: https://www.google.com/
 - Inglês: B2 (conversação fluente, documentação técnica confortável)
+- Site: https://www.google.com/
 
 # Conceitos que tenho experiência
 

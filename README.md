@@ -156,7 +156,7 @@ npm start
 ## 2) Informações que você precisa fornecer
 
 ### Dados pessoais
-Abra este diretório na sua ferramenta de agente de IA e inicie a conversa — por exemplo: **"Olá Sebastian, vamos começar"**. Na primeira vez, ele vai te perguntar alguns dados pessoais importantes para colocar no currículo (nome, contato, localização). Você pode pedir ao agente para atualizar esses dados a qualquer momento.
+Abra este diretório na sua ferramenta de agente de IA e inicie a conversa — por exemplo: **"Olá Sebastian, vamos começar"**. Na primeira vez, ele vai te perguntar alguns dados pessoais importantes para colocar no currículo (nome, contato, localização, portfólio). O campo `portfolio` aceita tanto um site pessoal quanto um link de repositórios (GitHub, GitLab, etc). Você pode pedir ao agente para atualizar esses dados a qualquer momento.
 
 ### [ai/skills/cv-base/SKILL.md](ai/skills/cv-base/SKILL.md)
 Base de experiência do candidato (fonte de verdade).
@@ -178,6 +178,7 @@ Dicas:
 6. Site integrações que você fez como: gateway de pagamento, serviços de nuvem, distribuidores, sistemas do governo.
 7. Projetos pessoais (opcional): se tiver, informe nome, período, stack e uma descrição. O Sebastian vai gerar uma seção "Projetos Pessoais" no CV quando houver projetos relevantes para a vaga.
 8. Certificações (opcional): se tiver, informe nome, instituição emissora, link e ano. O Sebastian vai gerar uma seção "Certificações" no CV quando houver certificados relevantes para a vaga.
+9. Site (opcional): se uma experiência, formação, projeto, certificação ou idioma tiver um site (empresa, universidade, repositório, certificado), adicione uma linha `- Site: URL` logo abaixo do heading daquele item. O Sebastian transforma isso automaticamente num link clicável no nome dessa entrada no CV gerado. Veja o formato exato no [CV base template](ai/skills/cv-base/SKILL.md.example).
 
 ### [ai/skills/contexto/SKILL.md](ai/skills/contexto/SKILL.md)
 Aqui são você pode dar contexto para o Sebastian e definir regras do que preencher em algumas situações e como dele deve agir. Sinta-se livre para colocar aqui o que quiser!
