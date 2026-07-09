@@ -5,30 +5,30 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 
 # Mapa de arquivos do sistema
 
-| Arquivo                                | Papel                                                                       |
-|----------------------------------------|-----------------------------------------------------------------------------|
-| `vagas.txt`                            | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição            |
-| `src/json/jobs-data.js`                | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga             |
-| `src/json/candidate-data.js`           | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, localização) |
-| `src/json/generic-cv-data.js`          | Dados gerados/atualizados pelo agente para o CV genêrico                    |
-| `src/interfaces/job-data.d.ts`         | **Fonte de verdade da forma** dos dados (Job, CV, CL, Fit, Gap, etc.)       |
-| `index.html`                           | Dashboard com fits e links CV/CL por vaga                                   |
-| `CLAUDE.md`                            | Syslink do AGENTS.md - Não alterar                                          |
-| `src/pages/cv.html`                    | Template de CV — renderiza via `?job=id`                                    |
-| `src/pages/cl.html`                    | Template de CL — renderiza via `?job=id`                                    |
-| `src/js/index.js`                      | Lógica de renderização do dashboard                                         |
-| `src/js/cv.js`                         | Lógica de renderização do CV                                                |
-| `src/js/cl.js`                         | Lógica de renderização da CL                                                |
-| `src/js/pdf.js`                        | Geração de PDF para download                                                |
-| `ai/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização               |
-| `ai/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                         |
-| `ai/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                 |
-| `ai/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                     |
-| `ai/agents/agent-fit.md`               | Agente especializado em análise de fit                                      |
-| `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                       |
-| `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                       |
-| `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                            |
-| `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                   |
+| Arquivo                                | Papel                                                                                  |
+|----------------------------------------|----------------------------------------------------------------------------------------|
+| `vagas.txt`                            | Vagas separadas por `-----`, com Empresa, Vaga, Tipo e descrição                       |
+| `src/json/jobs-data.js`                | Dados gerados/atualizados pelo agente para o CV/CL de cada vaga                        |
+| `src/json/candidate-data.js`           | Dados pessoais do candidato (nome, e-mail, telefone, LinkedIn, portfólio, localização) |
+| `src/json/generic-cv-data.js`          | Dados gerados/atualizados pelo agente para o CV genêrico                               |
+| `src/interfaces/job-data.d.ts`         | **Fonte de verdade da forma** dos dados (Job, CV, CL, Fit, Gap, etc.)                  |
+| `index.html`                           | Dashboard com fits e links CV/CL por vaga                                              |
+| `CLAUDE.md`                            | Syslink do AGENTS.md - Não alterar                                                     |
+| `src/pages/cv.html`                    | Template de CV — renderiza via `?job=id`                                               |
+| `src/pages/cl.html`                    | Template de CL — renderiza via `?job=id`                                               |
+| `src/js/index.js`                      | Lógica de renderização do dashboard                                                    |
+| `src/js/cv.js`                         | Lógica de renderização do CV                                                           |
+| `src/js/cl.js`                         | Lógica de renderização da CL                                                           |
+| `src/js/pdf.js`                        | Geração de PDF para download                                                           |
+| `ai/skills/cv-base/SKILL.md`           | Fonte de verdade do candidato — nunca alterar sem autorização                          |
+| `ai/skills/contexto/SKILL.md`          | Instruções específicas do candidato                                                    |
+| `ai/skills/boas-praticas-ats/SKILL.md` | Boas práticas ATS genéricas                                                            |
+| `ai/skills/iniciar-projeto/SKILL.md`   | Onboarding — configura o projeto para um novo candidato                                |
+| `ai/agents/agent-fit.md`               | Agente especializado em análise de fit                                                 |
+| `ai/agents/agent-cv.md`                | Agente especializado em geração de CV                                                  |
+| `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                  |
+| `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                       |
+| `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                              |
 
 ---
 
@@ -36,7 +36,7 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticamente o Passo 0.
 
 ## Passo 0 — Validação inicial
-**A primeira coisa a se fazer ao abrir uma sessão é** ler o arquivo `src/json/candidate-data.js`. Se não existir ou estiver sem os dados, siga as instruções em `ai/skills/iniciar-projeto/SKILL.md`.
+**A primeira coisa a se fazer ao abrir uma sessão é** seguir as instruções `ai/skills/iniciar-projeto/SKILL.md`. Ele serve para validar se todos os arquivos necessários para o Sebastian funcionar existem e estão preenchidos. Se algum estiver pendente, siga as instruções dessa skill apenas para os arquivos pendentes — os já preenchidos não devem ser sobrescritos nem repreguntados.
 
 ## Passo 1 — Perguntas de clarificação (por vaga)
 - Leia `ai/skills/cv-base/SKILL.md`, `ai/skills/contexto/SKILL.md`

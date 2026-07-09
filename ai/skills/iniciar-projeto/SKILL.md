@@ -4,40 +4,59 @@ description: Aqui vamos iniciar o projeto com os dados básicos do candidato com
 ---
 
 # Gatilho
-Inicie essa skill se o [candidate-data.js](../../../src/json/candidate-data.js) não existir ou estiver vazio.
+Inicie essa skill se **qualquer um** dos arquivos da tabela abaixo não existir ou pendente.
 
-Se o arquivo não existir ou estiver vazio, rode os comandos abaixo:
+| Arquivo                        | Copiar de                             | Vazio/pendente quando                         |
+|--------------------------------|---------------------------------------|-----------------------------------------------|
+| `src/json/candidate-data.js`   | `src/json/candidate-data.js.example`  | não existe OU conteúdo idêntico ao `.example` |
+| `ai/skills/cv-base/SKILL.md`   | `ai/skills/cv-base/SKILL.md.example`  | não existe OU conteúdo idêntico ao `.example` |
+| `ai/skills/contexto/SKILL.md`  | `ai/skills/contexto/SKILL.md.example` | não existe                                    |
+| `src/json/generic-cv-data.js`  | `src/json/generic-cv-data.js.example` | não existe                                    |
+| `src/json/jobs-data.js`        | `src/json/jobs-data.js.example`       | não existe                                    |
+| `vagas.txt`                    | `vagas.txt.example`                   | não existe                                    |
+| `insights.md`                  | `insights.md.example`                 | não existe                                    |
+
+## Passo 1 — Copiar somente o que falta
+Rode o comando inteiro abaixo para criar os arquivos que faltam
+
 ```bash
-cp src/json/candidate-data.js.example src/json/candidate-data.js
-cp src/json/generic-cv-data.js.example src/json/generic-cv-data.js
-cp src/json/jobs-data.js.example src/json/jobs-data.js
-cp vagas.txt.example vagas.txt
-cp insights.md.example insights.md
-cp ai/skills/cv-base/SKILL.md.example ai/skills/cv-base/SKILL.md
-cp ai/skills/contexto/SKILL.md.example ai/skills/contexto/SKILL.md
+[ -f src/json/candidate-data.js ] || cp src/json/candidate-data.js.example src/json/candidate-data.js
+[ -f src/json/generic-cv-data.js ] || cp src/json/generic-cv-data.js.example src/json/generic-cv-data.js
+[ -f src/json/jobs-data.js ] || cp src/json/jobs-data.js.example src/json/jobs-data.js
+[ -f vagas.txt ] || cp vagas.txt.example vagas.txt
+[ -f insights.md ] || cp insights.md.example insights.md
+[ -f ai/skills/cv-base/SKILL.md ] || cp ai/skills/cv-base/SKILL.md.example ai/skills/cv-base/SKILL.md
+[ -f ai/skills/contexto/SKILL.md ] || cp ai/skills/contexto/SKILL.md.example ai/skills/contexto/SKILL.md
 ```
 
-1. Pergunte ao candidato:
+## Passo 2 — Preencher somente o que está pendente
+Pergunte ao candidato **apenas** sobre os arquivos marcados como pendentes no diagnóstico. Não repita perguntas sobre o que já está preenchido.
+
+### candidate-data.js
+1. Pergunte os dados que faltam:
    - Nome
    - País do candidato
    - Cidade e estado/provincia/distrito: cidade - UF
      - Mostrar Exemplo: Belo Horizonte - MG
    - Email
-   - Link do LinkedIn
-   - Código de telefone do país
+   - Link do LinkedIn (opcional)
+   - Link do portfólio — site pessoal ou repositório como GitHub/GitLab (opcional)
+   - Código de telefone do país (opcional)
      - Informar que Brasil é +55
-   - Telefone de contato
+   - Telefone de contato (opcional)
      - Mostrar Exemplo: 11 99999-9999
 
-2. Com esses dados, preencha o `src/json/candidate-data.js`
+2. Com esses dados, preencha o `src/json/candidate-data.js`:
    - `name`: nome do candidato
    - `phoneCountryCode`: código do país (ex: +55)
    - `phone`: número do telefone
    - `email`: email do candidato
-   - `linkedin.url`: link do LinkedIn
-   - Em location
-     - pt: cidade - estado
-     - en: city - country
+   - `linkedin`: link do LinkedIn
+   - `portfolio`: link do portfólio (pode ser site pessoal ou GitHub/GitLab)
+   - Em `location`
+     - `pt`: cidade - estado
+     - `en`: city - country
 
-3. Peça o candidato para preencher o [CV base](../cv-base/SKILL.md).
-4. Oriente ele a ler o [README.md - ai/skills/cv-base/SKILL.md](../../../README.md#aiskillscv-baseskillmd)
+### [CV base](../cv-base/SKILL.md)
+- Peça o candidato para preencher o [CV base](../cv-base/SKILL.md).
+- Oriente ele a ler o [README.md - ai/skills/cv-base/SKILL.md](../../../README.md#aiskillscv-baseskillmd)

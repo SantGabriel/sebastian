@@ -90,6 +90,7 @@ function render() {
   const candidatePhone = CANDIDATE_DATA.phone;
   const candidatePhoneCountryCode = CANDIDATE_DATA.phoneCountryCode;
   const candidateLinkedin = CANDIDATE_DATA.linkedin;
+  const candidatePortfolio = CANDIDATE_DATA.portfolio;
 
   document.documentElement.lang = job.lang;
 
@@ -116,6 +117,8 @@ function render() {
     ? `<a href="mailto:${CANDIDATE_DATA.email}"><i class="fa-solid fa-envelope"></i> ${CANDIDATE_DATA.email}</a>` : '';
   const linkedinHtml = candidateLinkedin
     ? `<a href="${candidateLinkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${candidateLinkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
+  const portfolioHtml = candidatePortfolio
+    ? `<a href="${candidatePortfolio}" target="_blank"><i class="fa-solid fa-globe"></i> ${candidatePortfolio.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
   const locationHtml = vagaLocation
     ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
@@ -168,6 +171,7 @@ function render() {
       ${phoneHtml}
       ${emailHtml}
       ${linkedinHtml}
+      ${portfolioHtml}
     </div>
 
     <h2>${secResumo}</h2>

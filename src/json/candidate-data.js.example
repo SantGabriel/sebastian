@@ -6,6 +6,7 @@ export const CANDIDATE_DATA = {
   phone: "",
   email: "",
   linkedin: "",
+  portfolio: "",
   location: {
     pt: "",
     en: ""

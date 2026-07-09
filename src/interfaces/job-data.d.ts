@@ -111,9 +111,11 @@ export interface Job {
 /** Dados pessoais do candidato (src/json/candidate-data.js). */
 export interface CandidateData {
   name: string;
-  phoneCountryCode: string;
-  phone: string;
+  phoneCountryCode?: string;
+  phone?: string;
   email: string;
-  linkedin: string;
+  linkedin?: string;
+  /** URL do portfólio — pode ser um site pessoal ou link de repositórios (GitHub, GitLab, etc). */
+  portfolio?: string;
   location: { pt: string; en: string };
 }
