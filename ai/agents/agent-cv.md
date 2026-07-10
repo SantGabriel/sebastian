@@ -107,34 +107,51 @@ Leia o `src/json/candidate-data.js` para obter os valores de `location.pt` e `lo
 
 ## Links de Site (toda entrada com "- Site: URL" no cv-base)
 
-Sempre que uma experiência, formação acadêmica, idioma, certificação ou projeto pessoal tiver uma linha `- Site: URL` logo abaixo do heading no `ai/skills/cv-base/SKILL.md`, o CV gerado deve linkar essa entrada para essa URL. Use exatamente a URL informada naquela seção — não generalize para outra página do mesmo site. Se uma entrada **não** tiver linha "- Site:", não invente URL: deixe o campo como texto puro, sem link.
+Sempre que uma experiência, formação acadêmica, idioma, certificação ou projeto pessoal tiver uma linha `- Site: URL` logo abaixo do heading no `ai/skills/cv-base/SKILL.md`, preencha o campo `url` daquela entrada com essa URL. Use exatamente a URL informada naquela seção — não generalize para outra página do mesmo site. Se uma entrada **não** tiver linha "- Site:", **não invente URL**: omita o campo `url` (ou deixe `undefined`) e o campo de texto fica puro, sem link.
 
-**Sem a cor `--brand`** no texto — links no corpo do CV usam a classe CSS `link-plain` (definida em `src/styles/cv.css`: `color: var(--text); text-decoration: underline;`), a mesma cor do texto ao redor, só sublinhado. `--brand` fica reservado só para elementos estruturais (`h2`, borda do header, pills de skill) e para os links do header (telefone/e-mail/LinkedIn, via `.contact-line a`) — usá-lo em todo link de corpo (empresa, instituição, projeto, idioma) deixa o CV colorido demais e dilui o destaque da cor.
+**Nunca monte a tag `<a>` ou `class="link-plain"` manualmente nos dados.** Isso é responsabilidade exclusiva do `cv.js`: sempre que o campo `url` da entrada estiver preenchido, o código já envolve o texto correspondente num `<a href="${url}" target="_blank" class="link-plain">` automaticamente. Sua única tarefa aqui é preencher o campo `url` (texto puro) — nunca HTML dentro de `empresa`, `inst`, `nome` ou `idioma`.
 
-O indicador de link é só o **sublinhado** — sem ícone. **Nunca use `style` inline** — sempre `class="link-plain"`. A regra de print em `cv.css` está restrita a `.contact-line a`, então não sobrescreve essa classe no PDF.
+**Sem a cor `--brand`** no texto — a classe `link-plain` (definida em `src/styles/cv.css`: `color: var(--text); text-decoration: underline;`) usa a mesma cor do texto ao redor, só sublinhado. `--brand` fica reservado só para elementos estruturais (`h2`, borda do header, pills de skill) e para os links do header (telefone/e-mail/LinkedIn/portfólio, via `.contact-line a`) — usá-lo em todo link de corpo (empresa, instituição, projeto, certificação, idioma) deixa o CV colorido demais e dilui o destaque da cor.
 
-- **Experiência profissional**: o link cobre **apenas o nome da empresa** (não o cargo). A interface `Experience` já tem campo `url` — preencha com o link do "Site:" e formate `empresa` assim:
-  ```js
-  empresa: "<span class=\"link-plain\">Quero Passagem</span>",
-  url: "https://queropassagem.com.br/",
-  ```
-  O `cv.js` já envolve `empresa` num `<a href="${url}">` quando `url` está preenchido — não adicione a tag `<a>` manualmente aqui.
+O indicador de link é só o **sublinhado** — sem ícone. A regra de print em `cv.css` não sobrescreve `link-plain`, então o sublinhado aparece igual na tela e no PDF.
 
-- **Formação acadêmica**: o link cobre **apenas o nome da instituição** (não o curso). A interface `Education` **não tem** campo `url` — monte o link manualmente dentro do próprio campo `inst`:
-  ```js
-  { curso: "Engenharia de Computação", inst: "<a href=\"https://www.cefetmg.br/\" target=\"_blank\" class=\"link-plain\">CEFET/MG, Campus Timóteo</a>", periodo: "2016 - 2022", stack: "..." }
-  ```
+Todas as interfaces (`Experience`, `Education`, `Project`, `Certificate`, `Language`) têm campo `url?: string` opcional. Preencha só o texto do campo indicado:
 
-- **Certificações e projetos pessoais**: o link cobre **o título inteiro** (`cert.nome` ou `proj.nome`). Ambas as interfaces já têm campo `url` — preencha com o link do "Site:"/repositório e formate o nome assim:
-  ```js
-  nome: "<span class=\"link-plain\">Sebastian - Orquestrador de Currículos ATS com IA</span>",
-  url: "https://github.com/usuario/sebastian",
-  ```
+- **Experiência profissional**: o link cobre **apenas o nome da empresa** (não o cargo). Preencha `empresa` com texto puro e `url` com o link do "Site:":
+```json
+{
+  "empresa": "Quero Passagem",
+  "url": "https://queropassagem.com.br/"
+}
+  
+```
 
-- **Idiomas**: o link cobre **apenas o nome do idioma** (não o nível). `cv.idiomas` é `string[]` sem campo `url` — a seção `# Idiomas` do cv-base normalmente **não** tem linha "- Site:" (nesse caso, deixe o idioma como texto puro). Se houver, monte o link manualmente:
-  ```js
-  idiomas: ["<a href=\"URL\" target=\"_blank\" class=\"link-plain\">Inglês</a> - Avançado"]
-  ```
+- **Formação acadêmica**: o link cobre **apenas o nome da instituição** (não o curso). Preencha `inst` com texto puro e `url` separado:
+```json
+{
+  "curso": "Engenharia de Computação",
+  "inst": "CEFET/MG, Campus Timóteo",
+  "url": "https://www.cefetmg.br/",
+  "periodo": "2016 - 2022",
+  "stack": "..."
+}
+```
+
+- **Certificações e projetos pessoais**: o link cobre **o título inteiro** (`cert.nome` ou `proj.nome`). Preencha o nome com texto puro e `url` com o link do "Site:"/repositório:
+```json
+{
+  "nome": "Sebastian - Orquestrador de Currículos ATS com IA",
+  "url": "https://github.com/usuario/sebastian"
+}
+```
+
+- **Idiomas**: o link cobre **apenas o nome do idioma** (não o nível). `cv.idiomas` é `Language[]` (`{ idioma: string, url?: string }`) — a seção `# Idiomas` do cv-base normalmente **não** tem linha "- Site:" (nesse caso, omita `url`). Se houver, preencha:
+```json
+{
+  "idioma": "Inglês - Avançado",
+  "url": "https://certificado-url"
+}
+```
 
 ## Estrutura do objeto `cv` em `src/json/jobs-data.js`
 

@@ -122,46 +122,61 @@ function render() {
   const locationHtml = vagaLocation
     ? `<span><i class="fa-solid fa-location-dot"></i> ${vagaLocation}</span>` : '';
 
-  const expHtml = cv.experiencias.map(exp => `
+  const expHtml = cv.experiencias.map(exp => {
+    let empresaTitulo = exp.url ? ` - <a href="${exp.url}" target="_blank" class="link-plain">${exp.empresa}</a>` : ` - ${exp.empresa}`
+    return `
     <div class="job-header">
-      <h3>${exp.cargo}${exp.url ? ` - <a href="${exp.url}" target="_blank">${exp.empresa}</a>` : ` - ${exp.empresa}`}</h3>
+      <h3>${exp.cargo}${empresaTitulo}</h3>
       <span class="date">${exp.inicio} - ${exp.fim}</span>
     </div>
     <p class="stack">${exp.stack}</p>
     <ul>${exp.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
-  `).join('');
+  `
+  }).join('');
 
   const skillsHtml = cv.skills.map(s => `<span class="pill">${s}</span>`).join('');
 
-  const eduHtml = cv.educacao.map(e => `
+  const eduHtml = cv.educacao.map(e => {
+    let instTitulo = e.url ? `<a href="${e.url}" target="_blank" class="link-plain">${e.inst}</a>` : e.inst
+    return `
     <div class="edu-item">
       <div class="edu-header">
-        <h3>${e.curso} - ${e.inst}</h3>
+        <h3>${e.curso} - ${instTitulo}</h3>
         <span class="date">${e.periodo}</span>
       </div>
       <p class="stack">${e.stack}</p>
     </div>
-  `).join('');
+  `
+  }).join('');
 
-  const idiomasHtml = cv.idiomas.map(i => `<li>${i}</li>`).join('');
+  const idiomasHtml = cv.idiomas.map(i => {
+    let idiomaTitulo = i.url ? `<a href="${i.url}" target="_blank" class="link-plain">${i.idioma}</a>` : i.idioma
+    return `<li>${idiomaTitulo}</li>`
+  }).join('');
 
-  const projHtml = (cv.projetos || []).map(proj => `
+  const projHtml = (cv.projetos || []).map(proj => {
+    let nomeTitulo = proj.url ? `<a href="${proj.url}" target="_blank" class="link-plain">${proj.nome}</a>` : proj.nome
+    return `
     <div class="project-item">
       <div class="job-header">
-        <h3>${proj.url ? `<a href="${proj.url}" target="_blank">${proj.nome}</a>` : proj.nome}</h3>
+        <h3>${nomeTitulo}</h3>
         <span class="date">${proj.periodo}</span>
       </div>
       <p class="stack">${proj.stack}</p>
       <p>${proj.descricao}</p>
     </div>
-  `).join('');
+  `
+  }).join('');
 
-  const certHtml = (cv.certificados || []).map(cert => `
+  const certHtml = (cv.certificados || []).map(cert => {
+    let nomeTitulo = cert.url ? `<a href="${cert.url}" target="_blank" class="link-plain">${cert.nome}</a>` : cert.nome
+    return `
     <li class="cert-item">
-      <span><strong>${cert.url ? `<a href="${cert.url}" target="_blank">${cert.nome}</a>` : cert.nome}</strong></span>
+      <span><strong>${nomeTitulo}</strong></span>
       <span class="date">${cert.periodo}</span>
     </li>
-  `).join('');
+  `
+  }).join('');
 
   root.innerHTML = `
     <h1>${candidateName}</h1>

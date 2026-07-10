@@ -23,6 +23,7 @@ export interface Experience {
 export interface Education {
   curso: string;
   inst: string;
+  url?: string;
   periodo: string;
   stack: string;
 }
@@ -41,6 +42,11 @@ export interface Certificate {
   periodo: string;
 }
 
+export interface Language {
+  idioma: string;
+  url?: string;
+}
+
 export interface CV {
   authorized?: boolean;
   /** Localização específica do CV; quando ausente, usa a do candidato. */
@@ -53,7 +59,7 @@ export interface CV {
   skills: string[];
   educacao: Education[];
   certificados?: Certificate[];
-  idiomas: string[];
+  idiomas: Language[];
 }
 
 export interface CL {
