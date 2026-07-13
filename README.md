@@ -56,17 +56,21 @@ Você tem tido a sensação de que as respostas das vagas parecem automatizadas 
 
 Algumas empresas ou plataformas de vagas onde você costuma se candidatar usam ATSs (*Applicant Tracking Systems*) que automatiza processos do recrutamento e ajuda a filtrar os currículos (seja com ou sem IA) e é aqui onde a maioria dos candidatos é "eliminado" da vaga.
 
-O Sebastian ajuda a gerar CVs e CLs legíveis para esses sistemas, aumentando suas chances de ser chamado para uma entrevista, identificando essas palavras-chave e incluíndo no seu CV/CL, tornando-o mais personalizado.
+O Sebastian ajuda a gerar CVs e CLs legíveis para esses sistemas, aumentando suas chances de ser chamado para uma entrevista, identificando as palavras-chave da vaga e incluíndo no seu CV/CL, tornando-o mais personalizado.
 
 # Sobre os ATS e AI match - Você acha que sabe o que é, mas provavelmente não sabe.
 
-Diferente do que muitos candidatos acreditam, o ATS não é uma ferramenta de IA para filtrar currículos, ele muito mais que isso! Às vezes até sem IA envolvida. O ATS é uma solução completa que as empresas contratam para gerenciar o processo de recrutamento e seleção do início ao fim. Ele ajuda a organizar o processo de recrutamento, desde a publicação da vaga até a contratação do candidato, incluindo triagem de currículos, agendamento de entrevistas, comunicação com os candidatos, escolher quais plataformas a vaga será divulgada, agendamento de abertura de vagas. Hoje, as plataformas de vagas onde você costuma se candidatar, elas não são só anunciantes de vagas, mas sim uma solução de ATS que as empresas contratam.
+Diferente do que muitos candidatos acreditam, o ATS não é uma ferramenta de IA para filtrar currículos, ele muito mais que isso! Às vezes até sem IA envolvida. 
+
+O ATS é uma solução completa que as empresas contratam para gerenciar o processo de recrutamento e seleção do início ao fim. Ele ajuda a organizar o processo de recrutamento, desde a publicação da vaga até a contratação do candidato, incluindo triagem de currículos, agendamento de entrevistas, comunicação com os candidatos, escolher quais plataformas a vaga será divulgada, agendamento de abertura de vagas. Hoje, as plataformas de vagas onde você costuma se candidatar, elas não são só anunciantes de vagas, mas sim uma solução de ATS que as empresas contratam.
 
 Esses ATS permitem usar filtros, por exemplo, palavras-chave. Alguns deles inclusive ranqueia os candidatos e os currículos que não atendem aos critérios do ATS terá uma nota baixa. Os filtros e os ranques podem fazer o seu CV ficar "invisível" para o recrutador, te eliminando indiretamente, mesmo que você seja um candidato qualificado. 
 
 Os principais motivos do uso dessas soluções são: plataforma unificada para gerenciar todas as vagas, análise de dados das candidaturas (tempo de contratação, taxa de conversão, NPS do processo), processos automatizados de comunicação e abertura de vagas e **o que mais impacta os candidatos**, filtrar o grande volume de candidatos que se candidatam para uma vaga. Não é incomum no Linkedin, por exemplo, você encontrar vagas com **centenas** de candidatos. O ATS ajuda a filtrar esses currículos e escolhê-los para uma próxima etapa de avaliação "manual", com, por exemplo, 20 candidatos apenas.
 
-Alguns ATS podem ter ou não um AI match embutido, que ajuda a filtrar os currículos. Quando não tem, o ATS apenas filtra os currículos com base em critérios objetivos, como palavras-chave, experiência e formação, de forma bem manual, de tal forma que se no seu currículo estiver "Back-end" e o recrutador filtrar por "Backend", pode ser que você fique fora da busca. Quando tem, ele vai além e tenta entender o contexto do currículo e da vaga para determinar se o candidato é adequado para a vaga, mas ainda assim, seu currículo tem que estar mais adaptado para a vaga.
+Alguns ATS podem ter ou não um AI match embutido, que ajuda a filtrar os currículos. Quando não tem, o ATS apenas filtra os currículos com base em critérios objetivos, como palavras-chave, experiência e formação, de forma bem manual, de tal forma que se no seu currículo estiver "Fullstack" e o recrutador filtrar por "Backend", pode ser que você fique fora da busca, mesmo que fullstack implique que você sabe Backend.
+
+Quando tem IA, ele vai além e tenta entender o contexto do currículo e da vaga para determinar se o candidato é adequado para a vaga, mas ainda assim, seu currículo tem que estar mais adaptado a ela, usando as possíveis palavras-chave da vaga.
 
 Exemplo de plataformas de vagas conhecidas que usam ATS com filtros e/ou AI match:
 
