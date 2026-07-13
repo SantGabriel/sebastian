@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001/pdf';
+const BASE_URL = `${window.location.origin}/pdf`;
 
 /**
  * Monta a URL do endpoint de PDF e dispara o download.
@@ -32,7 +32,10 @@ export function gerarPDF({ job, doc = 'cv', isGeneric, candidate, vaga, empresa,
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = document.title.replace(' | ', ' - ') + '.pdf';
+      const coverLetterTxt = doc === 'cl' ? ' - Cover Letter' : '';
+      const nameParts = [candidateName, vaga, empresa, coverLetterTxt].filter(Boolean);
+      const filename = nameParts.join(' - ');
+      a.download = filename + '.pdf';
       a.click();
       URL.revokeObjectURL(url);
     })
