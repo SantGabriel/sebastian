@@ -21,9 +21,8 @@ describe('CL Estrutura', () => {
     expect(textLength).toBeGreaterThanOrEqual(800);
     expect(textLength).toBeLessThanOrEqual(1500);
   });
-  eachOrSkip(jobList)('Entre 2 a 3 parágrafos (Job "$id")', ({id, cl}) => {
+  eachOrSkip(jobList)('Mínimo de 3 parágrafos (Job "$id")', ({id, cl}) => {
 
-    expect(cl.paragrafos.length).toBeGreaterThanOrEqual(2);
-    expect(cl.paragrafos.length).toBeLessThanOrEqual(3);
+    expect(cl.paragrafos.length).toBeGreaterThanOrEqual(3);
   });
 });

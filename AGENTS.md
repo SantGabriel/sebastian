@@ -52,14 +52,35 @@ Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticame
 - Você não deve abrir os links fornecidos para obter dados. Eles apenas serão apenas informados no index.html
 
 ## Passo 3 — Autorização
-- Aguarde o usuário pedir para gerar os CV e/ou CL:
-    - Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
-    - Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções
+- Aguarde o usuário pedir para gerar os CV e/ou CL
 - O usuário pode pedir para tirar alguma vaga da lista baseado no fit gerado. Quando isso acontecer você deve:
   - remover a vaga do `src/json/jobs-data.js` e refazer o index de cada vaga
   - remover a vaga do `vagas.txt`
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
+
+## Passo 4 - Geração de CV/CL
+Para gerar CV/CL, você deve seguir esses passos
+
+1. Leia `ai/skills/boas-praticas-ats/SKILL.md` e `ai/skills/contexto/SKILL.md`
+2. **Baseie tudo no `ai/skills/cv-base/SKILL.md`**
+3. **Nunca inventar experiências não documentadas**
+4. Nunca afirme "experiência sólida" em algo sem histórico profissional real
+5. Nunca afirme saber ou ter aplicado algo que não esteja no `ai/skills/cv-base/SKILL.md` apenas satisfazer a vaga
+6. Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
+7. Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
+8. Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei
+9. Evite resumos genéricos
+    ❌ Errado — genérico, vago:
+    > "Desenvolvimento em sistema de alto tráfego"
+
+    ✅ Correto — específico, contextual:
+    > "Mantive e aprimorei sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
+
+Regras específicas para CV e CL:
+   - Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
+   - Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções 
+
 
 ## Fim do fluxo
 

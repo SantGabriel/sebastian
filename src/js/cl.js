@@ -54,7 +54,7 @@ if (!jobId || !job) {
     document.getElementById('page-title').textContent = `${jobTarget} | ${name} | Cover Letter`;
 
     const vagaLabel = job.vaga;
-    pdfMeta = { vaga: vagaLabel, empresa: job.empresa || 'Não informado', candidateName: name };
+    pdfMeta = { vaga: vagaLabel, empresa: job.empresa, candidateName: name };
 
     const paragrafosHtml = (cl.paragrafos).map(p => `<p>${p}</p>`).join('');
     const applicationLabel = isEN ? 'Application' : 'Candidatura';

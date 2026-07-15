@@ -109,7 +109,7 @@ function render() {
 
   document.getElementById('page-title').textContent = [job.vaga, job.empresa].filter(Boolean).join(' - ') + ` | ${candidateName}`;
 
-  pdfMeta = { vaga: job.vaga, empresa: job.empresa || 'Não informado', candidateName };
+  pdfMeta = { vaga: job.vaga, empresa: job.empresa, candidateName };
 
   const phoneHtml = candidatePhone
     ? `<a href="tel:${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(candidatePhone, candidatePhoneCountryCode)}</a>` : '';

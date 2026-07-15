@@ -10,22 +10,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 - Gere um CV por vez seguindo tais regras. Quando entender que ele estiver pronto, siga para gerar o próximo CV.
 
 ### Geral
-1. Leia `ai/skills/boas-praticas-ats/SKILL.md` e `ai/skills/contexto/SKILL.md`
-2. **Baseie tudo no `ai/skills/cv-base/SKILL.md`**
-3. **Nunca inventar experiências não documentadas**
-4. Priorize experiência profissional; experiências pessoais/acadêmicas só se úteis para o ATS
-5. Nunca afirme "experiência sólida" em algo sem histórico profissional real
-6. Nunca afirme saber ou ter aplicado algo que não esteja no `ai/skills/cv-base/SKILL.md` apenas satisfazer a vaga
-7. Incluir o contexto do sistema/produto (qual era o sistema, para quem era, qual era o objetivo)
-8. Incluir resultados com números quando disponíveis (ex: "reduzindo tempo de resposta em 90%", "aumentando ticket médio em 20%")
-9. Verbos fortes na 1ª pessoa do passado: Liderei, Realizei, Apliquei, Criei, Integrei, Otimizei, Documentei, Atuei, Escalei 
-10. Evite resumos genéricos
-    ❌ Errado — genérico, vago:
-    > "Desenvolvimento em sistema de alto tráfego"
-    
-    ✅ Correto — específico, contextual:
-    > "Manteve e aprimorou sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
-11. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
+1. Destaque alguns termos no CV em negrito que sejam relevantes para a vaga. Especialmente os mais repetidos
     1. Tem que ter 8 a 15 itens em negrito (usando <strong>) no CV:
        1. 3 a 5 no [Resumo profissional](#resumo-profissional);
        2. 5 a 10 nos bullets de [Experiência Profissional](#experiência-profissional)
@@ -35,8 +20,8 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
     4. Use negrito para destacar tecnologias, cargos, resultados.
     5. Jamais destaque preposições, artigos ou frases inteiras e verbos de ação.
     6. Cuidado para não cortar palavras ou expressões.
-12. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
-13. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
+2. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
+3. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
 
 ### Resumo profissional
 1. Deve ser um parágrafo de 400 - 500 caracteres
