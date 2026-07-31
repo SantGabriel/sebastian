@@ -22,6 +22,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
     6. Cuidado para não cortar palavras ou expressões.
 2. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
 3. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
+4. Identifique palavras/frases-chave de cada vaga e monte frases com elas em sua respectiva vaga
 
 ### Resumo profissional
 1. Deve ser um parágrafo de 400 - 500 caracteres
@@ -32,7 +33,7 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 ### Experiência Profissional
 1. A soma dos bullets de todas as experiências **detalhadas** deve ter entre 1500 a 2000 caracteres (experiências condensadas não entram nessa soma)
 2. Cite no máximo 4 experiências profissionais **detalhadas**. Se o candidato tiver mais de 4 e a vaga exigir um tempo de experiência que as detalhadas sozinhas não cobrem, você pode incluir também no máximo 2 experiências profissionais **condensadas** (Ver Regra 7), preservando a linha do tempo, omitindo as demais experiências se ela não tiver **qualquer** relação com a vaga.
-3. As experiências mais recentes e relevantes são detalhadas e priorizadas. As mais antigas vão sendo condensadas conforme perdem relevância, podendo ser omitidas se necessário, especialmente se não houver  **qualquer** relação com a vaga.
+3. As experiências mais recentes e relevantes são detalhadas e priorizadas. As mais antigas vão sendo condensadas conforme perdem relevância, podendo ser omitidas se necessário, especialmente se não houver **qualquer** relação com a vaga.
 4. A soma de todos os bullets da experiência profissional mais relevantes ter no mínimo 600 caracteres
    - A experiência profissional mais relevante é aquela que:
        - É mais recente;
@@ -42,11 +43,17 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 5. Em cada experiência profissional: 
    1. Cada bullet deve ter entre 100 e 300 caracteres (Exceto experiência condensada).
    2. Entre 1 a 6 bullets por experiência. Priorize ter mais bullets nas experiências mais relevantes para a vaga.
-6. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
+6. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada. As demais serão descartadas
 7. **Experiência condensada**:
    - Deve ser um único bullet entre 70 a 150 caracteres
    - Deve ser marcado com `condensada: true` (campo `boolean` da interface `Experience`)
    - Não terá lista de stacks
+   - Só existirá se já houver 4 experiências detalhadas.
+      - Ex: tem 5 experiências -> 4 detalhadas + 1 condensada
+      - Ex: tem 6 experiências -> 4 detalhadas + 2 condensada
+      - Ex: tem 7 experiências -> 4 detalhadas + 2 condensada (1 descartada)
+      - Ex: tem 4 experiências -> 4 detalhadas
+      - Ex: tem 3 experiências -> 3 detalhadas
 
 ### Competências Técnicas
 1. Deve citar entre a 1 a 15 skills.
@@ -54,20 +61,20 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
 ### Formação Acadêmica
 1. Cite no máximo 4 formações, portanto apenas oculte experiências se esbarrar nesse limite.
+    - Se houver mais de 4 formações, dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
 2. Máximo de 6 stacks por experiência profissional em `p.stacks`, priorizando as mais relevantes para a vaga e as quais o candidato tem mais experiência comprovada.
-3. Dê preferência para as que tem mais tempo de duração e que estejam mais associados à vaga
 
 Forma: interface `Education` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts).
 
 ### Projetos Pessoais
-- **Seção opcional**: incluir somente se existirem projetos documentados no `ai/skills/cv-base/SKILL.md`
+- **Seção opcional**: incluir somente se existirem projetos documentados no `ai/skills/cv-base/SKILL.md`. Se estiver documentedo, ela tem que ser incluída
 - Selecione no máximo 2 projetos que sejam relevantes para a vaga
 - Cada projeto deve ter entre 100 a 200 caracteres
 
 Forma: interface `Project` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts) (`url` é opcional).
 
 ### Certificados
-- **Seção opcional**: incluir somente se existirem certificados documentados no `ai/skills/cv-base/SKILL.md`
+- **Seção opcional**: incluir somente se existirem certificados documentados no `ai/skills/cv-base/SKILL.md`. Se estiver documentedo, ela tem que ser incluída
 - Inclua certificados relevantes para a vaga.
 - Máximo de 5 certificações. Se houver mais de 5, priorize os mais recentes e relevantes para a vaga.
 - `url` é opcional

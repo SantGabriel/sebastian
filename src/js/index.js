@@ -135,18 +135,18 @@ function render() {
       return `<li>${n.descricao} ${badge}</li>`;
     }).join('');
 
-    const cvAuthorized = job.cv && job.cv.authorized;
-    const clAuthorized = job.cl && job.cl.authorized;
+    const cvAuthorized = job.cv.authorized;
+    const clAuthorized = job.cl.authorized;
 
     const candidaturaHtml = job.candidatura ? `
       <div class="candidatura-aviso">
         <i class="fa-solid fa-triangle-exclamation icon-amber"></i>
         <span>${job.candidatura.aviso}</span>
         ${job.candidatura.url
-          ? `<a href="${job.candidatura.url}" target="_blank">
+      ? `<a href="${job.candidatura.url}" target="_blank">
                <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i> Abrir link
              </a>`
-          : ''}
+      : ''}
       </div>` : '';
 
     const modalidade        = job.modalidade || '';
@@ -167,15 +167,13 @@ function render() {
          </a>`
       : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> CV</span>`;
 
-    const clBtn = job.cl
-      ? clAuthorized
-        ? `<a class="btn btn-cl" href="src/pages/cl.html?job=${job.id}" target="_blank">
-             <i class="fa-solid fa-envelope"></i> Cover Letter
-           </a>`
-        : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`
-      : '';
+    const clBtn = clAuthorized
+      ? `<a class="btn btn-cl" href="src/pages/cl.html?job=${job.id}" target="_blank">
+           <i class="fa-solid fa-envelope"></i> Cover Letter
+         </a>`
+      : `<span class="btn btn-pending"><i class="fa-solid fa-lock"></i> Cover Letter</span>`;
 
-    const pendingLabel = !cvAuthorized || (job.cl && !clAuthorized)
+    const pendingLabel = !cvAuthorized || !clAuthorized
       ? `<span class="pending-label"><i class="fa-solid fa-clock"></i> Aguardando autorização</span>`
       : '';
 
@@ -188,10 +186,10 @@ function render() {
               <span class="job-number">${idx + 1}.</span>
               ${job.vaga}
               ${job.link
-                ? `<a href="${job.link}" target="_blank" rel="noreferrer" class="vaga-link">
+      ? `<a href="${job.link}" target="_blank" rel="noreferrer" class="vaga-link">
                      <i class="fa-solid fa-arrow-up-right-from-square icon-sm"></i> Abrir
                    </a>`
-                : ''}
+      : ''}
             </h2>
             <div class="company">
               <i class="fa-solid fa-building"></i> ${job.empresa || 'Não informado'}
@@ -210,20 +208,20 @@ function render() {
           Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>
         </button>
         ${job.vagaTexto
-          ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
+      ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
                Ver vaga <i class="fa-solid fa-caret-right"></i>
              </button>`
-          : ''}
+      : ''}
 
         <div class="fit-details" id="fit-${job.id}">
           ${positivos
-            ? `<div class="fit-section">
+      ? `<div class="fit-section">
                  <strong><i class="fa-solid fa-circle-check icon-success"></i> Pontos positivos</strong>
                  <ul>${positivos}</ul>
                </div>`
-            : ''}
+      : ''}
           ${negativos
-            ? `<div class="fit-section">
+      ? `<div class="fit-section">
                  <strong>
                    <i class="fa-solid fa-circle-xmark icon-danger"></i> Gaps / Pontos negativos
                    <a class="gap-help-link" href="src/pages/ajuda.html#gaps" target="_blank" title="Como funciona a classificação dos gaps">
@@ -232,14 +230,14 @@ function render() {
                  </strong>
                  <ul>${negativos}</ul>
                </div>`
-            : ''}
+      : ''}
         </div>
 
         ${job.vagaTexto
-          ? `<div class="vaga-texto" id="vaga-${job.id}">
+      ? `<div class="vaga-texto" id="vaga-${job.id}">
                ${job.vagaTexto.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
              </div>`
-          : ''}
+      : ''}
 
         <div class="card-actions">
           ${cvBtn}

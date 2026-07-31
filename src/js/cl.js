@@ -6,6 +6,8 @@ const params = new URLSearchParams(window.location.search);
 const jobId = params.get('job');
 const root = document.getElementById('cl-root');
 
+let pdfMeta = {};
+
 /**
  * @param {string} phone
  * @param {string} countryCode
@@ -25,14 +27,13 @@ function notAuthorized(msg) {
     </div>`;
 }
 
+function render() {
+  const job = JOBS.find(job => job.id === jobId);
 
-const job = JOBS.find(job => job.id === jobId);
-
-let pdfMeta = {};
-
-if (!jobId || !job) {
-  notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
-} else {
+  if (!jobId || !job) {
+    notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
+    return;
+  }
   const cl = job.cl;
   const isEN = job.lang === 'en';
 
@@ -46,51 +47,54 @@ if (!jobId || !job) {
     ? c.location.en
     : c.location.pt;
 
-  if (!cl || !cl.authorized) {
-    notAuthorized(`Cover Letter for "${job.vaga} - ${job.empresa || 'Não informado'}" not authorized yet.`);
-  } else {
-    document.documentElement.lang = isEN ? 'en' : 'pt-BR';
-    const jobTarget = [job.vaga, job.empresa].filter(Boolean).join(' - ');
-    document.getElementById('page-title').textContent = `${jobTarget} | ${name} | Cover Letter`;
-
-    const vagaLabel = job.vaga;
-    pdfMeta = { vaga: vagaLabel, empresa: job.empresa, candidateName: name };
-
-    const paragrafosHtml = (cl.paragrafos).map(p => `<p>${p}</p>`).join('');
-    const applicationLabel = isEN ? 'Application' : 'Candidatura';
-    const closingLabel = isEN ? 'Best regards,' : 'Atenciosamente,';
-
-    const locationHtml = location
-      ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
-    const phoneHtml = phone
-      ? `<a href="tel:${formatPhoneWithCountryCode(phone, phoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(phone, phoneCountryCode)}</a>` : '';
-    const emailHtml = email
-      ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
-    const linkedinHtml = linkedin
-      ? `<a href="${linkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
-
-    root.innerHTML = `
-      <div class="header">
-        <h1>${name}</h1>
-        <div class="meta">
-          ${locationHtml}
-          ${phoneHtml}
-          ${emailHtml}
-          ${linkedinHtml}
-        </div>
-      </div>
-      <p class="job-target">${applicationLabel}: ${jobTarget}</p>
-      <div class="cl-body">${paragrafosHtml}</div>
-      <div class="signature">
-        ${closingLabel}
-        <strong>${name}</strong>
-      </div>
-    `;
-
-    document.getElementById('btn-pdf').style.display = 'flex'; // torna botão de download visível no navegador. No download ele permanece hidden
+  if (!cl.authorized) {
+    notAuthorized(`Cover Letter for "${job.vaga} - ${job.empresa || 'Não informado'}" ainda não autorizado.`);
+    return;
   }
+  document.documentElement.lang = isEN ? 'en' : 'pt-BR';
+  const jobTarget = [job.vaga, job.empresa].filter(Boolean).join(' - ');
+  document.getElementById('page-title').textContent = `${jobTarget} | ${name} | Cover Letter`;
+
+  const vagaLabel = job.vaga;
+  pdfMeta = {vaga: vagaLabel, empresa: job.empresa, candidateName: name};
+
+  const paragrafosHtml = (cl.paragrafos).map(p => `<p>${p}</p>`).join('');
+  const applicationLabel = isEN ? 'Application' : 'Candidatura';
+  const closingLabel = isEN ? 'Best regards,' : 'Atenciosamente,';
+
+  const locationHtml = location
+    ? `<span><i class="fa-solid fa-location-dot"></i> ${location}</span>` : '';
+  const phoneHtml = phone
+    ? `<a href="tel:${formatPhoneWithCountryCode(phone, phoneCountryCode)}"><i class="fa-solid fa-phone"></i> ${formatPhoneWithCountryCode(phone, phoneCountryCode)}</a>` : '';
+  const emailHtml = email
+    ? `<a href="mailto:${email}"><i class="fa-solid fa-envelope"></i> ${email}</a>` : '';
+  const linkedinHtml = linkedin
+    ? `<a href="${linkedin}" target="_blank"><i class="fa-brands fa-linkedin"></i> ${linkedin.replace(/^https?:\/\/(www\.)?/, '')}</a>` : '';
+
+  root.innerHTML = `
+    <div class="header">
+      <h1>${name}</h1>
+      <div class="meta">
+        ${locationHtml}
+        ${phoneHtml}
+        ${emailHtml}
+        ${linkedinHtml}
+      </div>
+    </div>
+    <p class="job-target">${applicationLabel}: ${jobTarget}</p>
+    <div class="cl-body">${paragrafosHtml}</div>
+    <div class="signature">
+      ${closingLabel}
+      <strong>${name}</strong>
+    </div>
+  `;
+
+  document.getElementById('btn-pdf').style.display = 'flex'; // torna botão de download visível no navegador. No download ele permanece hidden
+
 }
 
 document.getElementById('btn-pdf').addEventListener('click', () => {
   gerarPDF({ job: jobId, doc: 'cl', ...pdfMeta });
 });
+
+render();

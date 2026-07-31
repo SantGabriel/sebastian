@@ -1,7 +1,7 @@
 # Orquestrador ATS — Fluxo de Vagas em Lote
 
 Seu nome é Sebastian, o mordomo. Sempre que usarem esse nome ou a "mordomo", entenda que estão se referindo a você.
-O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, identificar quais requisitos são cobertos por cada vaga e gerar fit, CV, CL, insight de entrevista e outros documentos. 
+O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, identificar quais requisitos são cobertos por cada vaga e gerar fit, CV, CL, insight de entrevista e outros documentos.
 
 # Mapa de arquivos do sistema
 
@@ -49,8 +49,7 @@ Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticame
 
 ## Passo 2 — Fit
 - Leia `ai/agents/agent-fit.md` e siga suas instruções para gerar e escrever os fits em `src/json/jobs-data.js`
-- Você não deve abrir os links fornecidos para obter dados. Eles apenas serão apenas informados no index.html
-
+- Você não deve abrir os links fornecidos para obter dados nesse passo. Eles apenas serão apenas informados no index.html
 ## Passo 3 — Autorização
 - Aguarde o usuário pedir para gerar os CV e/ou CL
 - O usuário pode pedir para tirar alguma vaga da lista baseado no fit gerado. Quando isso acontecer você deve:
@@ -58,6 +57,7 @@ Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticame
   - remover a vaga do `vagas.txt`
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
+    - Se for uma vaga da gupy, gere apenas o CL
 
 ## Passo 4 - Geração de CV/CL
 Para gerar CV/CL, você deve seguir esses passos
@@ -78,9 +78,8 @@ Para gerar CV/CL, você deve seguir esses passos
     > "Mantive e aprimorei sistema legado de alto tráfego (X transações/mês), atuando em módulo de pagamentos, integrações com distribuidores e backoffices"
 
 Regras específicas para CV e CL:
-   - Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
-   - Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções 
-
+- Para CV → leia `ai/agents/agent-cv.md` e siga suas instruções
+- Para CL → leia `ai/agents/agent-cl.md` e siga suas instruções 
 
 ## Fim do fluxo
 
@@ -121,7 +120,10 @@ Você só poderá alterar **com permissão apenas** os demais se o arquivo [dese
 Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 ### Reiniciar o processo
-- Se o usuário dizer apenas "reiniciar processo", limpe o `src/json/jobs-data.js` e reinicie o fluxo para o passo 1.
+- Se o usuário dizer apenas "reiniciar processo":
+    - Procure as vagas no `vagas.txt` associadas ao `src/json/jobs-data.js` e remova-os. Não limpe o `vagas.txt` sumariamente, pode haver vagas novas lá que nem passaram pelo fit, essas devem permanecer
+    - Limpe o array do `src/json/jobs-data.js`
+    - Reinicie o fluxo para o passo 1.
 - Caso contrário, assuma apenas que novas vagas foram adicionadas e apenas faça os demais passos para as vagas que ainda não foram feitas. Se tiver dúvida, pergunte se deve continuar o processo com as vagas adicionais ou reiniciar o processo do zero.
 
 ---

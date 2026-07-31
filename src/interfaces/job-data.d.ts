@@ -110,7 +110,7 @@ export interface Job {
   vagaTexto: string;
   candidatura?: Candidatura;
   fit: Fit;
-  cl?: CL;
+  cl: CL;
   cv: CV;
 }
 
