@@ -30,23 +30,23 @@ O Sebastian combina o uso de agente de IA + um dashboard que exibe o resultado d
 - [Requisitos](#requisitos)
 - [Agentes e modelos testados](#agentes-e-modelos-testados)
 - [Como usar?](#como-usar-)
-  - [Resumo do fluxo](#resumo-do-fluxo)
-  - [Instalação e execução](#1-instalação-e-execução)
-  - [Informações que você precisa fornecer](#2-informações-que-você-precisa-fornecer)
-    - [Dados pessoais](#dados-pessoais)
-    - [ai/skills/cv-base/SKILL.md](#aiskillscv-baseskillmd)
-    - [ai/skills/contexto/SKILL.md](#aiskillscontextoskillmd)
-    - [Vagas](#vagas)
-  - [Dashboard](#3-dashboard)
-    - [Alertas e avisos por vaga](#alertas-e-avisos-por-vaga)
-  - [Fluxo com o agente para gerar CV/CL](#4-fluxo-com-o-agente-para-gerar-cvcl)
-  - [CV genérico](#5-cv-genérico)
-  - [Entrevista](#6-entrevista)
-  - [Pós uso](#7-pós-uso)
-  - [Solução rápida de problemas](#8-solução-rápida-de-problemas)
+    - [Resumo do fluxo](#resumo-do-fluxo)
+    - [Instalação e execução](#1-instalação-e-execução)
+    - [Informações que você precisa fornecer](#2-informações-que-você-precisa-fornecer)
+        - [Dados pessoais](#dados-pessoais)
+        - [ai/skills/cv-base/SKILL.md](#aiskillscv-baseskillmd)
+        - [ai/skills/contexto/SKILL.md](#aiskillscontextoskillmd)
+        - [Vagas](#vagas)
+    - [Dashboard](#3-dashboard)
+        - [Alertas e avisos por vaga](#alertas-e-avisos-por-vaga)
+    - [Fluxo com o agente para gerar CV/CL](#4-fluxo-com-o-agente-para-gerar-cvcl)
+    - [CV genérico](#5-cv-genérico)
+    - [Entrevista](#6-entrevista)
+    - [Pós uso](#7-pós-uso)
+    - [Solução rápida de problemas](#8-solução-rápida-de-problemas)
 - [Regras de geração de fits, CV e CL](#regras-de-geração-de-fits-cv-e-cl)
-  - [Testes Automatizados](#testes-automatizados)
-    - [Hacking Reward](#hacking-reward)
+    - [Testes Automatizados](#testes-automatizados)
+        - [Hacking Reward](#hacking-reward)
 - [Disclaimers](#disclaimers)
 - [Me compre um café](#me-compre-um-café)
 
@@ -62,7 +62,7 @@ O Sebastian ajuda a gerar CVs e CLs legíveis para esses sistemas, aumentando su
 
 Diferente do que muitos candidatos acreditam, o ATS não é uma ferramenta de IA para filtrar currículos, ele muito mais que isso! Às vezes até sem IA envolvida. O ATS é uma solução completa que as empresas contratam para gerenciar o processo de recrutamento e seleção do início ao fim. Ele ajuda a organizar o processo de recrutamento, desde a publicação da vaga até a contratação do candidato, incluindo triagem de currículos, agendamento de entrevistas, comunicação com os candidatos, escolher quais plataformas a vaga será divulgada, agendamento de abertura de vagas. Hoje, as plataformas de vagas onde você costuma se candidatar, elas não são só anunciantes de vagas, mas sim uma solução de ATS que as empresas contratam.
 
-Esses ATS permitem usar filtros, por exemplo, palavras-chave. Alguns deles inclusive ranqueia os candidatos e os currículos que não atendem aos critérios do ATS terá uma nota baixa. Os filtros e os ranques podem fazer o seu CV ficar "invisível" para o recrutador, te eliminando indiretamente, mesmo que você seja um candidato qualificado. 
+Esses ATS permitem usar filtros, por exemplo, palavras-chave. Alguns deles inclusive ranqueia os candidatos e os currículos que não atendem aos critérios do ATS terá uma nota baixa. Os filtros e os ranques podem fazer o seu CV ficar "invisível" para o recrutador, te eliminando indiretamente, mesmo que você seja um candidato qualificado.
 
 Os principais motivos do uso dessas soluções são: plataforma unificada para gerenciar todas as vagas, análise de dados das candidaturas (tempo de contratação, taxa de conversão, NPS do processo), processos automatizados de comunicação e abertura de vagas e **o que mais impacta os candidatos**, filtrar o grande volume de candidatos que se candidatam para uma vaga. Não é incomum no Linkedin, por exemplo, você encontrar vagas com **centenas** de candidatos. O ATS ajuda a filtrar esses currículos e escolhê-los para uma próxima etapa de avaliação "manual", com, por exemplo, 20 candidatos apenas.
 
@@ -130,15 +130,24 @@ O Sebastian segue a convenção `AGENTS.md`, então deve funcionar com qualquer 
 - Sonnet 4.5 / 4.6 / 5
 - MiMo v2.5
 
-# Como usar? 
+**Comandos / Pré prompts**
+- GitHub Copilot
+- Claude Code
+- Open Code
+- Cursor
+- Codex
+
+# Como usar?
 
 ## Resumo do fluxo
-- Inicie a conversa com o Sebastian com um "olá Sebastian" e responda os dados pessoais que ele solicitar que serão colocados no CV e CL
+- Inicie a conversa com o Sebastian com um "olá Sebastian" (ou use o comando `/iniciar`) e responda os dados pessoais que ele solicitar que serão colocados no CV e CL
 - Cole as vagas no arquivo `vagas.txt` que você pretende se candidatar.
-- Peça para processar as vagas. O Sebastian vai analisar cada vaga e gerar um fit (score + gaps) com o seu perfil antes de gerar qualquer CV ou CL.
+- Use o comando `/fit` ou diga "processar as vagas". O Sebastian vai analisar cada vaga e gerar um fit (score + gaps) com o seu perfil antes de gerar qualquer CV ou CL.
 - Acesse o dashboard `http://localhost:3001/index.html` e veja os fits para decidir quais vagas você ainda tem interesse de se candidatar. O fit vai te ajudar a decidir se vale a pena se candidatar ou não a partir dos gaps que você tem com a vaga e o score do seu fit
-- Autorize o Sebastian a gerar os CV e/ou CL das vagas
+- Use o comando `/gerar` ou diga "gerar os CV e/ou CL das vagas" para autorizar o Sebastian
 - Volte ao dashboard e você verá os botões de CV e CL liberados para acesso. Reveja cada um deles e peça ajustes caso necessário.
+
+> Os comandos (`/fit`, `/gerar`, etc.) são a forma recomendada de acionar o Sebastian. Se a sua ferramenta de agente de IA não suportar slash commands, use sempre a frase alternativa em linguagem natural indicada ao lado de cada comando neste README.
 
 ## 1) Instalação e execução
 
@@ -156,7 +165,7 @@ npm start
 ## 2) Informações que você precisa fornecer
 
 ### Dados pessoais
-Abra este diretório na sua ferramenta de agente de IA e inicie a conversa — por exemplo: **"Olá Sebastian, vamos começar"**. Na primeira vez, ele vai te perguntar alguns dados pessoais importantes para colocar no currículo (nome, contato, localização, portfólio). O campo `portfolio` aceita tanto um site pessoal quanto um link de repositórios (GitHub, GitLab, etc). Você pode pedir ao agente para atualizar esses dados a qualquer momento.
+Abra este diretório na sua ferramenta de agente de IA e inicie a conversa. Use o comando `/iniciar` ou diga **"Olá Sebastian, vamos começar"**. Na primeira vez, ele vai te perguntar alguns dados pessoais importantes para colocar no currículo (nome, contato, localização, portfólio). O campo `portfolio` aceita tanto um site pessoal quanto um link de repositórios (GitHub, GitLab, etc). Você pode pedir ao agente para atualizar esses dados a qualquer momento.
 
 ### [ai/skills/cv-base/SKILL.md](ai/skills/cv-base/SKILL.md)
 Base de experiência do candidato (fonte de verdade).
@@ -166,12 +175,12 @@ Não economize detalhes aqui, pois quanto mais completo for o CV base, melhor se
 Dicas:
 1. Use o [CV base template](ai/skills/cv-base/SKILL.md.example) como base. Lá há sugestões de seções e subseções, mas você pode adicionar ou remover a medida que achar necessário.
 2. Fale detalhes de cada projeto/feature que você fez no seu trabalho, de preferência as mais longas e complexas, informando:
-   - O que foi o projeto/feature (ex: Aplicação de Cache usando Redis)
-   - Em quanto tempo levou para ser feito 
-   - Quais foram as tecnologias utilizadas 
-   - Quais foram os resultados obtidos (Ex: aumentou em 20% o número de vendas ou reduziu em 30% o tempo de resposta do sistema)
-   - Que posição você exercia nesse projeto/feature
-   - Como era o dia a dia do projeto/feature (ex: reuniões diárias, planejamento semanal, Kanban, Scrum)
+    - O que foi o projeto/feature (ex: Aplicação de Cache usando Redis)
+    - Em quanto tempo levou para ser feito
+    - Quais foram as tecnologias utilizadas
+    - Quais foram os resultados obtidos (Ex: aumentou em 20% o número de vendas ou reduziu em 30% o tempo de resposta do sistema)
+    - Que posição você exercia nesse projeto/feature
+    - Como era o dia a dia do projeto/feature (ex: reuniões diárias, planejamento semanal, Kanban, Scrum)
 3. Fale não apenas das suas experiências profissionais, mas também de projetos pessoais e acadêmicos, trabalhos voluntários, monitorias, TCCs, programa de iniciação científica
 4. Fale um pouco sobre você: suas soft skills, o que você prefere fazer e trabalhar, se gosta mais de presencial/hibrído/remoto, se tem disponibilidade para viajar ou se mudar
 5. Você pode citar também conceitos que você conhece, mas nunca praticou ou tem pouca prática. Ex: sitemap, SSR, TDD, SOLID.
@@ -249,16 +258,16 @@ Além do score de fit e dos gaps, o dashboard sinaliza automaticamente alguns po
 
 ## 4) Fluxo com o agente para gerar CV/CL
 
-1. Peça para processar as vagas. No meio do processo, o Sebastian pode te fazer perguntas de sobre os requisitos da vaga para ter certeza se você tem ou não uma habilidade específica, ou alguma outra dúvida. Responda às perguntas para que ele possa ter um melhor entendimento do seu perfil e gerar um fit mais preciso. Baseado nas respostas, o Sebastian pode sugerir alterações no seu CV ou no contexto.
+1. Use o comando `/fit` ou diga "processar as vagas". No meio do processo, o Sebastian pode te fazer perguntas de sobre os requisitos da vaga para ter certeza se você tem ou não uma habilidade específica, ou alguma outra dúvida. Responda às perguntas para que ele possa ter um melhor entendimento do seu perfil e gerar um fit mais preciso. Baseado nas respostas, o Sebastian pode sugerir alterações no seu CV ou no contexto.
 2. Após os fits serem gerados, acesse-os no dashboard `http://localhost:3001/index.html`. Olhe a descrição da vaga e os gaps para ver se estão coerentes. Caso não estejam, você pode pedir correções
-   - Você pode e deve pedir para remover as vagas em que o seu score está muito baixo.
-3. Feito a revisão dos fits, peça para gerar os CVs e/ou CLs. Você também pode pedir para gerar somente um dos dois pelo número da vaga.
-Exemplo: 1) CV; 2) CL; 3) CV e CL.
+    - Você pode e deve pedir para remover as vagas em que o seu score está muito baixo.
+3. Feito a revisão dos fits, use o comando `/gerar` ou diga "gerar os CVs e/ou CLs". Você também pode pedir para gerar somente um dos dois pelo número da vaga.
+   Exemplo: 1) CV; 2) CL; 3) CV e CL.
 4. Após gerar os documentos, Sebastian roda uma auditoria automática e apresenta um relatório informando quais CVs/CLs tiveram possíveis infrações de regras quantitativas (tamanho, quantidade de bullets, etc.) e quais passaram. Se houver infrações, ele vai te perguntar se deseja uma rodada de correção automática:
-   - **Não:** encerra o fluxo — você pode revisar e pedir ajustes manualmente depois
-   - **Sim:** Sebastian corrige os documentos com falha e apresenta um novo relatório. Esse ciclo se repete até você encerrar ou todos passarem
+    - **Não:** encerra o fluxo — você pode revisar e pedir ajustes manualmente depois
+    - **Sim:** Sebastian corrige os documentos com falha e apresenta um novo relatório. Esse ciclo se repete até você encerrar ou todos passarem
 5. Reveja os CVs/CLs no dashboard `http://localhost:3001/index.html`. Veja o que foi gerado e se está coerente. Caso queira ajustes, peça para corrigir o CV/CL da vaga específica.
-O Sebastian também pode identificar alguns problemas e sugerir ajustes.
+   O Sebastian também pode identificar alguns problemas e sugerir ajustes.
 6. Para baixar o CV/CL, existe um botão no canto inferior direito da tela **Baixar PDF**
 
 Após autorização, os botões de CV/CL da vaga são liberados no dashboard.
@@ -272,8 +281,8 @@ Basta pedir "gere um CV genérico" que ele vai gerar 2, um português e um ingl�
 
 Sebastian também pode te ajudar a se preparar para a entrevista de uma vaga específica. Ele vai analisar os requisitos e gerar perguntas e respostas para você praticar.
 
-Para isso, informe o número da vaga e peça a entrevista.
-<br> Exemplo: `Entrevista para a vaga 2`
+Use o comando `/entrevista <número da vaga>` ou diga "entrevista para a vaga <número>".
+<br> Exemplo: `/entrevista 2` ou diga `Entrevista para a vaga 2`
 
 Ou você pode colar a vaga no chat com o agente e pedir para gerar a entrevista.
 <br> Exemplo: `Entrevista para a vaga abaixo: [texto da vaga]`
@@ -282,8 +291,8 @@ O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
 
 ## 7) Pós uso
 
-- Se quiser processar um novo lote de vagas do zero, basta limpar as vagas antigas `vagas.txt` e preencher com as novas e dizer "reiniciar processo" que o Sebastian vai reiniciar o processo.
-  - Se você quiser processar apenas adicionar novas vagas, basta adicionar novas vagas no arquivo `vagas.txt` e pedir para processar as demais vagas. 
+- Se quiser processar um novo lote de vagas do zero, basta limpar as vagas antigas `vagas.txt` e preencher com as novas, depois usar o comando `/reiniciar` ou dizer "reiniciar processo" que o Sebastian vai reiniciar o processo.
+    - Se você quiser processar apenas adicionar novas vagas, basta adicionar novas vagas no arquivo `vagas.txt` e usar o comando `/fit` ou pedir para processar as demais vagas.
 - É interessante guardar os CVs e CLs numa pasta para quando for chamado para uma entrevista, você saiba qual CV/CL a empresa recebeu.
 
 ## 8) Solução rápida de problemas
@@ -320,7 +329,7 @@ PIX QR-code
    <img src="assets/pix.jpeg" alt="qrcode pix" width="200" />
 </div>
 
-PIX copia e cola: 
+PIX copia e cola:
 ```
 00020126800014br.gov.bcb.pix01368a2736bc-1b9e-4655-ba11-1017ea798f610218Sebastian agradece5204000053039865802BR5918Gabriel O. Santana6002NA62070503***630442B8
 ``` 
