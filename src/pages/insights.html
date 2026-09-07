@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sebastian - Insights</title>
+  <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/global.css" />
+  <link rel="stylesheet" href="../styles/insights.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="app-page">
+
+  <div class="page-header">
+    <h1 class="fonte-baskerville">Insights</h1>
+    <h3 class="fonte-baskerville">O que converte em entrevista — e o que não converte</h3>
+  </div>
+
+  <div class="insights-toolbar">
+    <button type="button" class="btn-secondary" onclick="runReindex()">
+      <i class="fa-solid fa-rotate"></i> Reindexar termos
+    </button>
+    <span id="toolbar-status" class="toolbar-status"></span>
+  </div>
+
+  <div id="reliability-banner"></div>
+
+  <section class="panel insights-section">
+    <h2>Funil de candidaturas</h2>
+    <div id="funnel-chart"></div>
+  </section>
+
+  <section class="panel insights-section">
+    <h2>Onde as candidaturas foram reprovadas</h2>
+    <p class="section-hint">Última etapa de andamento que cada vaga reprovada alcançou antes do "não".</p>
+    <div id="rejection-funnel-chart"></div>
+  </section>
+
+  <section class="panel insights-section">
+    <h2>Volume mensal</h2>
+    <div id="volume-chart"></div>
+  </section>
+
+  <section class="panel insights-section">
+    <div class="insights-section-header">
+      <h2>Termos da vaga que mais convertem</h2>
+      <div class="term-filters">
+        <select id="term-scope" class="select select--sm">
+          <option value="posting">Descrição da vaga</option>
+          <option value="cv">CV enviado</option>
+          <option value="cl">Cover Letter enviada</option>
+        </select>
+        <select id="term-n" class="select select--sm">
+          <option value="">Unigramas + bigramas</option>
+          <option value="1">Só palavras únicas</option>
+          <option value="2">Só pares de palavras</option>
+        </select>
+        <input type="search" id="term-q" class="input input--sm" placeholder="Buscar termo..." />
+      </div>
+    </div>
+    <div id="terms-table"></div>
+    <div id="terms-pagination" class="pagination-bar"></div>
+  </section>
+
+  <section class="panel insights-section">
+    <div class="insights-section-header">
+      <h2>Por empresa</h2>
+      <input type="search" id="company-q" class="input input--sm" placeholder="Buscar empresa..." />
+    </div>
+    <div id="companies-table"></div>
+    <div id="companies-pagination" class="pagination-bar"></div>
+  </section>
+
+  <script type="module" src="../js/insights.js"></script>
+</body>
+</html>

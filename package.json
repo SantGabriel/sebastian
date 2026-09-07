@@ -13,19 +13,27 @@
   ],
   "main": "src/json/jobs-data.js",
   "scripts": {
-    "start": "nodemon pdf-server.js"
+    "start": "prisma migrate deploy && nodemon server/index.js",
+    "postinstall": "prisma generate"
   },
   "author": "Gabriel Santana - LF",
   "license": "MIT",
+  "//engines": "O server carrega src/js/domain/stages.js (ESM, compartilhado com o browser) via require() — require(esm) só existe a partir do 20.19/22.12.",
+  "engines": {
+    "node": ">=20.19 <21 || >=22.12"
+  },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "express": "^5.2.1",
     "puppeteer": "^24.42.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.29.7",
+    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "babel-jest": "^30.4.1",
     "jest": "^30.4.2",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "prisma": "^6.19.3"
   }
 }

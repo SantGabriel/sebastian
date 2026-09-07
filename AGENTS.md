@@ -29,6 +29,9 @@ O principal objetivo aqui é ler um CV base e um lote de vagas de emprego, ident
 | `ai/agents/agent-cl.md`                | Agente especializado em geração de CL                                                  |
 | `ai/agents/agent-interview.md`         | Agente especializado em preparação de entrevista                                       |
 | `ai/agents/agent-testes.md`            | Agente de auditoria e relatório de testes                                              |
+| `server/`                              | Backend (Express + Prisma) — não alterar sem autorização                              |
+| `prisma/schema.prisma`                 | Schema do banco de candidaturas (histórico, etapas, termos) — não alterar             |
+| `db/`                                  | Banco SQLite local — gerado, não versionado                                          |
 
 ---
 
@@ -55,6 +58,12 @@ Ao receber qualquer saudação (olá, oi, hello, hey, etc.), inicie automaticame
 - O usuário pode pedir para tirar alguma vaga da lista baseado no fit gerado. Quando isso acontecer você deve:
   - remover a vaga do `src/json/jobs-data.js` e refazer o index de cada vaga
   - remover a vaga do `vagas.txt`
+- Antes de qualquer geração em lote (fit, CV ou CL), compare o `jobs-data.js` atual com o que você mesmo escreveu/leu por último **nesta mesma sessão** (contagem de vagas, `id`s e `index` de cada uma). Isso só é checável dentro da mesma sessão — ao abrir uma sessão nova, não existe checkpoint anterior nenhum pra comparar, então trate o `jobs-data.js` como fonte de verdade atual, sem essa checagem.
+  - Se divergir do que você tinha visto antes, as causas possíveis são:
+    - **Remoção via dashboard** (botão "Remover vaga" → `POST /api/postings/discard`): uma ou mais vagas sumiram, os `index` restantes ficaram sequenciais sem buraco (1, 2, 3...), e o `vagas.txt` continua com o bloco da vaga removida.
+    - **Edição manual do arquivo** (pelo usuário ou outra ferramenta): qualquer divergência que não seja a reindexação limpa acima — buraco na sequência, índice duplicado, campo alterado sem explicação.
+    - **Outra sessão do Claude Code editando ao mesmo tempo**: o conteúdo mudou de um jeito que você não reconhece como próprio.
+  - Em qualquer um desses casos, pare e pergunte ao usuário o que aconteceu antes de prosseguir com a geração em lote. Não edite o `vagas.txt` pra remover a vaga correspondente sem confirmação explícita do usuário — mesmo que pareça óbvio que ela foi descartada.
 - O usuário pode pedir para gerar o CV ou CL apenas, informando o número da vaga. Exemplo: 1) CV; 2) CL; 3) CV e CL.
 - Se não informar, assuma que será gerado apenas o CV.
     - Se for uma vaga da gupy, gere apenas o CL
@@ -121,6 +130,9 @@ Só responda **"feito"** após apresentar (ou não haver) propostas pendentes.
 
 ### Reiniciar o processo
 - Se o usuário dizer apenas "reiniciar processo":
+    - **Antes de limpar qualquer coisa**, verifique se as vagas marcadas como "já me candidatei" no dashboard já foram salvas: consulte `GET http://localhost:3001/api/applications/sync-status`.
+        - Se `pendingCount > 0`, avise quais vagas ainda não foram salvas e pergunte se o usuário quer usar o botão "Salvar candidaturas" antes de continuar, ou se pode prosseguir mesmo assim (o histórico dessas vagas seria perdido).
+        - Se a chamada falhar (servidor fora do ar), avise que não foi possível verificar e pergunte se o usuário quer limpar mesmo assim.
     - Procure as vagas no `vagas.txt` associadas ao `src/json/jobs-data.js` e remova-os. Não limpe o `vagas.txt` sumariamente, pode haver vagas novas lá que nem passaram pelo fit, essas devem permanecer
     - Limpe o array do `src/json/jobs-data.js`
     - Reinicie o fluxo para o passo 1.
@@ -143,7 +155,8 @@ Regras de preenchimento que **não** estão (nem cabem) na interface:
 
 - `index` — sequencial começando em 1, usado para referenciar vagas por número (ex.: "remova a vaga 3"). **Sempre reatribuir** ao adicionar ou remover vagas.
 - `id` — string simples, **sem espaços/acentos** (é usada na URL).
-- Quando omitir campos opcionais (`empresa`, `contratacao`, `cidadeVaga`, `candidatura`) e os valores válidos de `modalidade`/`contratacao`: ver `ai/agents/agent-fit.md`.
+- Quando omitir campos opcionais (`empresa`, `contratacao`, `cidadeVaga`, `candidatura`, `duplicata`) e os valores válidos de `modalidade`/`contratacao`: ver `ai/agents/agent-fit.md`.
+- `duplicata` — resultado de `GET /api/postings/check`, consultado **só** pelo agente de fit e **uma vez por vaga**. O dashboard nunca chama essa API: ele apenas renderiza o campo. Ver `ai/agents/agent-fit.md`.
 - Conteúdo de `fit`, `cv` e `cl`: ver `agent-fit.md`, `agent-cv.md` e `agent-cl.md`.
 
 ---

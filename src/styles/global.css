@@ -1,25 +1,60 @@
+/* =========================================================================
+   global.css — tokens e primitivos compartilhados por todas as páginas.
+   Folhas de página (index/candidaturas/insights/ajuda/cv/cl) só devem conter
+   o que é exclusivo daquela tela. Se um estilo aparece em duas páginas, o
+   lugar dele é aqui.
+   ========================================================================= */
+
 :root {
+  /* ---------- marca ---------- */
   --brand:         #1a73e8;
   --brand-dark:    #1558b0;
   --brand-light:   #e8f0fe;
+  --brand-badge:   #1a56db;
+  --brand-ring:    rgba(26, 115, 232, 0.15);
 
+  --green:         #34a853;
+  --green-dark:    #267a3e;
+
+  /* ---------- texto ---------- */
   --text:          #333;
   --text-dark:     #111;
   --text-muted:    #555;
   --text-faint:    #666;
+  --text-label:    #888;
   --text-disabled: #aaa;
+
+  /* ---------- superfícies e bordas ---------- */
+  --bg:           #f5f7fa;
+  --surface:      #fff;
+  --surface-alt:  #fafafa;
+  --surface-mute: #eee;
+  --border:       #ddd;
+  --border-soft:  #eee;
+  --border-faint: #f0f0f0;
+  --shadow-panel: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+  /* ---------- semânticos ---------- */
+  --info-bg:      #f0f4ff;
+
+  --success-bg:   #d4edda;
+  --success-text: #1a6e2e;
+
+  --yellow-bg:    #fff3cd;
+  --yellow-text:  #856404;
 
   --warning-bg:     #fff8e1;
   --warning-border: #f59e0b;
   --warning-text:   #92400e;
-}
+  --amber:          #f9a825;
 
-body {
-  font-family: Arial, sans-serif;
-}
+  --danger:      #c62828;
+  --danger-dark: #a52a2a;
+  --danger-bg:   #f8d7da;
+  --danger-text: #721c24;
+  --danger-icon: #e53935;
 
-.fonte-baskerville {
-  font-family: "Libre Baskerville", serif;
+  --header-height: 120px;
 }
 
 * {
@@ -28,7 +63,50 @@ body {
   padding: 0;
 }
 
-/* ---------- not-authorized ---------- */
+body {
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.fonte-baskerville {
+  font-family: "Libre Baskerville", serif;
+}
+
+/* Shell das páginas de aplicação (dashboard, candidaturas, insights).
+   As páginas de documento (cv/cl) e a ajuda têm layout próprio. */
+.app-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + 24px) 24px 24px;
+  background: var(--bg);
+}
+
+/* ---------- cabeçalho de página ---------- */
+
+.page-header { text-align: center; margin-bottom: 24px; }
+
+.subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 28px;
+}
+
+/* ---------- painel (job-card, app-card, insights-section, help-section) ---------- */
+
+.panel {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-panel);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ---------- estado vazio ---------- */
+
+.empty   { text-align: center; color: var(--text-disabled); margin-top: 60px; font-size: 15px; }
+.empty i { font-size: 36px; display: block; margin-bottom: 12px; }
 
 .not-authorized {
   text-align: center;
@@ -53,32 +131,340 @@ body {
   font-size: 14px;
 }
 
-/* ---------- btn-pdf ---------- */
+/* =========================================================================
+   Botões
+   Toda a família compartilha a mesma base para que `class="btn-primary"` e
+   `class="btn btn-primary"` rendam idênticos — antes o `.btn` só existia no
+   index.css e o mesmo botão mudava de tamanho conforme a página.
+   ========================================================================= */
 
-#btn-pdf {
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-outline-primary,
+.btn-outline-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* --- variantes sólidas --- */
+
+.btn-primary       { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); }
+
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
+  background: var(--brand);
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.btn-secondary       { background: var(--surface-mute); color: var(--text); font-weight: normal; }
+.btn-secondary:hover { background: var(--border); }
+
+.btn-danger       { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: var(--danger-dark); }
+
+.btn-danger:disabled {
+  background: var(--text-disabled);
+  cursor: default;
+}
+
+.btn-cv       { background: var(--brand); color: #fff; }
+.btn-cv:hover { background: var(--brand-dark); }
+.btn-cl       { background: var(--green); color: #fff; }
+.btn-cl:hover { background: var(--green-dark); }
+.btn-pending  { background: #e8eaed; color: #999; cursor: default; pointer-events: none; }
+
+/* --- variantes outline --- */
+
+.btn-outline-primary,
+.btn-outline-danger {
+  background: none;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn-outline-primary {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.btn-outline-primary:hover {
+  background: var(--brand);
+  border-color: var(--brand-dark);
+  color: #fff;
+}
+
+.btn-outline-danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+  background: var(--danger);
+  border-color: var(--danger-dark);
+  color: #fff;
+}
+
+/* --- utilitários de botão --- */
+
+.btn-push-right { margin-left: auto; }
+
+.btn-floating {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: var(--brand);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
   padding: 10px 18px;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 999;
 }
 
-#btn-pdf:hover {
-  background: var(--brand-dark);
+/* Botão com aparência de link (toggles de "ver detalhes", "ver vaga", etc.) */
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--brand);
+  cursor: pointer;
 }
 
-/* ---------- card / card--ledger ---------- */
+.link-button:hover { text-decoration: underline; }
+
+.link-button--muted {
+  color: var(--text-label);
+  font-size: 12px;
+}
+
+/* =========================================================================
+   Badges
+   ========================================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.badge--neutral { background: var(--surface-mute); color: var(--text-label); }
+.badge--brand   { background: var(--brand-light); color: var(--brand-badge); }
+.badge--success { background: var(--success-bg); color: var(--success-text); }
+.badge--warning { background: var(--warning-bg); color: var(--warning-text); }
+.badge--danger  { background: var(--danger-bg); color: var(--danger-text); }
+
+/* Badge de score do fit — maior que os demais, usado no dashboard e nas candidaturas. */
+.score-badge {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.score-green  { background: var(--success-bg); color: var(--success-text); }
+.score-yellow { background: var(--yellow-bg); color: var(--yellow-text); }
+.score-red    { background: var(--danger-bg); color: var(--danger-text); }
+
+.gap-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--danger);
+  margin-left: 4px;
+}
+
+/* =========================================================================
+   Callouts (faixa com barra lateral)
+   ========================================================================= */
+
+.callout {
+  border-left: 3px solid var(--brand);
+  border-radius: 0 4px 4px 0;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.callout--info {
+  background: var(--info-bg);
+  color: #444;
+}
+
+.callout--warning {
+  background: var(--warning-bg);
+  border-left-color: var(--warning-border);
+  color: var(--warning-text);
+  font-size: 12px;
+}
+
+.callout i { margin-right: 6px; }
+
+/* =========================================================================
+   Formulários
+   ========================================================================= */
+
+.input,
+.select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.select { cursor: pointer; }
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px var(--brand-ring);
+}
+
+.input--sm,
+.select--sm {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* =========================================================================
+   Paginação — candidaturas (server-side) e insights/empresas (client-side)
+   ========================================================================= */
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.pagination-bar .btn-secondary {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.pagination-bar .btn-secondary:disabled { opacity: 0.4; cursor: default; }
+
+.pagination-bar .page-number {
+  min-width: 30px;
+  padding: 6px 8px;
+  font-weight: 600;
+}
+
+.pagination-bar .page-number.current {
+  background: var(--brand);
+  color: #fff;
+  cursor: default;
+}
+
+/* =========================================================================
+   Tabelas de dados
+   ========================================================================= */
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-faint);
+  vertical-align: top;
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ---------- rótulo de seção em maiúsculas ---------- */
+
+.section-label,
+.data-table th,
+.fit-section strong {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-label);
+  letter-spacing: 0.5px;
+}
+
+.data-table th { font-size: 11px; }
+
+/* =========================================================================
+   Bloco de fit / vaga — renderizado tanto pelo dashboard quanto pelas
+   candidaturas, por isso mora aqui e não no index.css.
+   ========================================================================= */
+
+.fit-toggle  { margin-bottom: 10px; margin-right: 14px; }
+.vaga-toggle { margin-bottom: 10px; }
+
+.fit-details      { display: none; margin-bottom: 12px; }
+.fit-details.open { display: block; }
+
+.fit-section        { margin-bottom: 8px; }
+.fit-section strong { display: block; margin-bottom: 4px; }
+.fit-section ul     { padding-left: 18px; }
+.fit-section li     { font-size: 13px; margin-bottom: 2px; }
+
+.vaga-texto {
+  display: none;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  background: var(--surface-alt);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.vaga-link       { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--brand); text-decoration: none; margin-left: 8px; }
+.vaga-link:hover { text-decoration: underline; }
+
+.pending-label {
+  font-size: 12px;
+  color: var(--text-disabled);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  align-self: center;
+}
+
+/* =========================================================================
+   Ícones utilitários
+   ========================================================================= */
+
+.icon-sm      { font-size: 11px; }
+.icon-info    { color: var(--brand); }
+.icon-success { color: var(--green); }
+.icon-danger  { color: var(--danger-icon); }
+.icon-warning { color: var(--amber); flex-shrink: 0; }
+
+/* =========================================================================
+   Cartão do ledger (logo)
+   ========================================================================= */
 
 .card {
   max-width: 360px;
@@ -95,6 +481,7 @@ body {
   padding: 28px 20px 24px;
   margin: 6px;
 }
+
 .card--ledger img {
   width: 140px;
   height: 140px;
@@ -107,9 +494,171 @@ body {
   margin-top: 16px;
 }
 
-/* ---------- print ---------- */
+/* =========================================================================
+   Modal (reusado por index.js, candidaturas.js e pdf.js)
+   ========================================================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-box {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-box h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: var(--text-dark);
+}
+
+.modal-body {
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Mensagem em texto puro (showMessage/askConfirm) — preserva as quebras de
+   linha do texto original sem precisar montar HTML no chamador. */
+.modal-message {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.modal-icon--info    { color: var(--brand); }
+.modal-icon--success { color: var(--green-dark); }
+.modal-icon--error   { color: var(--danger); }
+.modal-icon--danger  { color: var(--warning-border); }
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-job-list {
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+}
+
+.modal-job-list li {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.modal-job-list li:last-child { border-bottom: none; }
+
+.modal-job-list label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.modal-error {
+  color: var(--danger);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* Saída de qualquer item removido de uma lista (ver fadeOutElement em lib/dom.js).
+   A transição mora no `.panel`; aqui fica só o estado final. */
+.is-removing {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition: none; }
+}
+
+/* =========================================================================
+   Navegação (index.html, candidaturas.html, insights.html, ajuda.html)
+   ========================================================================= */
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  padding: 12px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.toc-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.toc-brand:hover {
+  color: var(--text-dark);
+}
+
+.nome-logo {
+  font-size: 18px;
+}
+
+.app-nav-links {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.app-nav-link:hover { background: var(--brand-light); color: var(--brand); }
+.app-nav-link.active { background: var(--brand-light); color: var(--brand); font-weight: bold; }
+
+@media (max-width: 600px) {
+  .app-nav { height: auto; padding: 14px 24px; }
+}
+
+/* =========================================================================
+   Impressão
+   ========================================================================= */
 
 @media print {
-  #btn-pdf     { display: none !important; }
+  #btn-pdf      { display: none !important; }
   .city-warning { display: none !important; }
 }

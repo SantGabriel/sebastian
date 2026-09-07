@@ -14,7 +14,8 @@ Inicie essa skill se **qualquer um** dos arquivos da tabela abaixo não existir 
 | `src/json/generic-cv-data.js`  | `src/json/generic-cv-data.js.example` | não existe                                    |
 | `src/json/jobs-data.js`        | `src/json/jobs-data.js.example`       | não existe                                    |
 | `vagas.txt`                    | `vagas.txt.example`                   | não existe                                    |
-| `insights.md`                  | `insights.md.example`                 | não existe                                    |
+| `entrevista.md`                | `entrevista.md.example`               | não existe                                    |
+| `db/sebastian.db`              | `npx prisma migrate deploy`           | não existe                                    |
 
 ## Passo 1 — Copiar somente o que falta
 Rode o comando inteiro abaixo para criar os arquivos que faltam
@@ -24,9 +25,10 @@ Rode o comando inteiro abaixo para criar os arquivos que faltam
 [ -f src/json/generic-cv-data.js ] || cp src/json/generic-cv-data.js.example src/json/generic-cv-data.js
 [ -f src/json/jobs-data.js ] || cp src/json/jobs-data.js.example src/json/jobs-data.js
 [ -f vagas.txt ] || cp vagas.txt.example vagas.txt
-[ -f insights.md ] || cp insights.md.example insights.md
+[ -f entrevista.md ] || cp entrevista.md.example entrevista.md
 [ -f ai/skills/cv-base/SKILL.md ] || cp ai/skills/cv-base/SKILL.md.example ai/skills/cv-base/SKILL.md
 [ -f ai/skills/contexto/SKILL.md ] || cp ai/skills/contexto/SKILL.md.example ai/skills/contexto/SKILL.md
+[ -f db/sebastian.db ] || npx prisma migrate deploy
 ```
 
 ## Passo 2 — Preencher somente o que está pendente

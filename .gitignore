@@ -12,11 +12,20 @@ yarn-error.log*
 .idea/*
 CVs/*
 
+# Banco local (Prisma/SQLite)
+db/
+
+# Prisma Client gerado (ver output no schema.prisma)
+server/generated/
+
+# PDFs arquivados de candidaturas
+storage/
+
 src/json/candidate-data.js
 src/json/generic-cv-data.js
 src/json/jobs-data.js
 vagas.txt
-insights.md
+entrevista.md
 ai/skills/cv-base/SKILL.md
 ai/skills/contexto/SKILL.md
 desenvolvedor.md

@@ -13,6 +13,6 @@
       "@test/*": ["test/*"]
     }
   },
-  "include": ["src", "test"],
-  "exclude": ["node_modules"]
+  "include": ["src", "test", "server"],
+  "exclude": ["node_modules", "server/generated"]
 }

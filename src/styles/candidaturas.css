@@ -1,0 +1,120 @@
+/* =========================================================================
+   candidaturas.css — exclusivo de candidaturas.html.
+   Botões, badges, inputs, tabelas e o bloco de fit vêm do global.css.
+   ========================================================================= */
+
+/* ---------- filtros ---------- */
+
+.filters-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+/* Só o comportamento de largura; a aparência vem de .input. */
+.filter-input {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* ---------- resumo ---------- */
+
+.summary-bar {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* ---------- card de candidatura ---------- */
+
+.app-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.app-card-header h2 { font-size: 15px; font-weight: bold; color: var(--text-dark); }
+.app-card-company   { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.app-card-meta      { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+
+.app-card-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* ---------- detalhe / toggle ---------- */
+
+.app-detail-toggle { margin-top: 10px; }
+
+.app-detail { display: none; margin-top: 14px; border-top: 1px solid var(--border-soft); padding-top: 14px; }
+.app-detail.open { display: block; }
+
+.detail-section { margin-bottom: 16px; }
+
+/* O h4 carrega .section-label (aparência); aqui fica só o arranjo. */
+.detail-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+/* O score e o link da vaga moram no h4, mas não são "rótulo de seção". */
+.detail-section h4 .score-badge { text-transform: none; letter-spacing: 0; font-size: 13px; padding: 3px 10px; }
+.detail-section h4 .vaga-link   { text-transform: none; letter-spacing: 0; font-size: 12px; margin-left: auto; }
+
+/* ---------- timeline ---------- */
+
+.timeline { list-style: none; }
+
+.timeline-event {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-faint);
+  font-size: 13px;
+}
+
+.timeline-event:last-child { border-bottom: none; }
+
+.timeline-event-main { display: flex; flex-direction: column; gap: 2px; }
+.timeline-event-stage { font-weight: 600; color: var(--text-dark); }
+.timeline-event-date  { font-size: 11px; color: var(--text-faint); }
+.timeline-event-note  { font-size: 12px; color: var(--text-muted); margin-top: 2px; max-width: 420px; }
+
+.timeline-event-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.timeline-event-actions button {
+  background: none;
+  border: none;
+  color: var(--text-disabled);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px;
+}
+.timeline-event-actions button:hover { color: var(--danger); }
+
+/* ---------- form de nova etapa ---------- */
+
+.stage-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-soft);
+}
+
+.stage-form input[type="text"] {
+  flex: 1;
+  min-width: 160px;
+}
+
+/* ---------- documentos e ações ---------- */
+
+.doc-list { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }

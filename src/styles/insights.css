@@ -1,0 +1,83 @@
+/* =========================================================================
+   insights.css — exclusivo de insights.html.
+   .panel, .callout, .badge, .select e .data-table vêm do global.css.
+   ========================================================================= */
+
+.insights-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-status {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Variante de .callout--warning: banner de página, maior que um aviso de card. */
+.reliability-banner {
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ---------- seções ---------- */
+
+.insights-section h2 {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+.section-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: -8px 0 14px;
+}
+
+/* O .section-hint padrão sobe com margin negativa (fica sob o h2); o contador de
+   resultados vem depois da tabela, então precisa de respiro em cima. */
+.list-count { margin: 8px 0 0; }
+
+.insights-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.insights-section-header h2 { margin-bottom: 0; }
+
+.term-filters { display: flex; gap: 8px; }
+
+/* ---------- tabelas de termos ---------- */
+
+.chart-empty { color: var(--text-disabled); font-size: 13px; padding: 12px 0; }
+
+.direction-positive { color: var(--green-dark); font-weight: 600; }
+.direction-negative { color: var(--danger); font-weight: 600; }
+
+.term-cell { display: flex; align-items: center; gap: 6px; }
+
+/* Menor que o .badge padrão — convive com o texto do termo na célula. */
+.term-n-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+.stat-summary {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.stat-summary strong { color: var(--text-dark); }

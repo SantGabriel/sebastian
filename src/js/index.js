@@ -1,6 +1,22 @@
 import { JOBS } from '../json/jobs-data.js';
 import { CANDIDATE_DATA } from '../json/candidate-data.js';
 import { gapWeight } from './utils.js';
+import { escapeHtml, fadeOutElement } from './lib/dom.js';
+import { openModal, showMessage } from './lib/modal.js';
+import { renderNav } from './lib/nav.js';
+import * as api from './lib/api.js';
+
+/** @type {Array} vagas atualmente renderizadas (com fit) — usado por onSalvarCandidaturas */
+let currentJobs = [];
+/** @type {Map<string, {jobId: string, archived: boolean}>} status de arquivamento por job.id */
+let syncStatusByJobId = new Map();
+/**
+ * Vagas removidas nesta sessão. O servidor já reescreveu o `jobs-data.js`, mas
+ * o módulo importado continua em memória — este Set é o que mantém o dashboard
+ * em dia sem recarregar a página.
+ * @type {Set<string>}
+ */
+const removedJobIds = new Set();
 
 export function abrirCVDropdown(value) {
   if (!value) return;
@@ -100,20 +116,216 @@ function toggleCandidatura(jobId) {
   }
 
   localStorage.setItem('candidaturas', JSON.stringify(Array.from(candidaturasSet)));
+  updateCandidaturasCount();
 }
 
 function isCandidatura(jobId) {
   return JSON.parse(localStorage.getItem('candidaturas') || '[]').includes(jobId);
 }
 
+function updateCandidaturasCount() {
+  const el = document.getElementById('candidaturas-count');
+  if (!el) return;
+  const candidaturasSet = new Set(JSON.parse(localStorage.getItem('candidaturas') || '[]'));
+  const marked = currentJobs.filter(j => candidaturasSet.has(j.id)).length;
+  el.textContent = marked
+    ? `${marked} de ${currentJobs.length} marcadas como "já me candidatei"`
+    : (currentJobs.length ? `Nenhuma vaga marcada ainda` : '');
+}
+
+/**
+ * Remove a vaga do jobs-data.js (via servidor) sem tocar no vagas.txt.
+ * Usado quando o checkbox foi marcado só para indicar "já vi", não "me candidatei".
+ */
+function removeVaga(jobId, vagaLabel) {
+  openModal({
+    title: 'Remover vaga?',
+    confirmLabel: 'Remover',
+    confirmClass: 'btn-danger',
+    bodyHtml: `
+      <p>Remover <strong>${escapeHtml(vagaLabel)}</strong> da lista?</p>
+      <p>Isso NÃO altera o <code>vagas.txt</code> — apenas some do dashboard e não é reprocessada. Use quando a vaga expirou ou você desistiu.</p>
+      <p class="modal-error" data-role="error" style="display:none"></p>
+    `,
+    onConfirm: async (overlay, close) => {
+      const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+      const errorEl = overlay.querySelector('[data-role="error"]');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Removendo...';
+      try {
+        await api.discardPosting(jobId);
+        close();
+        removedJobIds.add(jobId);
+        await fadeOutElement(document.getElementById('job-card-' + jobId));
+        render();
+      } catch (err) {
+        errorEl.textContent = 'Erro ao remover a vaga: ' + err.message;
+        errorEl.style.display = 'block';
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = 'Remover';
+      }
+    }
+  });
+}
+
+async function refreshSyncStatus() {
+  try {
+    const { items } = await api.getSyncStatus();
+    syncStatusByJobId = new Map(items.map(i => [i.jobId, i]));
+  } catch {
+    syncStatusByJobId = new Map();
+  }
+}
+
+function summarizeArchiveResults(results) {
+  const archived = results.filter(r => r.status === 'archived').length;
+  const exists = results.filter(r => r.status === 'exists').length;
+  const problems = results.filter(r => r.status === 'skipped' || r.status === 'error' || r.status === 'not_found');
+
+  let msg = archived ? `${archived} candidaturas arquivadas com sucesso.` : 'Nenhuma candidatura nova arquivada.';
+  if (exists) msg += ` ${exists} já estavam salvas anteriormente.`;
+  if (problems.length) {
+    msg += `\n\n${problems.length} não puderam ser salvas:\n` +
+      problems.map(p => `- ${p.jobId}: ${p.reason || p.error || 'vaga não encontrada'}`).join('\n');
+  }
+  return msg;
+}
+
+/**
+ * Estado de carregamento do botão "Salvar candidaturas". O arquivamento grava a
+ * candidatura e indexa os termos do CV/CL de cada vaga, então não é instantâneo —
+ * sem isso o clique parece não ter feito nada e o usuário clica de novo.
+ */
+function setSalvarLoading(loading) {
+  const btn = document.getElementById('btn-salvar-candidaturas');
+  if (!btn) return;
+
+  btn.disabled = loading;
+  btn.innerHTML = loading
+    ? '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...'
+    : '<i class="fa-solid fa-floppy-disk"></i> Salvar candidaturas';
+}
+
+async function runArchive(jobIds) {
+  if (!jobIds.length) return;
+  setSalvarLoading(true);
+  try {
+    const { results } = await api.archiveApplications(jobIds);
+
+    // Atualiza a tela ANTES de mostrar o resultado: quando o usuário fecha o
+    // modal, os selos "Salvo" já estão lá — sem recarregar nada.
+    await refreshSyncStatus();
+    render();
+
+    const problems = results.filter(r => r.status === 'skipped' || r.status === 'error' || r.status === 'not_found');
+    showMessage({
+      title: problems.length ? 'Candidaturas salvas com pendências' : 'Candidaturas salvas',
+      message: summarizeArchiveResults(results),
+      variant: problems.length ? 'danger' : 'success'
+    });
+  } catch (err) {
+    showMessage({
+      title: 'Erro ao salvar candidaturas',
+      message: err.message,
+      variant: 'error'
+    });
+  } finally {
+    setSalvarLoading(false);
+  }
+}
+
+/**
+ * Botão "Salvar candidaturas": arquiva só as marcadas com o checkbox.
+ * Se houver vagas não marcadas, avisa num modal antes de prosseguir — o
+ * usuário pode marcá-las ali mesmo (ver AGENTS.md / plano da Fase 2).
+ */
+async function onSalvarCandidaturas() {
+  const candidaturasSet = new Set(JSON.parse(localStorage.getItem('candidaturas') || '[]'));
+  const marked = currentJobs.filter(j => candidaturasSet.has(j.id));
+  const unmarked = currentJobs.filter(j => !candidaturasSet.has(j.id));
+
+  if (!marked.length && !unmarked.length) {
+    showMessage({ title: 'Nada para salvar', message: 'Nenhuma vaga carregada para salvar.' });
+    return;
+  }
+
+  if (!unmarked.length) {
+    if (!marked.length) {
+      showMessage({ title: 'Nada para salvar', message: 'Nenhuma vaga marcada como "já me candidatei".' });
+      return;
+    }
+    await runArchive(marked.map(j => j.id));
+    return;
+  }
+
+  const extraIds = new Set();
+
+  openModal({
+    title: `${unmarked.length} vagas não serão salvas`,
+    confirmLabel: `Salvar as ${marked.length}`,
+    bodyHtml: `
+      <p>Você marcou ${marked.length} de ${currentJobs.length} como "já me candidatei". Estas ficarão de fora:</p>
+      <ul class="modal-job-list">
+        ${unmarked.map(j => `
+          <li>
+            <label>
+              <input type="checkbox" data-extra-id="${escapeHtml(j.id)}" />
+              ${escapeHtml(j.vaga)} — ${escapeHtml(j.empresa || 'Empresa não informada')}
+            </label>
+          </li>
+        `).join('')}
+      </ul>
+    `,
+    onRender: (overlay) => {
+      const confirmBtn = overlay.querySelector('[data-action="confirm"]');
+      overlay.querySelectorAll('[data-extra-id]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) extraIds.add(cb.dataset.extraId);
+          else extraIds.delete(cb.dataset.extraId);
+          confirmBtn.textContent = `Salvar as ${marked.length + extraIds.size}`;
+        });
+      });
+    },
+    onConfirm: async (_overlay, close) => {
+      close();
+      await runArchive([...marked.map(j => j.id), ...extraIds]);
+    }
+  });
+}
+
 function badge(label) {
-  return label ? `<span class="job-badge">${label}</span>` : '';
+  return label ? `<span class="badge badge--brand job-badge">${label}</span>` : '';
+}
+
+/** Ícone e intensidade do aviso por tipo de duplicata (ver `Duplicata` no job-data.d.ts). */
+const DUPLICATA_ESTILO = {
+  'repostagem':          { icone: 'fa-copy',       soft: false },
+  'descartada':          { icone: 'fa-trash-can',  soft: false },
+  'possivel-repostagem': { icone: 'fa-clone',      soft: true }
+};
+
+/**
+ * Aviso de repostagem/descarte, exibido ANTES de o usuário se candidatar.
+ * Vem pronto do `jobs-data.js`: quem consulta `GET /api/postings/check` é o
+ * agente de fit, uma vez só, ao processar a vaga. O dashboard não chama a API.
+ */
+function buildDuplicateWarningHtml(duplicata) {
+  if (!duplicata || !duplicata.aviso) return '';
+
+  const estilo = DUPLICATA_ESTILO[duplicata.tipo] || DUPLICATA_ESTILO['possivel-repostagem'];
+
+  return `
+    <div class="callout duplicate-warning${estilo.soft ? ' duplicate-warning--soft' : ''}">
+      <i class="fa-solid ${estilo.icone}"></i>
+      ${escapeHtml(duplicata.aviso)}
+    </div>`;
 }
 
 function render() {
   const container = document.getElementById('jobs-container');
   const jobsArray = Array.isArray(JOBS) ? JOBS : Object.values(JOBS || {});
-  const jobs      = jobsArray.filter(j => j.fit);
+  const jobs      = jobsArray.filter(j => j.fit && !removedJobIds.has(j.id));
+  currentJobs = jobs;
 
   if (jobs.length === 0) {
     container.innerHTML = `
@@ -140,7 +352,7 @@ function render() {
 
     const candidaturaHtml = job.candidatura ? `
       <div class="candidatura-aviso">
-        <i class="fa-solid fa-triangle-exclamation icon-amber"></i>
+        <i class="fa-solid fa-triangle-exclamation icon-warning"></i>
         <span>${job.candidatura.aviso}</span>
         ${job.candidatura.url
       ? `<a href="${job.candidatura.url}" target="_blank">
@@ -154,12 +366,14 @@ function render() {
     const cityFromVaga      = (job.cidadeVaga || '').split(/[,\-]/)[0].trim().toLowerCase();
     const cityFromCandidate = candidateLocation.split(/[,\-]/)[0].trim().toLowerCase();
     const cityWarningHtml   = job.cidadeVaga && modalidade && modalidade !== 'Remoto' && candidateLocation && cityFromVaga !== cityFromCandidate
-      ? `<div class="city-warning">
+      ? `<div class="callout callout--warning city-warning">
            <i class="fa-solid fa-triangle-exclamation"></i>
            Vaga <strong>${modalidade}</strong> em <strong>${job.cidadeVaga}</strong>
            — sua localização cadastrada é <strong>${candidateLocation}</strong>.
          </div>`
       : '';
+
+    const duplicateWarningHtml = buildDuplicateWarningHtml(job.duplicata);
 
     const cvBtn = cvAuthorized
       ? `<a class="btn btn-cv" href="src/pages/cv.html?job=${job.id}" target="_blank">
@@ -177,8 +391,13 @@ function render() {
       ? `<span class="pending-label"><i class="fa-solid fa-clock"></i> Aguardando autorização</span>`
       : '';
 
+    const savedInfo = syncStatusByJobId.get(job.id);
+    const savedBadge = savedInfo?.archived
+      ? `<span class="saved-badge"><i class="fa-solid fa-circle-check"></i> Salvo</span>`
+      : '';
+
     return `
-      <div class="job-card">
+      <div class="panel job-card" id="job-card-${job.id}">
 
         <div class="card-header">
           <div class="card-header-left">
@@ -200,15 +419,16 @@ function render() {
           <span class="score-badge ${scoreClass(score)}">${score}/10</span>
         </div>
 
-        ${fit.summary ? `<div class="fit-summary">${fit.summary}</div>` : ''}
+        ${fit.summary ? `<div class="callout callout--info">${fit.summary}</div>` : ''}
         ${cityWarningHtml}
+        ${duplicateWarningHtml}
         ${candidaturaHtml}
 
-        <button class="fit-toggle" id="toggle-${job.id}" onclick="toggleFit('${job.id}')">
+        <button class="link-button fit-toggle" id="toggle-${job.id}" onclick="toggleFit('${job.id}')">
           Ver detalhes do fit <i class="fa-solid fa-caret-right"></i>
         </button>
         ${job.vagaTexto
-      ? `<button class="vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
+      ? `<button class="link-button link-button--muted vaga-toggle" id="vaga-toggle-${job.id}" onclick="toggleVaga('${job.id}')">
                Ver vaga <i class="fa-solid fa-caret-right"></i>
              </button>`
       : ''}
@@ -243,6 +463,9 @@ function render() {
           ${cvBtn}
           ${clBtn}
           ${pendingLabel}
+          <button type="button" class="btn-outline-danger btn-push-right" onclick="removeVaga('${job.id}', '${escapeHtml(job.vaga).replace(/'/g, "\\'")}')">
+            <i class="fa-solid fa-trash-can"></i> Remover vaga
+          </button>
         </div>
 
         <label class="candidato-checkbox ${isCandidatura(job.id) ? 'marcado' : ''}" id="candidato-container-${job.id}">
@@ -254,20 +477,25 @@ function render() {
           />
           <span>Já me candidatei</span>
         </label>
+        ${savedBadge}
 
       </div>`;
   }).join('');
+
+  updateCandidaturasCount();
 }
 
 // Os cards renderizados usam handlers inline (onclick/onchange) que resolvem
 // no escopo global; como este arquivo agora é um módulo, expomos no window.
 if (typeof window !== 'undefined') {
-  Object.assign(window, { abrirCVDropdown, toggleFit, toggleVaga, toggleCandidatura });
+  Object.assign(window, { abrirCVDropdown, toggleFit, toggleVaga, toggleCandidatura, removeVaga, onSalvarCandidaturas });
 }
 
 // Só renderiza no browser; ao ser importado pelos testes (Node, sem DOM) o
 // import fica livre de efeitos colaterais.
 if (typeof document !== 'undefined') {
+  renderNav('dashboard');
   render();
   loadAvailableExamples().then(renderExampleDropdown);
+  refreshSyncStatus().then(render);
 }

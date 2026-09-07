@@ -6,8 +6,8 @@
   <title>Sebastian - Ajuda</title>
   <link rel="icon" href="../../assets/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../styles/ajuda.css" />
   <link rel="stylesheet" href="../styles/global.css" />
+  <link rel="stylesheet" href="../styles/ajuda.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
@@ -15,10 +15,6 @@
 <body>
 
   <nav class="toc">
-    <a href="../../index.html" class="toc-brand">
-      <img src="../../assets/logo.png" alt="Sebastian Logo" height="50" />
-      <span class="nome-logo fonte-baskerville">Sebastian</span>
-    </a>
     <a href="#fonte-verdade">Sobre esta página</a>
     <a href="#glossario">Glossário</a>
     <a href="#fluxo">Resumo do fluxo</a>
@@ -39,7 +35,7 @@
       <p class="subtitle fonte-baskerville">Referência dos conceitos usados no dashboard do Sebastian.</p>
     </div>
 
-    <section id="fonte-verdade" class="help-section">
+    <section id="fonte-verdade" class="panel help-section">
       <h2><i class="fa-solid fa-book-open icon-info"></i> Sobre esta página </h2>
       <p>
         Todos os detalhes descritos nesta paǵina de ajuda estão definidos em <code>README.md</code>, <code>AGENTS.md</code> e nos arquivos de
@@ -49,10 +45,10 @@
       </p>
     </section>
 
-    <section id="glossario" class="help-section">
+    <section id="glossario" class="panel help-section">
     <h2><i class="fa-solid fa-book icon-info"></i> Glossário</h2>
     <div class="table-wrap">
-      <table class="help-table plain">
+      <table class="data-table help-table plain">
         <thead>
           <tr>
             <th>Termo</th>
@@ -97,7 +93,7 @@
     </div>
   </section>
 
-  <section id="fluxo" class="help-section">
+  <section id="fluxo" class="panel help-section">
     <h2><i class="fa-solid fa-route icon-info"></i> Resumo do fluxo</h2>
     <ol class="help-list">
       <li>Inicie a conversa com um "olá Sebastian" e responda os dados pessoais solicitados.</li>
@@ -110,7 +106,7 @@
     </ol>
   </section>
 
-  <section id="gaps" class="help-section">
+  <section id="gaps" class="panel help-section">
     <h2><i class="fa-solid fa-circle-xmark icon-danger"></i> Classificação dos gaps</h2>
     <p>
       Cada vaga começa com nota <strong>10</strong>. Todo requisito não atendido pelo candidato
@@ -119,7 +115,7 @@
     </p>
 
     <div class="table-wrap">
-      <table class="help-table">
+      <table class="data-table help-table">
         <thead>
           <tr>
             <th>Classificação</th>
@@ -218,13 +214,13 @@
       </table>
     </div>
 
-    <p class="help-example">
+    <p class="callout callout--info help-example">
       Exemplo: 1 gap <strong>Core</strong> + 2 gaps <strong>Desejável/Diferencial</strong>
       → 10 - 4 - (0,25 × 2) = <strong>5,5</strong>.
     </p>
   </section>
 
-  <section id="regras-fit" class="help-section">
+  <section id="regras-fit" class="panel help-section">
     <h2><i class="fa-solid fa-magnifying-glass-chart icon-info"></i> Regras de Fit</h2>
     <p>Regras definidas em <code>ai/agents/agent-fit.md</code>.</p>
     <ul class="help-list">
@@ -245,7 +241,7 @@
     </ul>
   </section>
 
-  <section id="regras-cv" class="help-section">
+  <section id="regras-cv" class="panel help-section">
     <h2><i class="fa-solid fa-file-lines icon-info"></i> Regras de CV</h2>
     <p>Regras definidas em <code>ai/agents/agent-cl.md</code>.</p>
     <p><a href="#regras-ats">Regras de texto ATS</a> também são aplicadas no CL</p>
@@ -327,7 +323,7 @@
 
   </section>
 
-  <section id="regras-cl" class="help-section">
+  <section id="regras-cl" class="panel help-section">
     <h2><i class="fa-solid fa-envelope-open-text icon-info"></i> Regras de CL</h2>
     <p>Regras definidas em <code>ai/agents/agent-cl.md</code>.</p>
     <p><a href="#regras-ats">Regras de texto ATS</a> também são aplicadas no CL</p>
@@ -365,7 +361,7 @@
 
   </section>
 
-  <section id="regras-ats" class="help-section">
+  <section id="regras-ats" class="panel help-section">
     <h2><i class="fa-solid fa-shield-halved icon-info"></i> Regras de texto ATS</h2>
     <p>Regras definidas em <code>ai/skills/boas-praticas-ats/SKILL.md</code>.</p>
     <p>São aplicadas tanto no CV quanto no CL</p>
@@ -399,7 +395,7 @@
     </ul>
   </section>
 
-  <section id="testes" class="help-section">
+  <section id="testes" class="panel help-section">
     <h2><i class="fa-solid fa-vial-circle-check icon-info"></i> Testes automatizados</h2>
     <p>Definidos em <code>ai/agents/agent-testes.md</code>.</p>
 
@@ -412,11 +408,11 @@
     </ul>
   </section>
 
-  <section id="campos-vaga" class="help-section">
+  <section id="campos-vaga" class="panel help-section">
     <h2><i class="fa-solid fa-list-check icon-info"></i> Campos da vaga</h2>
     <p>O dashboard exibe alguns campos extraídos automaticamente do texto de cada vaga:</p>
     <div class="table-wrap">
-      <table class="help-table plain">
+      <table class="data-table help-table plain">
         <thead>
           <tr>
             <th>Campo</th>
@@ -441,7 +437,7 @@
     </div>
   </section>
 
-  <section id="alertas" class="help-section">
+  <section id="alertas" class="panel help-section">
     <h2><i class="fa-solid fa-triangle-exclamation icon-warning"></i> Alertas automáticos no dashboard</h2>
     <p>
       Além do score de fit e dos gaps, o dashboard sinaliza automaticamente alguns pontos de atenção
@@ -452,10 +448,10 @@
       <li><strong>Localização divergente:</strong> quando a vaga é Presencial ou Híbrida em uma cidade diferente da sua, o dashboard destaca a modalidade e a cidade, alertando sobre possível deslocamento ou mudança.</li>
       <li><strong>Vagas da Gupy:</strong> como a Gupy não permite anexar currículo (apenas carta de apresentação), o Sebastian sugere gerar apenas uma CL para essas vagas.</li>
     </ul>
-    <p class="help-example">Esses avisos são apenas indicativos, gerados a partir do texto da vaga. Sempre confira a descrição original antes de se candidatar.</p>
+    <p class="callout callout--info help-example">Esses avisos são apenas indicativos, gerados a partir do texto da vaga. Sempre confira a descrição original antes de se candidatar.</p>
     </section>
 
-    <section id="cafe" class="help-section">
+    <section id="cafe" class="panel help-section">
       <h2><img src="../../assets/logo.png" alt="" class="icon-logo" /> Me compre um café</h2>
       <p>
         Se você curtiu o projeto do Sebastian, especialmente se ele te ajudou a conseguir uma nova vaga,
@@ -469,7 +465,7 @@
       <p>PIX copia e cola:</p>
       <div class="pix-copy-wrap">
         <pre><code id="pix-code">00020126800014br.gov.bcb.pix01368a2736bc-1b9e-4655-ba11-1017ea798f610218Sebastian agradece5204000053039865802BR5918Gabriel O. Santana6002NA62070503***630442B8</code></pre>
-        <button type="button" id="pix-copy-btn" class="pix-copy-btn">
+        <button type="button" id="pix-copy-btn" class="btn btn-primary pix-copy-btn">
           <i class="fa-solid fa-copy"></i> Copiar
         </button>
       </div>

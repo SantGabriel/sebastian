@@ -126,6 +126,41 @@ candidatura = { aviso: "A candidatura deve ser feita por formulário externo", u
 candidatura = { aviso: "A vaga é pela Gupy, você só vai precisar de gerar o CL" }
 ```
 
+## Campo `duplicata` — checagem de repostagem
+
+Toda vaga é checada contra o histórico do banco **uma única vez**, aqui no fit. O dashboard nunca consulta a API: ele só lê o campo `duplicata` que você gravar.
+
+**Ordem obrigatória:** o `/check` procura a vaga pelo `id` dentro do `src/json/jobs-data.js`. Grave a entrada da vaga **antes** de chamar, senão a resposta é `404`.
+
+1. Escreva a entrada da vaga no `jobs-data.js` (precisa ao menos de `id`, `vaga`, `empresa` e `vagaTexto`)
+2. Chame `GET http://localhost:3001/api/postings/check?jobId=<id>` — uma vez por vaga
+3. Traduza a resposta para o campo `duplicata`, na ordem de prioridade abaixo
+4. Nunca chame de novo para a mesma vaga
+
+| Condição na resposta | `tipo` | Conteúdo do `aviso` |
+|---|---|---|
+| `exactMatch: true` **e** `previousApplications` não vazio | `"repostagem"` | Empresa, data (`appliedAt`, formato `dd/mm/aaaa`) e desfecho (`outcome`) da candidatura **mais recente** da lista |
+| `discarded` preenchido | `"descartada"` | Data do `discardedAt` |
+| `nearDuplicates` não vazio | `"possivel-repostagem"` | Que existe vaga parecida (mesma empresa e título) vista antes — deixe claro que é indício, não certeza |
+| Nenhuma das anteriores | — | **Omita o campo `duplicata`** por completo |
+
+Forma: interface `Duplicata` em [`src/interfaces/job-data.d.ts`](../../src/interfaces/job-data.d.ts). O `aviso` é texto puro, sem HTML — o dashboard escapa o conteúdo e escolhe ícone e cor pelo `tipo`.
+
+```js
+// já se candidatou a essa mesma vaga antes
+duplicata = { tipo: "repostagem", aviso: "Repostagem — você já se candidatou na Acme em 12/03/2026 (Reprovado)." }
+
+// vaga que o usuário já removeu do dashboard
+duplicata = { tipo: "descartada", aviso: "Você descartou essa vaga em 12/03/2026." }
+
+// heurística: mesma empresa e título, texto parecido
+duplicata = { tipo: "possivel-repostagem", aviso: "Possível repostagem: há uma vaga com título e empresa parecidos vista antes." }
+```
+
+**Só reporte, nunca decida.** Ao detectar repostagem ou descarte, mencione no chat qual vaga é e siga gerando o fit normalmente. Tirar a vaga da lista é decisão exclusiva do usuário — vale a mesma regra de nunca descartar vaga por conta própria.
+
+**Se o servidor estiver fora do ar** (a chamada falha ou dá timeout): omita o campo `duplicata`, siga o fluxo normalmente e avise no chat que não foi possível checar repostagem.
+
 ## Saída
 
 - Escreva o fit diretamente em `src/json/jobs-data.js`, com `cv.authorized: false` e `cl.authorized: false`

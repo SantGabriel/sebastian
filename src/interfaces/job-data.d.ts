@@ -94,6 +94,20 @@ export interface Candidatura {
   url?: string;
 }
 
+export type DuplicataTipo =
+  /** Mesmo texto de vaga de uma candidatura anterior. */
+  | 'repostagem'
+  /** Mesmo texto de uma vaga que o usuário já removeu do dashboard. */
+  | 'descartada'
+  /** Mesma empresa e título, texto parecido — heurística, pode ser falso positivo. */
+  | 'possivel-repostagem';
+
+export interface Duplicata {
+  tipo: DuplicataTipo;
+  /** Texto pronto para exibição, escrito pelo agente a partir da resposta do /check. */
+  aviso: string;
+}
+
 export interface Job {
   /** Índice sequencial (começa em 1) para referenciar vagas por número. */
   id: string;
@@ -109,6 +123,7 @@ export interface Job {
   cidadeVaga?: string;
   vagaTexto: string;
   candidatura?: Candidatura;
+  duplicata?: Duplicata;
   fit: Fit;
   cl: CL;
   cv: CV;

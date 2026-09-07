@@ -1,3 +1,7 @@
+import { renderNav } from './lib/nav.js';
+
+renderNav('ajuda');
+
 const links = [...document.querySelectorAll('.toc a')].filter((link) => link.hash);
 const sections = links
   .map((link) => document.querySelector(link.hash))

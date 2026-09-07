@@ -1,0 +1,4 @@
+{
+  "ignore": ["src/json/**"],
+  "execMap": { "js": "node" }
+}

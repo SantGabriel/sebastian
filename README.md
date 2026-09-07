@@ -107,7 +107,7 @@ Os arquivos com informações pessoais **não são versionados** — já estão 
 - `ai/skills/contexto/SKILL.md` — suas instruções pessoais
 - `src/json/jobs-data.js` e `src/json/generic-cv-data.js` — CVs/CLs gerados
 - `vagas.txt` — as vagas que você cola
-- `insights.md` — preparação de entrevista
+- `entrevista.md` — preparação de entrevista
 
 O repositório versiona apenas os equivalentes `*.example` (modelos sem dados reais). Ao clonar, o Sebastian cria as cópias locais a partir desses modelos no primeiro uso.
 
@@ -278,7 +278,7 @@ Para isso, informe o número da vaga e peça a entrevista.
 Ou você pode colar a vaga no chat com o agente e pedir para gerar a entrevista.
 <br> Exemplo: `Entrevista para a vaga abaixo: [texto da vaga]`
 
-O resultado da entrevista é gerado no arquivo `insights.md` para você revisar.
+O resultado da entrevista é gerado no arquivo `entrevista.md` para você revisar.
 
 ## 7) Pós uso
 

@@ -1,54 +1,42 @@
+/* =========================================================================
+   ajuda.css — exclusivo de ajuda.html.
+   .panel, .callout, .data-table e os ícones utilitários vêm do global.css.
+   Esta página tem layout próprio (TOC lateral), por isso não usa .app-page.
+   ========================================================================= */
+
 :root {
   --toc-width: 260px;
 }
 
 body {
-  color: var(--text);
-  font-size: 14px;
-  background: #f5f7fa;
-  margin: 0;
+  background: var(--bg);
 }
 
 .content {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 40px 24px 0 calc(var(--toc-width) + 24px);
+  padding: calc(var(--header-height) + 40px) 24px 0 calc(var(--toc-width) + 24px);
 }
 
-.page-header { text-align: center; margin-bottom: 24px; }
-
 .subtitle {
-  font-size: 13px;
-  color: #777;
   margin: 8px 0 12px;
 }
 
+/* ---------- índice lateral ---------- */
+
 .toc {
   position: fixed;
-  top: 0;
+  top: var(--header-height);
   left: 0;
   bottom: 0;
   width: var(--toc-width);
   overflow-y: auto;
-  background: #fff;
-  border-right: 1px solid #eee;
+  background: var(--surface);
+  border-right: 1px solid var(--border-soft);
   padding: 20px 16px 40px;
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.toc a.toc-brand,
-.toc a.toc-brand:hover {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: bold;
-  color: var(--text-dark);
-  margin-bottom: 14px;
-  padding: 0 10px;
-  text-decoration: none;
-  background: none;
 }
 
 .toc a {
@@ -72,21 +60,17 @@ body {
   border-left-color: var(--brand);
 }
 
-.nome-logo {
-  font-size: 18px;
-  margin-top: 16px;
-}
-
 @media (max-width: 860px) {
   .toc {
     position: static;
     width: auto;
     height: auto;
     border-right: none;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-soft);
     flex-direction: row;
     flex-wrap: wrap;
     gap: 4px;
+    padding-top: calc(var(--header-height) + 20px);
   }
 
   .content {
@@ -94,13 +78,7 @@ body {
   }
 }
 
-.help-section {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px 24px;
-  margin-bottom: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
+/* ---------- conteúdo das seções ---------- */
 
 .help-section h2 {
   font-size: 16px;
@@ -128,37 +106,48 @@ body {
   margin-top: 0;
 }
 
+.help-section code {
+  background: var(--border-faint);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.help-section pre {
+  background: var(--border-faint);
+  padding: 10px 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.help-section pre code {
+  background: none;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ---------- tabelas ----------
+   A base é .data-table; .help-table só acrescenta o destaque da última coluna
+   (o "peso" do gap), que .plain desliga. */
+
 .table-wrap {
   overflow-x: auto;
   margin-bottom: 14px;
-}
-
-.help-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.help-table th,
-.help-table td {
-  text-align: left;
-  padding: 8px 10px;
-  border-bottom: 1px solid #eee;
-  vertical-align: top;
-}
-
-.help-table th {
-  color: #888;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .help-table td:last-child,
 .help-table th:last-child {
   white-space: nowrap;
   font-weight: bold;
-  color: #c62828;
+  color: var(--danger);
+}
+
+.help-table.plain td:last-child,
+.help-table.plain th:last-child {
+  white-space: normal;
+  font-weight: normal;
+  color: inherit;
 }
 
 .help-table td ul {
@@ -170,15 +159,10 @@ body {
   margin-top: 4px;
 }
 
-.help-example {
-  font-size: 13px;
-  color: #444;
-  background: #f0f4ff;
-  border-left: 3px solid var(--brand);
-  padding: 8px 12px;
-  border-radius: 0 4px 4px 0;
-  margin-bottom: 0;
-}
+/* ---------- listas e exemplos ---------- */
+
+/* Último elemento da seção — o espaçamento fica por conta do .help-section. */
+.help-example { margin-bottom: 0; }
 
 .help-list {
   margin: 0 0 14px;
@@ -195,33 +179,7 @@ body {
   padding-left: 1.5em;
 }
 
-.help-table.plain td:last-child,
-.help-table.plain th:last-child {
-  white-space: normal;
-  font-weight: normal;
-  color: inherit;
-}
-
-.help-section code {
-  background: #f0f0f0;
-  padding: 1px 5px;
-  border-radius: 3px;
-  font-size: 12px;
-}
-
-.help-section pre {
-  background: #f0f0f0;
-  padding: 10px 12px;
-  border-radius: 6px;
-  overflow-x: auto;
-}
-
-.help-section pre code {
-  background: none;
-  padding: 0;
-  white-space: pre-wrap;
-  word-break: break-all;
-}
+/* ---------- pix ---------- */
 
 .pix-copy-wrap {
   display: flex;
@@ -234,32 +192,15 @@ body {
   margin: 0;
 }
 
-.pix-copy-btn {
-  flex-shrink: 0;
-  background: var(--brand);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pix-copy-btn:hover {
-  background: var(--brand-dark);
-}
-
 .pix-copy-btn.copied {
   background: #2e7d32;
 }
 
-.icon-danger { color: #e53935; }
-.icon-info { color: var(--brand); }
-.icon-warning { color: #f9a825; }
+.pix-copy-btn.copied:hover {
+  background: #2e7d32;
+}
+
+/* ---------- logo ---------- */
 
 .icon-logo {
   width: 30px;
@@ -268,8 +209,6 @@ body {
   object-fit: fill;
   margin-top: -8px;
 }
-
-/* ---------- card-stack ---------- */
 
 .card-stack {
   display: flex;

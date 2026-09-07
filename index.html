@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
-<body>
+<body class="app-page">
 
   <div class="page-header">
     <div class="card card--ledger logo-ledger">
@@ -39,7 +39,7 @@
       <label for="cv-select">
         <i class="fa-solid fa-file-lines"></i> CV exemplo:
       </label>
-      <select id="cv-select" onchange="abrirCVDropdown(this.value)">
+      <select id="cv-select" class="select" onchange="abrirCVDropdown(this.value)">
         <option value="">Escolher CV...</option>
       </select>
     </div>
@@ -57,6 +57,12 @@
     </a>
   </div>
   <div id="jobs-container"></div>
+  <div class="candidaturas-bar">
+    <button id="btn-salvar-candidaturas" class="btn-primary" onclick="onSalvarCandidaturas()">
+      <i class="fa-solid fa-floppy-disk"></i> Salvar candidaturas
+    </button>
+    <span id="candidaturas-count" class="candidaturas-count"></span>
+  </div>
   <script type="module" src="src/js/index.js"></script>
 </body>
 </html>

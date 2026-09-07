@@ -1,0 +1,259 @@
+generator client {
+  provider = "prisma-client-js"
+  // Gerado fora de node_modules: o output default (node_modules/.prisma/client)
+  // é alcançado por um re-export de pacote oculto que a IDE não resolve — tudo
+  // vira `any`. Também é o que o Prisma 7 vai exigir.
+  output   = "../server/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // file:../db/sebastian.db
+}
+
+// ─────────────────────────────────────────────────────────────
+// Enums (SQLite: suportado a partir do Prisma 6.2 — vira TEXT)
+// ─────────────────────────────────────────────────────────────
+
+enum Stage {
+  CURRICULO
+  ENTREVISTA_RH
+  TESTE_PRATICO
+  ENTREVISTA_TECNICA
+  ETAPA_FINAL
+  PROPOSTA_RECEBIDA
+  EMPREGADO
+  PROPOSTA_RECUSADA
+  REPROVADO
+}
+
+enum Outcome {
+  EM_ANDAMENTO
+  CONTRATADO
+  REPROVADO
+  PROPOSTA_RECUSADA
+}
+
+enum DocumentKind {
+  CV
+  CL
+}
+
+enum InsightScope {
+  POSTING
+  CV
+  CL
+}
+
+// ─────────────────────────────────────────────────────────────
+
+model Company {
+  id        String   @id @default(uuid())
+  /// nome como veio do jobs-data.js
+  name      String
+  /// lowercase, sem acento, sem pontuação, espaços colapsados
+  nameKey   String   @unique
+  createdAt DateTime @default(now())
+
+  postings     JobPosting[]
+  applications Application[]
+}
+
+/// Toda descrição de vaga que o sistema já viu — arquivada OU descartada.
+/// A identidade é o hash do texto normalizado.
+model JobPosting {
+  id              String @id @default(uuid())
+  /// sha256 do texto normalizado: lowercase, acento dobrado,
+  /// não-alfanuméricos removidos, espaços colapsados
+  descriptionHash String @unique
+  descriptionText String
+  /// tamanho do texto normalizado — usado na heurística de quase-duplicata
+  normalizedLength Int
+
+  /// título/empresa da primeira vez que este texto apareceu.
+  /// Necessário porque uma vaga descartada não gera Application.
+  titulo    String
+  tituloKey String
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+  lang      String?
+
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+  /// quantas vezes este mesmo texto foi visto (arquivado ou descartado)
+  seenCount   Int      @default(1)
+
+  /// preenchido pelo botão "Remover vaga"; zerado se depois virar candidatura
+  discardedAt    DateTime?
+
+  /// 0 = ainda não indexado (ver Setting.tokenizerVersion)
+  tokenizerVersion Int @default(0)
+
+  applications Application[]
+  terms        PostingTerm[]
+
+  @@index([tituloKey])
+  @@index([companyId])
+  @@index([lastSeenAt])
+  @@index([discardedAt])
+}
+
+/// O registro permanente. Sobrevive ao "reiniciar processo".
+model Application {
+  id String @id @default(uuid())
+
+  /// id da vaga no jobs-data.js no momento do arquivamento (rastreabilidade)
+  sourceJobId String
+
+  postingId String
+  posting   JobPosting @relation(fields: [postingId], references: [id])
+  companyId String?
+  company   Company?   @relation(fields: [companyId], references: [id])
+
+  // ── snapshot da vaga (denormalizado de propósito: é o recibo, é imutável)
+  titulo           String
+  /// normalizado — é o que a busca por título usa (COLLATE NOCASE não dobra acento)
+  tituloKey        String
+  lang             String  @default("pt")
+  link             String?
+  modalidade       String?
+  contratacao      String?
+  cidadeVaga       String?
+  candidaturaAviso String?
+  candidaturaUrl   String?
+
+  // ── snapshot dos documentos (Json nativo)
+  /// Fit completo: { score, positivos[], negativos[], summary }
+  fit       Json
+  /// duplicado fora do Json só para ordenar/filtrar sem desserializar
+  fitScore  Float?
+  /// CV completo; null quando cv.authorized !== true
+  cv        Json?
+  /// CL completo; null quando cl.authorized !== true (ex.: fluxo não-Gupy)
+  cl        Json?
+  /// CANDIDATE_DATA congelado — sem isto, regerar o PDF em 2028 usa dados de 2028
+  candidate Json
+
+  // ── pipeline
+  appliedAt       DateTime
+  currentStage    Stage    @default(CURRICULO)
+  /// data do último evento — base do cálculo de "sem resposta"
+  currentStageAt  DateTime
+  outcome         Outcome  @default(EM_ANDAMENTO)
+  rejectionReason String?
+  notes           String?
+
+  tokenizerVersion Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  stageEvents StageEvent[]
+  terms       ApplicationTerm[]
+
+  @@index([appliedAt])
+  @@index([currentStage])
+  @@index([currentStageAt])
+  @@index([outcome])
+  @@index([tituloKey])
+  @@index([companyId])
+  /// Uma Application por JobPosting: a identidade de "já me candidatei" é o
+  /// hash exato do texto da vaga, não a data do clique em "Salvar" — sem essa
+  /// constraint, dois cliques em dias diferentes (ou uma corrida entre duas
+  /// requisições concorrentes de /applications/batch) duplicavam a candidatura.
+  @@unique([postingId])
+  @@index([sourceJobId])
+}
+
+/// Histórico completo de etapas. Só insere e remove; nunca sobrescreve.
+model StageEvent {
+  id            String      @id @default(uuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  stage Stage
+  /// data informada pelo usuário — pode ser retroativa. NÃO é o createdAt.
+  occurredAt DateTime
+  /// motivo da recusa dado pela empresa, ou anotação livre
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@index([applicationId, occurredAt])
+  @@index([stage])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Índice de termos (Fase 5)
+// ─────────────────────────────────────────────────────────────
+
+/// Vocabulário global. n = 1 (unigrama) ou 2 (bigrama).
+model Term {
+  id   Int    @id @default(autoincrement())
+  text String @unique
+  n    Int
+
+  postings     PostingTerm[]
+  applications ApplicationTerm[]
+  insights     TermInsight[]
+
+  @@index([n])
+}
+
+/// Termos da DESCRIÇÃO DA VAGA — pendurados no posting, que é deduplicado por hash.
+model PostingTerm {
+  postingId String
+  posting   JobPosting @relation(fields: [postingId], references: [id], onDelete: Cascade)
+  termId    Int
+  term      Term       @relation(fields: [termId], references: [id], onDelete: Cascade)
+  tf        Int        @default(1)
+
+  @@id([postingId, termId])
+  @@index([termId])
+}
+
+/// Termos do CV/CL enviados — pendurados na application, pois variam a cada candidatura.
+model ApplicationTerm {
+  applicationId String
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  termId        Int
+  term          Term         @relation(fields: [termId], references: [id], onDelete: Cascade)
+  source        DocumentKind
+  tf            Int          @default(1)
+
+  @@id([applicationId, termId, source])
+  @@index([termId, source])
+}
+
+/**
+ * Resultado persistido da análise de conversão em entrevista (lift/Wilson),
+ * um snapshot por (termo, escopo). Recalculado sob demanda quando
+ * Setting['insightsDataVersion'] muda — ver insights-cache.service.js.
+ * É esta tabela que o agent-cv.md consulta via GET /api/insights/vocabulary,
+ * em vez de recomputar ou ler um arquivo.
+ */
+model TermInsight {
+  id     String       @id @default(uuid())
+  termId Int
+  term   Term         @relation(fields: [termId], references: [id], onDelete: Cascade)
+  scope  InsightScope
+
+  df                     Int
+  withTermTotal          Int
+  withTermInterviewed    Int
+  withoutTermTotal       Int
+  withoutTermInterviewed Int
+  lift                   Float
+  wilsonLower            Float
+  /// 'positive' | 'negative'
+  direction              String
+
+  computedAt DateTime @default(now())
+
+  @@unique([termId, scope])
+  @@index([scope, direction])
+}
+
+/// Chave-valor: silenceDays (30), tokenizerVersion, insightsDataVersion, flags diversas.
+model Setting {
+  key   String @id
+  value String
+}

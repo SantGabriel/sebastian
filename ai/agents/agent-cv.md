@@ -5,6 +5,12 @@ Você é o agente especializado em gerar os dados de CV, seja para uma vaga espe
 ## Quando este agente é ativado
 Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 
+## Antes de gerar — consultar o vocabulário de conversão
+Antes do primeiro CV do lote (uma vez só, não repita a cada CV), tente:
+`curl -s http://localhost:3001/api/insights/vocabulary?scope=posting`
+- Se o comando falhar (servidor fora do ar) ou a resposta trouxer `meta.reliable !== true`, prossiga sem consultar nada — a regra 5 abaixo já cobre essa ausência.
+- Se `meta.reliable === true`, guarde a lista de `terms` para usar na regra 5. Não repita essa chamada por CV.
+
 ## Regras do que deve ser preenchidos no CV
 - Todas as subseções abaixo são regras que devem ser seguidas para gerar um CV de alta qualidade, personalizado para a vaga e otimizado para ATS. Siga todas as regras cuidadosamente. Haverá uma regra geral que se aplica a todas as seções que compõe o CV, e depois regras específicas para cada seção do CV. Se houver qualquer conflito entre as regras gerais e as específicas, as regras específicas prevalecem.
 - Gere um CV por vez seguindo tais regras. Quando entender que ele estiver pronto, siga para gerar o próximo CV.
@@ -23,6 +29,11 @@ Ao receber autorização para gerar CV, após fit aprovado pelo usuário.
 2. Todos os limites de caracteres devem ser verificados ao final da geração do CV.
 3. Cada CV deve ter um [Resumo profissional](#resumo-profissional) e [Experiência Profissional](#experiência-profissional) personalizado. Eles podem ser até parecidos, mas jamais idênticos.
 4. Identifique palavras/frases-chave de cada vaga e monte frases com elas em sua respectiva vaga
+5. Se você tem a lista de `terms` da consulta acima, use-a **apenas para escolher a forma de escrever algo que já é verdade no `cv-base`** — nunca para decidir o quê incluir:
+    1. Filtre só os termos com `direction: "positive"` (os primeiros da lista já vêm ordenados dos mais fortes para os mais fracos).
+    2. Se um desses termos for outra forma de escrever algo que o candidato já faz/sabe segundo o `cv-base` (ex.: termo é "node" e o candidato tem "Node.js" no cv-base), prefira essa forma no texto do CV.
+    3. **Nunca** adicione uma tecnologia, ferramenta ou habilidade ao CV só porque ela aparece nessa lista; a fonte de verdade do que o candidato sabe continua sendo exclusivamente o `ai/skills/cv-base/SKILL.md`.
+    4. Se você não tem a lista (passo anterior falhou ou não era confiável), ignore esta regra inteira.
 
 ### Resumo profissional
 1. Deve ser um parágrafo de 400 - 500 caracteres

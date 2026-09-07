@@ -23,5 +23,5 @@ Para a vaga indicada, produza:
 
 ## Saída
 
-- sobrescreva `insights.md` com o resultado
+- sobrescreva `entrevista.md` com o resultado
 - Após gerar, apenas diga: "feito"

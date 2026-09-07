@@ -4,6 +4,7 @@ import { gerarPDF } from './pdf.js';
 
 const params = new URLSearchParams(window.location.search);
 const jobId = params.get('job');
+const applicationId = params.get('application');
 const fakeCandidateName = params.get('candidate');
 const isGeneric = params.get('isGeneric');
 const root = document.getElementById('cv-root');
@@ -15,11 +16,24 @@ let pdfMeta = {};
 
 const importData = (path) => import(path).catch(() => ({}));
 
+let documentDataPromise = null;
+function fetchDocumentData() {
+  if (!documentDataPromise) {
+    documentDataPromise = fetch(`/api/applications/${applicationId}/document-data`)
+      .then(res => (res.ok ? res.json() : { job: null, candidate: null }))
+      .catch(() => ({ job: null, candidate: null }));
+  }
+  return documentDataPromise;
+}
+
 await getCandidateData();
 await getDoc();
 
 async function getCandidateData() {
-  if (fakeCandidateName) {
+  if (applicationId) {
+    const data = await fetchDocumentData();
+    CANDIDATE_DATA = data.candidate;
+  } else if (fakeCandidateName) {
     const moduleCandidateData = await importData(`../../fixtures/fake-candidates/${fakeCandidateName}/candidate.fixture.js`);
     CANDIDATE_DATA = moduleCandidateData.CANDIDATE_FIXTURE;
   } else {
@@ -29,7 +43,10 @@ async function getCandidateData() {
 }
 
 async function getDoc() {
-  if (fakeCandidateName) {
+  if (applicationId) {
+    const data = await fetchDocumentData();
+    job = data.job;
+  } else if (fakeCandidateName) {
     const { CV_FIXTURE = [] } = await importData(`../../fixtures/fake-candidates/${fakeCandidateName}/cv.fixture.js`);
     job = CV_FIXTURE.find(c => c.id === jobId);
   } else if (isGeneric) {
@@ -75,8 +92,12 @@ function notAuthorized(msg) {
 }
 
 function render() {
-  if (!jobId || !job) {
-    notAuthorized(jobId ? `Vaga "${jobId}" não encontrada.` : 'Nenhum parâmetro de vaga informado na URL.');
+  if ((!jobId && !applicationId) || !job) {
+    notAuthorized(
+      applicationId ? `Candidatura "${applicationId}" não encontrada.`
+        : jobId ? `Vaga "${jobId}" não encontrada.`
+          : 'Nenhum parâmetro de vaga informado na URL.'
+    );
     return;
   }
 
@@ -213,7 +234,13 @@ function render() {
 }
 
 document.getElementById('btn-pdf').addEventListener('click', () => {
-  gerarPDF({ job: jobId, isGeneric: isGeneric || undefined, candidate: fakeCandidateName || undefined, ...pdfMeta });
+  gerarPDF({
+    job: applicationId ? undefined : jobId,
+    application: applicationId || undefined,
+    isGeneric: isGeneric || undefined,
+    candidate: fakeCandidateName || undefined,
+    ...pdfMeta
+  });
 });
 
 window.addEventListener('beforeprint', () => {

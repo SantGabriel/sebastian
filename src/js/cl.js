@@ -1,12 +1,42 @@
 import { gerarPDF } from './pdf.js';
-import { CANDIDATE_DATA } from '../json/candidate-data.js';
-import { JOBS } from '../json/jobs-data.js';
 
 const params = new URLSearchParams(window.location.search);
 const jobId = params.get('job');
+const applicationId = params.get('application');
 const root = document.getElementById('cl-root');
 
 let pdfMeta = {};
+let job;
+let CANDIDATE_DATA;
+
+const importData = (path) => import(path).catch(() => ({}));
+
+let documentDataPromise = null;
+function fetchDocumentData() {
+  if (!documentDataPromise) {
+    documentDataPromise = fetch(`/api/applications/${applicationId}/document-data`)
+      .then(res => (res.ok ? res.json() : { job: null, candidate: null }))
+      .catch(() => ({ job: null, candidate: null }));
+  }
+  return documentDataPromise;
+}
+
+async function getData() {
+  if (applicationId) {
+    const data = await fetchDocumentData();
+    job = data.job;
+    CANDIDATE_DATA = data.candidate;
+  } else {
+    const [{ JOBS = [] }, { CANDIDATE_DATA: candidateData }] = await Promise.all([
+      importData('../json/jobs-data.js'),
+      importData('../json/candidate-data.js')
+    ]);
+    job = JOBS.find(j => j.id === jobId);
+    CANDIDATE_DATA = candidateData;
+  }
+}
+
+await getData();
 
 /**
  * @param {string} phone
@@ -28,10 +58,12 @@ function notAuthorized(msg) {
 }
 
 function render() {
-  const job = JOBS.find(job => job.id === jobId);
-
-  if (!jobId || !job) {
-    notAuthorized(jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.` : 'No job parameter provided in the URL.');
+  if ((!jobId && !applicationId) || !job) {
+    notAuthorized(
+      applicationId ? `Application "${applicationId}" not found.`
+        : jobId ? `Job "${jobId}" not found in src/json/jobs-data.js.`
+          : 'No job parameter provided in the URL.'
+    );
     return;
   }
   const cl = job.cl;
@@ -94,7 +126,12 @@ function render() {
 }
 
 document.getElementById('btn-pdf').addEventListener('click', () => {
-  gerarPDF({ job: jobId, doc: 'cl', ...pdfMeta });
+  gerarPDF({
+    job: applicationId ? undefined : jobId,
+    application: applicationId || undefined,
+    doc: 'cl',
+    ...pdfMeta
+  });
 });
 
 render();
